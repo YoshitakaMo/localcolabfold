@@ -678,7 +678,7 @@ with tqdm.notebook.tqdm(total=total, bar_format=TQDM_BAR_FORMAT) as pbar:
       print(line)
       if show_images:
         fig = cf.plot_protein(outs[key]["unrelaxed_protein"], Ls=Ls_plot, dpi=100)
-        # plt.show()
+        plt.ion()
       if save_tmp_pdb:
         tmp_pdb_path = os.path.join(output_dir,f'unranked_{key}_unrelaxed.pdb')
         pdb_lines = protein.to_pdb(outs[key]["unrelaxed_protein"])
