@@ -472,7 +472,7 @@ if len(msa_merged) > 1:
     plt.xlabel("Positions")
     plt.ylabel("Sequences")
     plt.savefig(os.path.join(output_dir,"msa_coverage.png"), bbox_inches = 'tight', dpi=200)
-    plt.show()
+    # plt.show()
 #%%
 #@title run alphafold
 num_relax = "None"
@@ -678,7 +678,7 @@ with tqdm.notebook.tqdm(total=total, bar_format=TQDM_BAR_FORMAT) as pbar:
       print(line)
       if show_images:
         fig = cf.plot_protein(outs[key]["unrelaxed_protein"], Ls=Ls_plot, dpi=100)
-        plt.show()
+        # plt.show()
       if save_tmp_pdb:
         tmp_pdb_path = os.path.join(output_dir,f'unranked_{key}_unrelaxed.pdb')
         pdb_lines = protein.to_pdb(outs[key]["unrelaxed_protein"])
@@ -809,22 +809,22 @@ if use_ptm:
   print("predicted alignment error")
   cf.plot_paes([outs[k]["pae"] for k in model_rank], Ls=Ls_plot, dpi=dpi)
   plt.savefig(os.path.join(output_dir,f'predicted_alignment_error.png'), bbox_inches = 'tight', dpi=np.maximum(200,dpi))
-  plt.show()
+  # plt.show()
 
 print("predicted contacts")
 cf.plot_adjs([outs[k]["adj"] for k in model_rank], Ls=Ls_plot, dpi=dpi)
 plt.savefig(os.path.join(output_dir,f'predicted_contacts.png'), bbox_inches = 'tight', dpi=np.maximum(200,dpi))
-plt.show()
+# plt.show()
 
 print("predicted distogram")
 cf.plot_dists([outs[k]["dists"] for k in model_rank], Ls=Ls_plot, dpi=dpi)
 plt.savefig(os.path.join(output_dir,f'predicted_distogram.png'), bbox_inches = 'tight', dpi=np.maximum(200,dpi))
-plt.show()
+# plt.show()
 
 print("predicted LDDT")
 cf.plot_plddts([outs[k]["plddt"] for k in model_rank], Ls=Ls_plot, dpi=dpi)
 plt.savefig(os.path.join(output_dir,f'predicted_LDDT.png'), bbox_inches = 'tight', dpi=np.maximum(200,dpi))
-plt.show()
+# plt.show()
 
 def do_save_to_txt(filename, adj, dists, pae=None, Ls=None):
   adj = np.asarray(adj)
