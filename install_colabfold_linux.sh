@@ -91,6 +91,6 @@ echo "Enable GPU-accelerated relaxation..."
 (cd ${COLABFOLDDIR} && patch -u alphafold/relax/amber_minimize.py -i gpurelaxation.patch)
 
 echo "Downloading runner.py"
-(cd ${COLABFOLDDIR} && wget -q "https://gist.githubusercontent.com/YoshitakaMo/015d14b61788e0cdc945a8765a6dcd30/raw/6e80d81370cf423e8b619b7b1b700163d3c026bd/runner.py")
+(cd ${COLABFOLDDIR} && wget -q "https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/runner.py")
 
 echo "Installation of Alphafold2_advanced finished."
