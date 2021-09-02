@@ -84,7 +84,7 @@ mv stereo_chemical_props.txt ${COLABFOLDDIR}/alphafold/common
 
 # Apply OpenMM patch.
 echo "Applying OpenMM patch..."
-(cd ${COLABFOLDDIR}/conda/lib/python3.7/site-packages/ && patch -p0 < ${COLABFOLDDIR}/docker/openmm.patch)
+(cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/ && patch -p0 < ${COLABFOLDDIR}/docker/openmm.patch)
 
 # Enable GPU-accelerated relaxation.
 echo "Enable GPU-accelerated relaxation..."
