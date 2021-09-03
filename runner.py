@@ -31,6 +31,19 @@ from alphafold.data.tools import jackhmmer
 
 from alphafold.common import protein
 
+### Check your OS
+import platform
+pf = platform.system()
+if pf == 'Windows':
+  print('ColabFold on Windows')
+elif pf == 'Darwin':
+  print('ColabFold on Mac')
+  device="cpu"
+elif pf == 'Linux':
+  print('ColabFold on Linux')
+  device="gpu"
+###
+
 def run_jackhmmer(sequence, prefix):
 
   fasta_path = f"{prefix}.fasta"
@@ -614,7 +627,7 @@ with tqdm.notebook.tqdm(total=total, bar_format=TQDM_BAR_FORMAT) as pbar:
       if COMPILED != compiled: recompile = True
     else: recompile = True
     if recompile:
-      cf.clear_mem("gpu")
+      cf.clear_mem(device)
       cfg = config.model_config(name)
 
       # set size of msa (to reduce memory requirements)
@@ -633,7 +646,7 @@ with tqdm.notebook.tqdm(total=total, bar_format=TQDM_BAR_FORMAT) as pbar:
       recompile = False
 
   else:
-    cf.clear_mem("gpu")
+    cf.clear_mem(device)
     recompile = True
 
   # cleanup
@@ -693,7 +706,7 @@ with tqdm.notebook.tqdm(total=total, bar_format=TQDM_BAR_FORMAT) as pbar:
       del params
     else:
       del params, model_runner, cfg
-      cf.clear_mem("gpu")
+      cf.clear_mem(device)
 
   # delete old files
   for f in os.listdir(output_dir):
