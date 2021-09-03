@@ -756,7 +756,7 @@ else:
 if num_relax > 0:
   if "relax" not in dir():
     # add conda environment to path
-    sys.path.append('./colabfold-onda/lib/python3.7/site-packages')
+    sys.path.append('./colabfold-conda/lib/python3.7/site-packages')
 
     # import libraries
     from alphafold.relax import relax
