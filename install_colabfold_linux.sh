@@ -27,7 +27,7 @@ wget -qnc https://raw.githubusercontent.com/sokrypton/ColabFold/main/beta/config
 wget -qnc https://raw.githubusercontent.com/sokrypton/ColabFold/main/beta/model.patch
 wget -qnc https://raw.githubusercontent.com/sokrypton/ColabFold/main/beta/modules.patch
 # GPU relaxation patch
-wget -qnc https://gist.githubusercontent.com/YoshitakaMo/f844b5ccecd1f4717ea145ed10a25b88/raw/13c4966ee88576f4718c8ae52f085c9316d5b679/gpurelaxation.patch
+wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/gpurelaxation.patch -O gpurelaxation.patch
 
 # donwload reformat.pl from hh-suite
 wget -qnc https://raw.githubusercontent.com/soedinglab/hh-suite/master/scripts/reformat.pl
