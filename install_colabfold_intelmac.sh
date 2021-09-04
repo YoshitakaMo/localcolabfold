@@ -3,6 +3,24 @@
 # check whether `wget` and `curl` are installed
 type wget || { echo "wget command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 
+# check whether Apple Silicon (M1 mac) or Intel Mac
+arch_name="$(uname -m)"
+
+if [ "${arch_name}" = "x86_64" ]; then
+    if [ "$(sysctl -in sysctl.proc_translated)" = "1" ]; then
+        echo "Running on Rosetta 2"
+    else
+        echo "Running on native Intel"
+    fi
+elif [ "${arch_name}" = "arm64" ]; then
+    echo "Running on Apple Silicon (M1 mac)"
+    echo "This installer is only for intel Mac. Use install_colabfold_M1mac.sh to install on this Mac."
+    exit 1
+else
+    echo "Unknown architecture: ${arch_name}"
+    exit 1
+fi
+
 GIT_REPO="https://github.com/deepmind/alphafold"
 SOURCE_URL="https://storage.googleapis.com/alphafold/alphafold_params_2021-07-14.tar"
 CURRENTPATH=`pwd`
@@ -42,6 +60,12 @@ echo "Downloading AlphaFold2 trained parameters..."
 mkdir -p ${PARAMS_DIR}
 curl -fL ${SOURCE_URL} | tar x -C ${PARAMS_DIR}
 
+# Downloading stereo_chemical_props.txt from https://git.scicore.unibas.ch/schwede/openstructure
+echo "Downloading stereo_chemical_props.txt..."
+wget -q https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
+mkdir -p ${COLABFOLDDIR}/alphafold/common
+mv stereo_chemical_props.txt ${COLABFOLDDIR}/alphafold/common
+
 # echo "installing HH-suite 3.3.0..."
 # mkdir -p ${MSATOOLS}
 # git clone --branch v3.3.0 https://github.com/soedinglab/hh-suite.git hh-suite-3.3.0
@@ -73,12 +97,6 @@ conda install -c conda-forge python=3.7 openmm==7.5.1 pdbfixer -y
 echo "Installing alphafold dependencies by pip"
 python3.7 -m pip install absl-py==0.13.0 biopython==1.79 chex==0.0.7 dm-haiku==0.0.4 dm-tree==0.1.6 immutabledict==2.0.0 jax==0.2.14 jaxlib==0.1.69 ml-collections==0.1.0 numpy==1.19.5 scipy==1.7.0 tensorflow==2.5.0
 python3.7 -m pip install jupyter matplotlib py3Dmol tqdm
-
-# Downloading stereo_chemical_props.txt from https://git.scicore.unibas.ch/schwede/openstructure
-echo "Downloading stereo_chemical_props.txt..."
-wget -q https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
-mkdir -p ${COLABFOLDDIR}/alphafold/common
-mv stereo_chemical_props.txt ${COLABFOLDDIR}/alphafold/common
 
 # Apply OpenMM patch.
 echo "Applying OpenMM patch..."
