@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# check whether `wget` and `curl` are installed
+# check whether `wget` are installed
 type wget || { echo "wget command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 
 # check whether Apple Silicon (M1 mac) or Intel Mac

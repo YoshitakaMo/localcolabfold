@@ -40,7 +40,7 @@ arm64  # Apple Silicon
 **Note: 依存するPythonパッケージのほとんどがまだApple Silicon Macで十分にテストされていないため、このインストーラーによる動作は試験的なものです。**
 
 1. [Homebrew](https://qiita.com/zaburo/items/29fe23c1ceb6056109fd)をインストールします:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-1. Homebrweで`wget`コマンドをインストールします:<pre>$ brew install wget</pre>
+1. Homebrweで`wget`と`cmake`コマンドをインストールします:<pre>$ brew install wget cmake</pre>
 1. `miniforge`をHomebrewでインストールします:<pre>$ brew install --cask miniforge</pre>
 1. インストーラー`install_colabfold_M1mac.sh`をこのリポジトリからダウンロードします:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabfold_M1mac.sh</pre> これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabfold_M1mac.sh</pre>およそ5分後に`colabfold`ディレクトリができます。途中色々WarningsやErrorが出るかもしれません。インストール後はこのディレクトリを移動させないでください。
 1. `cd colabfold`を入力してこのディレクトリに入ります。

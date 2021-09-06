@@ -2,6 +2,8 @@
 
 [ColabFold / AlphaFold2_advanced](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb) on your local PC (or macOS)
 
+To Do: Implementation of command line arguments for `runner.py` (Sep.06, 2021)
+
 ## Installation
 
 ### For Linux
@@ -38,7 +40,7 @@ Please use the correct installer for your Mac.
 **Note: This installer is experimental because most of the dependent packages are not fully tested on Apple Silicon Mac.**
 
 1. Install [Homebrew](https://brew.sh/index_ja) if not present:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-1. Install `wget` command using Homebrew:<pre>$ brew install wget</pre>
+1. Install `wget` and `cmake` commands using Homebrew:<pre>$ brew install wget cmake</pre>
 1. Install `miniforge` command using Homebrew:<pre>$ brew install --cask miniforge</pre>
 1. Download `install_colabfold_M1mac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabfold_M1mac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabfold_M1mac.sh</pre>About 5 minutes later, `colabfold` directory will be created. Do not move this directory after the installation.
 1. Type `cd colabfold` to enter the directory.
