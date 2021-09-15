@@ -1,4 +1,67 @@
 #%%
+## command-line arguments
+import argparse
+parser = argparse.ArgumentParser(description="The runner was optimized for my condition")
+parser.add_argument("--input", help="Path to a FASTA file. Required.", required=True)
+parser.add_argument("--output_dir", default="", type=str,
+                    help="Path to a directory that will store the results. "
+                    "The default name is 'prediction_<hash>'. ")
+parser.add_argument("--homooligomer", default="1", type=str,
+                    help="homooligomer: Define number of copies in a homo-oligomeric assembly. "
+                    "For example, sequence:ABC:DEF, homooligomer: 2:1, "
+                    "the first protein ABC will be modeled as a omodimer (2 copies) and second DEF a monomer (1 copy). Default is 1.")
+parser.add_argument("--pair_mode", default="unpaired", choices=["unpaired", "unpaired+paired", "paired"],
+                    help="Experimental option for protein complexes. "
+                    "Pairing currently only supported for proteins in same operon (prokaryotic genomes). "
+                    "unpaired - generate seperate MSA for each protein. (default) "
+                    "unpaired+paired - attempt to pair sequences from the same operon within the genome. "
+                    "paired - only use sequences that were sucessfully paired. "
+                    "Default is 'unpaired'.")
+parser.add_argument("--pair_cov", default=50, type=int,
+                    help="Options to prefilter each MSA before pairing. It might help if there are any paralogs in the complex. "
+                    "prefilter each MSA to minimum coverage with query (%%) before pairing. "
+                    "Default is 50.")
+parser.add_argument("--pair_qid", default=20, type=int,
+                    help="Options to prefilter each MSA before pairing. It might help if there are any paralogs in the complex. "
+                    "prefilter each MSA to minimum sequence identity with query (%%) before pairing. "
+                    "Default is 20.")
+parser.add_argument("--rank_by", default="pLDDT", type=str, choices=["pLDDT", "pTMscore"],
+                    help="specify metric to use for ranking models (For protein-protein complexes, we recommend pTMscore). "
+                    "Default is 'pLDDT'.")
+parser.add_argument("--use_turbo", action='store_true',
+                    help="introduces a few modifications (compile once, swap params, adjust max_msa) to speedup and reduce memory requirements. "
+                    "Disable for default behavior.")
+parser.add_argument("--max_msa", default="512:1024", type=str,
+                    help="max_msa defines: max_msa_clusters:max_extra_msa number of sequences to use. "
+                    "This option ignored if use_turbo is disabled. Default is '512:1024'.")
+parser.add_argument("--num_models", default=5, type=int, help="specify how many model params to try. (Default is 5)")
+parser.add_argument("--use_ptm", action='store_true',
+                    help="uses Deepmind's ptm finetuned model parameters to get PAE per structure. Disable to use the original model params. (Disabling may give alternative structures.)")
+parser.add_argument("--num_ensemble", default=1, type=int, choices=[1, 8],
+                    help="the trunk of the network is run multiple times with different random choices for the MSA cluster centers. (1=default, 8=casp14 setting)")
+parser.add_argument("--max_recycles", default=3, type=int, help="controls the maximum number of times the structure is fed back into the neural network for refinement. (default is 3)")
+parser.add_argument("--tol", default=0, help="tolerance for deciding when to stop (CA-RMS between recycles)")
+parser.add_argument("--is_training", action='store_true',
+                    help="enables the stochastic part of the model (dropout), when coupled with num_samples can be used to 'sample' a diverse set of structures. False (NOT specifying this option) is recommended at first.")
+parser.add_argument("--num_samples", default=1, help="number of random_seeds to try. Default is 1.")
+parser.add_argument("--num_relax", default="None", choices=["None", "Top1", "Top5", "All"],
+                    help="num_relax is 'None' (default), 'Top1', 'Top5' or 'All'. Specify how many of the top ranked structures to relax.")
+args = parser.parse_args()
+## command-line arguments
+
+### Check your OS for localcolabfold
+import platform
+pf = platform.system()
+if pf == 'Windows':
+  print('ColabFold on Windows')
+elif pf == 'Darwin':
+  print('ColabFold on Mac')
+  device="cpu"
+elif pf == 'Linux':
+  print('ColabFold on Linux')
+  device="gpu"
+#%%
+### python code of AlphaFold2_advanced.ipynb
 import os
 import tensorflow as tf
 tf.config.set_visible_devices([], 'GPU')
@@ -40,19 +103,6 @@ from alphafold.data import pipeline
 from alphafold.data.tools import jackhmmer
 
 from alphafold.common import protein
-
-### Check your OS for localcolabfold
-import platform
-pf = platform.system()
-if pf == 'Windows':
-  print('ColabFold on Windows')
-elif pf == 'Darwin':
-  print('ColabFold on Mac')
-  device="cpu"
-elif pf == 'Linux':
-  print('ColabFold on Linux')
-  device="gpu"
-#%%
 
 def run_jackhmmer(sequence, prefix):
 
@@ -157,10 +207,24 @@ def run_jackhmmer(sequence, prefix):
                    "names":names}, open(pickled_msa_path,"wb"))
   return msas, deletion_matrices, names
 
+#%%
 import re
 
-# define sequence
-sequence = 'PIAQIHILEGRSDEQKETLIREVSEAISRSLDAPLTSVRVIITEMAKGHFGIGGELASK' #@param {type:"string"}
+# --read sequence from input file--
+from Bio import SeqIO
+
+def readfastafile(fastafile):
+    records = list(SeqIO.parse(fastafile, "fasta"))
+    if(len(records) != 1):
+        raise ValueError('Input FASTA file must have a single ID/sequence.')
+    else:
+        return records[0].id, records[0].seq
+
+
+print("Input ID: {}".format(readfastafile(args.input)[0]))
+print("Input Sequence: {}".format(readfastafile(args.input)[1]))
+sequence = str(readfastafile(args.input)[1])
+# --read sequence from input file--
 sequence = re.sub("[^A-Z:/]", "", sequence.upper())
 sequence = re.sub(":+",":",sequence)
 sequence = re.sub("/+","/",sequence)
@@ -171,7 +235,7 @@ jobname = "test" #@param {type:"string"}
 jobname = re.sub(r'\W+', '', jobname)
 
 # define number of copies
-homooligomer = "1" #@param {type:"string"}
+homooligomer = args.homooligomer #@param {type:"string"}
 homooligomer = re.sub("[:/]+",":",homooligomer)
 homooligomer = re.sub("^[:/]+","",homooligomer)
 homooligomer = re.sub("[:/]+$","",homooligomer)
@@ -207,7 +271,13 @@ if len(seqs) != len(homooligomers):
 full_sequence = "".join([s*h for s,h in zip(seqs,homooligomers)])
 
 # prediction directory
-output_dir = 'prediction_' + jobname + '_' + cf.get_hash(full_sequence)[:5]
+# --set the output directory from command-line arguments
+if args.output_dir == "":
+  output_dir = 'prediction_' + jobname + '_' + cf.get_hash(full_sequence)[:5]
+else:
+  output_dir = args.output_dir
+# --set the output directory from command-line arguments
+
 os.makedirs(output_dir, exist_ok=True)
 # delete existing files in working directory
 for f in os.listdir(output_dir):
@@ -241,17 +311,18 @@ TQDM_BAR_FORMAT = '{l_bar}{bar}| {n_fmt}/{total_fmt} [elapsed: {elapsed} remaini
 
 #@markdown ---
 msa_method = "mmseqs2" #@param ["mmseqs2","jackhmmer","single_sequence","precomputed"]
-#@markdown - `mmseqs2` - FAST method from [ColabFold](https://github.com/sokrypton/ColabFold)
-#@markdown - `jackhmmer` - default method from Deepmind (SLOW, but may find more/less sequences).
-#@markdown - `single_sequence` - use single sequence input
-#@markdown - `precomputed` If you have previously run this notebook and saved the results,
-pair_msa = False #@param {type:"boolean"}
-pair_cov = 50 #@param [50,75,90] {type:"raw"}
-pair_qid = 20 #@param [15,20,30,40,50] {type:"raw"}
-include_unpaired_msa = True #@param {type:"boolean"}
-
+#@markdown ---
+#@markdown **custom msa options**
 add_custom_msa = False #@param {type:"boolean"}
 msa_format = "fas" #@param ["fas","a2m","a3m","sto","psi","clu"]
+#@markdown - `add_custom_msa` - If enabled, you'll get an option to upload your custom MSA in the specified `msa_format`. Note: Your MSA will be supplemented with those from 'mmseqs2' or 'jackhmmer', unless `msa_method` is set to 'single_sequence'.
+
+# --set the output directory from command-line arguments
+pair_mode = "unpaired" #@param ["unpaired","unpaired+paired","paired"] {type:"string"}
+
+pair_cov = args.pair_cov #@param [0,25,50,75,90] {type:"raw"}
+pair_qid = args.pair_qid #@param [0,15,20,30,40,50] {type:"raw"}
+# --set the output directory from command-line arguments
 
 # --- Search against genetic databases ---
 os.makedirs('tmp', exist_ok=True)
@@ -441,11 +512,15 @@ if make_msa_plot:
   plt = cf.plot_msas(msas, ori_sequence)
   plt.savefig(os.path.join(output_dir,"msa_coverage.png"), bbox_inches = 'tight', dpi=300)
 #%%
-#@title run alphafold
-num_relax = "None"
-rank_by = "pLDDT" #@param ["pLDDT","pTMscore"]
-use_turbo = True #@param {type:"boolean"}
-max_msa = "512:1024" #@param ["512:1024", "256:512", "128:256", "64:128", "32:64"]
+##@title run alphafold
+# --------set parameters from command-line arguments--------
+num_relax = args.num_relax
+rank_by = args.rank_by
+
+use_turbo = True if args.use_turbo else False
+max_msa = args.max_msa
+# --------set parameters from command-line arguments--------
+
 max_msa_clusters, max_extra_msa = [int(x) for x in max_msa.split(":")]
 
 
@@ -460,13 +535,15 @@ show_images = True #@param {type:"boolean"}
 #@markdown There are two stochastic parts of the pipeline. Within the feature generation (choice of cluster centers) and within the model (dropout).
 #@markdown To get structure diversity, you can iterate through a fixed number of random_seeds (using `num_samples`) and/or enable dropout (using `is_training`).
 
-num_models = 5 #@param [1,2,3,4,5] {type:"raw"}
-use_ptm = True #@param {type:"boolean"}
-num_ensemble = 1 #@param [1,8] {type:"raw"}
-max_recycles = 3 #@param [1,3,6,12,24,48] {type:"raw"}
-tol = 0 #@param [0,0.1,0.5,1] {type:"raw"}
-is_training = False #@param {type:"boolean"}
-num_samples = 1 #@param [1,2,4,8,16,32] {type:"raw"}
+# --------set parameters from command-line arguments--------
+num_models = args.num_models
+use_ptm = True if args.use_ptm else False
+num_ensemble = args.num_ensemble
+max_recycles = args.max_recycles
+tol = args.tol
+is_training = True if args.is_training else False
+num_samples = args.num_samples
+# --------set parameters from command-line arguments--------
 
 subsample_msa = True #@param {type:"boolean"}
 #@markdown - `subsample_msa` subsample large MSA to `3E7/length` sequences to avoid crashing the preprocessing protocol. (This option ignored if `use_turbo` is disabled.)

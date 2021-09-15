@@ -21,6 +21,7 @@ git clone ${GIT_REPO} ${COLABFOLDDIR}
 echo "Applying several patches to be Alphafold2_advanced..."
 cd ${COLABFOLDDIR}
 wget -qnc https://raw.githubusercontent.com/sokrypton/ColabFold/main/beta/colabfold.py
+wget -qnc https://raw.githubusercontent.com/sokrypton/ColabFold/main/beta/colabfold_alphafold.py
 wget -qnc https://raw.githubusercontent.com/sokrypton/ColabFold/main/beta/pairmsa.py
 wget -qnc https://raw.githubusercontent.com/sokrypton/ColabFold/main/beta/protein.patch
 wget -qnc https://raw.githubusercontent.com/sokrypton/ColabFold/main/beta/config.patch
