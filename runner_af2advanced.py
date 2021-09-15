@@ -1,7 +1,7 @@
 #%%
 ## command-line arguments
 import argparse
-parser = argparse.ArgumentParser(description="The runner was optimized for my condition")
+parser = argparse.ArgumentParser(description="Runner script that can take command-line arguments")
 parser.add_argument("--input", help="Path to a FASTA file. Required.", required=True)
 parser.add_argument("--output_dir", default="", type=str,
                     help="Path to a directory that will store the results. "

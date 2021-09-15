@@ -706,11 +706,7 @@ for n,key in enumerate(model_rank):
   print(f"rank_{n+1}_{key} {rank_by}:{outs[key][rank_by]:.2f}")
 #%%
 #@title Refine structures with Amber-Relax (Optional)
-
-# --------set parameters from command-line arguments--------
-num_relax = args.num_relax
-# --------set parameters from command-line arguments--------
-
+num_relax = "None" #@param ["None", "Top1", "Top5", "All"] {type:"string"}
 if num_relax == "None":
   num_relax = 0
 elif num_relax == "Top1":
