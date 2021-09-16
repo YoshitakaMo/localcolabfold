@@ -245,13 +245,30 @@ msa_method = "mmseqs2" #@param ["mmseqs2","jackhmmer","single_sequence","precomp
 #@markdown - `jackhmmer` - default method from Deepmind (SLOW, but may find more/less sequences).
 #@markdown - `single_sequence` - use single sequence input
 #@markdown - `precomputed` If you have previously run this notebook and saved the results,
-pair_msa = False #@param {type:"boolean"}
-pair_cov = 50 #@param [50,75,90] {type:"raw"}
-pair_qid = 20 #@param [15,20,30,40,50] {type:"raw"}
-include_unpaired_msa = True #@param {type:"boolean"}
+#@markdown you can skip this step by uploading
+#@markdown the previously generated  `prediction_?????/msa.pickle`
 
+
+#@markdown ---
+#@markdown **custom msa options**
 add_custom_msa = False #@param {type:"boolean"}
 msa_format = "fas" #@param ["fas","a2m","a3m","sto","psi","clu"]
+#@markdown - `add_custom_msa` - If enabled, you'll get an option to upload your custom MSA in the specified `msa_format`. Note: Your MSA will be supplemented with those from 'mmseqs2' or 'jackhmmer', unless `msa_method` is set to 'single_sequence'.
+
+#@markdown ---
+#@markdown **pair msa options**
+
+#@markdown Experimental option for protein complexes. Pairing currently only supported for proteins in same operon (prokaryotic genomes).
+pair_mode = "unpaired" #@param ["unpaired","unpaired+paired","paired"] {type:"string"}
+#@markdown - `unpaired` - generate seperate MSA for each protein.
+#@markdown - `unpaired+paired` - attempt to pair sequences from the same operon within the genome.
+#@markdown - `paired` - only use sequences that were sucessfully paired.
+
+#@markdown Options to prefilter each MSA before pairing. (It might help if there are any paralogs in the complex.)
+pair_cov = 50 #@param [0,25,50,75,90] {type:"raw"}
+pair_qid = 20 #@param [0,15,20,30,40,50] {type:"raw"}
+#@markdown - `pair_cov` prefilter each MSA to minimum coverage with query (%) before pairing.
+#@markdown - `pair_qid` prefilter each MSA to minimum sequence identity with query (%) before pairing.
 
 # --- Search against genetic databases ---
 os.makedirs('tmp', exist_ok=True)
