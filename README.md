@@ -109,6 +109,12 @@ PSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLHEHKGKKARLDWNTDAASLIGEELQVDF
   - **No, it is not currently supported**.
 - I want to run the predictions step-by-step like Google Colab.
   - You can use VSCode and Python plugin to do the same. See https://code.visualstudio.com/docs/python/jupyter-support-py.
+- I want to use multiple GPUs to perform the prediction.
+  - You need to set the environment variables `TF_FORCE_UNIFIED_MEMORY`,`XLA_PYTHON_CLIENT_MEM_FRACTION` before execution. See [this discussion](https://github.com/YoshitakaMo/localcolabfold/issues/7#issuecomment-923027641).
+- I want to solve the `ResourceExhausted` error when trying to predict for a sequence with > 1000 residues.
+  - See the same discussion as above.
+- I got an error message `CUDA_ERROR_ILLEGAL_ADDRESS: an illegal memory access was encountered`.
+  - You may not have updated to CUDA 11.1 or later. Please check the version of Cuda compiler with `nvcc --version` command, not `nvidia-smi`.
 - Is this available on Windows 10?
   - You can run LocalColabFold on your Windows 10 with [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
