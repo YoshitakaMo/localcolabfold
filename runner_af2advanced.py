@@ -318,7 +318,7 @@ msa_format = "fas" #@param ["fas","a2m","a3m","sto","psi","clu"]
 #@markdown - `add_custom_msa` - If enabled, you'll get an option to upload your custom MSA in the specified `msa_format`. Note: Your MSA will be supplemented with those from 'mmseqs2' or 'jackhmmer', unless `msa_method` is set to 'single_sequence'.
 
 # --set the output directory from command-line arguments
-pair_mode = "unpaired" #@param ["unpaired","unpaired+paired","paired"] {type:"string"}
+pair_mode = args.pair_mode #@param ["unpaired","unpaired+paired","paired"] {type:"string"}
 
 pair_cov = args.pair_cov #@param [0,25,50,75,90] {type:"raw"}
 pair_qid = args.pair_qid #@param [0,15,20,30,40,50] {type:"raw"}
