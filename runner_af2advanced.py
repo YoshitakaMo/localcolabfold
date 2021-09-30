@@ -43,7 +43,7 @@ parser.add_argument("--max_recycles", default=3, type=int, help="controls the ma
 parser.add_argument("--tol", default=0, help="tolerance for deciding when to stop (CA-RMS between recycles)")
 parser.add_argument("--is_training", action='store_true',
                     help="enables the stochastic part of the model (dropout), when coupled with num_samples can be used to 'sample' a diverse set of structures. False (NOT specifying this option) is recommended at first.")
-parser.add_argument("--num_samples", default=1, help="number of random_seeds to try. Default is 1.")
+parser.add_argument("--num_samples", default=1, type=int, help="number of random_seeds to try. Default is 1.")
 parser.add_argument("--num_relax", default="None", choices=["None", "Top1", "Top5", "All"],
                     help="num_relax is 'None' (default), 'Top1', 'Top5' or 'All'. Specify how many of the top ranked structures to relax.")
 args = parser.parse_args()
