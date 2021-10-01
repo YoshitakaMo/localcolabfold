@@ -10,6 +10,11 @@ parser.add_argument("--homooligomer", default="1", type=str,
                     help="homooligomer: Define number of copies in a homo-oligomeric assembly. "
                     "For example, sequence:ABC:DEF, homooligomer: 2:1, "
                     "the first protein ABC will be modeled as a omodimer (2 copies) and second DEF a monomer (1 copy). Default is 1.")
+parser.add_argument("--msa_method", default="mmseqs2", type=str, choices=["mmseqs2", "single_sequence"],
+                    help="Options to generate MSA."
+                    "mmseqs2 - FAST method from ColabFold (default) "
+                    "single_sequence - use single sequence input."
+                    "Default is 'mmseqs2'.")
 parser.add_argument("--pair_mode", default="unpaired", choices=["unpaired", "unpaired+paired", "paired"],
                     help="Experimental option for protein complexes. "
                     "Pairing currently only supported for proteins in same operon (prokaryotic genomes). "
@@ -310,7 +315,7 @@ TQDM_BAR_FORMAT = '{l_bar}{bar}| {n_fmt}/{total_fmt} [elapsed: {elapsed} remaini
 #@markdown (Note that the search against databases and the actual prediction can take some time, from minutes to hours, depending on the length of the protein and what type of GPU you are allocated by Colab.)
 
 #@markdown ---
-msa_method = "mmseqs2" #@param ["mmseqs2","jackhmmer","single_sequence","precomputed"]
+msa_method = args.msa_method #@param ["mmseqs2","jackhmmer","single_sequence","precomputed"]
 #@markdown ---
 #@markdown **custom msa options**
 add_custom_msa = False #@param {type:"boolean"}
