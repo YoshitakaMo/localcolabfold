@@ -44,6 +44,12 @@ echo "Downloading AlphaFold2 trained parameters..."
 mkdir -p ${PARAMS_DIR}
 curl -fL ${SOURCE_URL} | tar x -C ${PARAMS_DIR}
 
+# Downloading stereo_chemical_props.txt from https://git.scicore.unibas.ch/schwede/openstructure
+echo "Downloading stereo_chemical_props.txt..."
+wget -q https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
+mkdir -p ${COLABFOLDDIR}/alphafold/common
+mv stereo_chemical_props.txt ${COLABFOLDDIR}/alphafold/common
+
 # echo "installing HH-suite 3.3.0..."
 # mkdir -p ${MSATOOLS}
 # git clone --branch v3.3.0 https://github.com/soedinglab/hh-suite.git hh-suite-3.3.0
@@ -76,12 +82,6 @@ echo "Installing alphafold dependencies by pip"
 python3.7 -m pip install absl-py==0.13.0 biopython==1.79 chex==0.0.7 dm-haiku==0.0.4 dm-tree==0.1.6 immutabledict==2.0.0 jax==0.2.14 ml-collections==0.1.0 numpy==1.19.5 scipy==1.7.0 tensorflow-gpu==2.5.0
 python3.7 -m pip install jupyter matplotlib py3Dmol tqdm
 python3.7 -m pip install --upgrade jax jaxlib==0.1.69+cuda111 -f https://storage.googleapis.com/jax-releases/jax_releases.html
-
-# Downloading stereo_chemical_props.txt from https://git.scicore.unibas.ch/schwede/openstructure
-echo "Downloading stereo_chemical_props.txt..."
-wget -q https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
-mkdir -p ${COLABFOLDDIR}/alphafold/common
-mv stereo_chemical_props.txt ${COLABFOLDDIR}/alphafold/common
 
 # Apply OpenMM patch.
 echo "Applying OpenMM patch..."
