@@ -147,7 +147,6 @@ if msa_method == "precomputed":
     print("Use precomputed msa.pickle: {}".format(precomputed))
 else:
   precomputed = args.precomputed
-  print("Not use msa.pickle")
 
 add_custom_msa = False #@param {type:"boolean"}
 msa_format = "fas" #@param ["fas","a2m","a3m","sto","psi","clu"]
@@ -224,25 +223,25 @@ Ls_plot = feature_dict["Ls"]
 # prep model options
 if use_turbo:
   opt = {"N":len(feature_dict["msa"]),
-       "L":len(feature_dict["residue_index"]),
-       "use_ptm":use_ptm,
-       "use_turbo":use_turbo,
-       "max_recycles":max_recycles,
-       "tol":tol,
-       "num_ensemble":num_ensemble,
-       "max_msa_clusters":max_msa_clusters,
-       "max_extra_msa":max_extra_msa,
-       "is_training":is_training}
+         "L":len(feature_dict["residue_index"]),
+         "use_ptm":use_ptm,
+         "use_turbo":use_turbo,
+         "max_recycles":max_recycles,
+         "tol":tol,
+         "num_ensemble":num_ensemble,
+         "max_msa_clusters":max_msa_clusters,
+         "max_extra_msa":max_extra_msa,
+         "is_training":is_training}
 else:
   opt = {"N":len(feature_dict["msa"]),
-       "L":len(feature_dict["residue_index"]),
-       "use_ptm":use_ptm,
-       "max_recycles":max_recycles,
-       "tol":tol,
-       "num_ensemble":num_ensemble,
-       "max_msa_clusters":max_msa_clusters,
-       "max_extra_msa":max_extra_msa,
-       "is_training":is_training}
+         "L":len(feature_dict["residue_index"]),
+         "use_ptm":use_ptm,
+         "max_recycles":max_recycles,
+         "tol":tol,
+         "num_ensemble":num_ensemble,
+         "max_msa_clusters":max_msa_clusters,
+         "max_extra_msa":max_extra_msa,
+         "is_training":is_training}
 
 if use_turbo:
   if "runner" in dir():
