@@ -222,10 +222,21 @@ feature_dict = cf_af.prep_feats(mod_I, clean=IN_COLAB)
 Ls_plot = feature_dict["Ls"]
 
 # prep model options
-opt = {"N":len(feature_dict["msa"]),
+if use_turbo:
+  opt = {"N":len(feature_dict["msa"]),
        "L":len(feature_dict["residue_index"]),
        "use_ptm":use_ptm,
        "use_turbo":use_turbo,
+       "max_recycles":max_recycles,
+       "tol":tol,
+       "num_ensemble":num_ensemble,
+       "max_msa_clusters":max_msa_clusters,
+       "max_extra_msa":max_extra_msa,
+       "is_training":is_training}
+else:
+  opt = {"N":len(feature_dict["msa"]),
+       "L":len(feature_dict["residue_index"]),
+       "use_ptm":use_ptm,
        "max_recycles":max_recycles,
        "tol":tol,
        "num_ensemble":num_ensemble,
