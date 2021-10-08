@@ -593,7 +593,7 @@ with tqdm.notebook.tqdm(total=total, bar_format=TQDM_BAR_FORMAT) as pbar:
       if COMPILED != compiled: recompile = True
     else: recompile = True
     if recompile:
-      cf.clear_mem("gpu")
+      cf.clear_mem(device)
       cfg = config.model_config(name)
 
       # set size of msa (to reduce memory requirements)
@@ -612,7 +612,7 @@ with tqdm.notebook.tqdm(total=total, bar_format=TQDM_BAR_FORMAT) as pbar:
       recompile = False
 
   else:
-    cf.clear_mem("gpu")
+    cf.clear_mem(device)
     recompile = True
 
   # cleanup
