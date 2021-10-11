@@ -159,8 +159,8 @@ pair_qid = args.pair_qid #@param [0,15,20,30,40,50] {type:"raw"}
 
 # --- Search against genetic databases ---
 
-I = cf_af.prep_msa(I, msa_method, add_custom_msa, msa_format,
-                   pair_mode, pair_cov, pair_qid, precomputed=precomputed, TMP_DIR=TMP_DIR)
+I = cf_af.prep_msa(I, msa_method, add_custom_msa, msa_format, pair_mode, pair_cov, pair_qid,
+                   hhfilter_loc="colabfold-conda/bin/hhfilter", precomputed=precomputed, TMP_DIR=output_dir)
 mod_I = I
 
 if len(I["msas"][0]) > 1:
