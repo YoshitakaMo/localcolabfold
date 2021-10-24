@@ -1,0 +1,21 @@
+--- residue_constants.py.orig   2021-10-24 11:30:58.275400080 +0900
++++ residue_constants.py        2021-10-24 11:20:08.028085425 +0900
+@@ -20,6 +20,8 @@ from typing import List, Mapping, Tuple
+
+ import numpy as np
+ import tree
++import os
++colabfold_path = os.getenv('COLABFOLD_PATH', '.')
+
+ # Internal import (35fd).
+
+@@ -403,7 +405,7 @@ def load_stereo_chemical_props() -> Tupl
+     residue_bond_angles: dict that maps resname --> list of BondAngle tuples
+   """
+   stereo_chemical_props_path = (
+-      'alphafold/common/stereo_chemical_props.txt')
++      colabfold_path + '/alphafold/common/stereo_chemical_props.txt')
+   with open(stereo_chemical_props_path, 'rt') as f:
+     stereo_chemical_props = f.read()
+   lines_iter = iter(stereo_chemical_props.splitlines())
+

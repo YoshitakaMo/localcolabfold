@@ -1,0 +1,34 @@
+--- colabfold_alphafold.py.orig    2021-10-24 10:56:09.887461716 +0900
++++ colabfold_alphafold.py         2021-10-24 11:25:12.811888920 +0900
+@@ -32,6 +32,13 @@ try:
+ except:
+   IN_COLAB = False
+
++if os.getenv('COLABFOLD_PATH'):
++    print("COLABFOLD_PATH is set to " + os.getenv('COLABFOLD_PATH'))
++    colabfold_path = os.getenv('COLABFOLD_PATH')
++else:
++    print("COLABFOLD_PATH is not set.")
++    colabfold_path = '.'
++
+ import tqdm.notebook
+ TQDM_BAR_FORMAT = '{l_bar}{bar}| {n_fmt}/{total_fmt} [elapsed: {elapsed} remaining: {remaining}]'
+
+@@ -641,7 +648,7 @@ def prep_model_runner(opt=None, model_na
+     cfg.model.recycle_tol = opt["tol"]
+     cfg.data.eval.num_ensemble = opt["num_ensemble"]
+
+-    params = data.get_model_haiku_params(name, params_loc)
++    params = data.get_model_haiku_params(name, colabfold_path + "/" + params_loc)
+     return {"model":model.RunModel(cfg, params, is_training=opt["is_training"]), "opt":opt}
+   else:
+     return old_runner
+@@ -749,7 +756,7 @@ def run_alphafold(feature_dict, opt=None
+           pbar.set_description(f'Running {key}')
+
+           # replace model parameters
+-          params = data.get_model_haiku_params(name, params_loc)
++          params = data.get_model_haiku_params(name, colabfold_path + "/" + params_loc)
+           for k in runner["model"].params.keys():
+             runner["model"].params[k] = params[k]
+

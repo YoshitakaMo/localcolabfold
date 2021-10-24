@@ -46,7 +46,7 @@ curl -fL ${SOURCE_URL} | tar x -C ${PARAMS_DIR}
 
 # Downloading stereo_chemical_props.txt from https://git.scicore.unibas.ch/schwede/openstructure
 echo "Downloading stereo_chemical_props.txt..."
-wget -q https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
+wget -q https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt --no-check-certificate
 mkdir -p ${COLABFOLDDIR}/alphafold/common
 mv stereo_chemical_props.txt ${COLABFOLDDIR}/alphafold/common
 
@@ -63,7 +63,7 @@ echo "Creating conda environments with python3.7 as ${COLABFOLDDIR}/colabfold-co
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
 conda create -p $COLABFOLDDIR/colabfold-conda python=3.7 -y
 conda activate $COLABFOLDDIR/colabfold-conda
-conda update -y conda
+conda update -n base conda -y
 
 echo "Installing conda-forge packages"
 conda install -c conda-forge python=3.7 cudnn==8.2.1.32 cudatoolkit==11.1.1 openmm==7.5.1 pdbfixer -y
@@ -81,7 +81,29 @@ echo "Applying OpenMM patch..."
 echo "Enable GPU-accelerated relaxation..."
 (cd ${COLABFOLDDIR} && patch -u alphafold/relax/amber_minimize.py -i gpurelaxation.patch)
 
-echo "Downloading runner.py"
+echo "Downloading runner.py..."
 (cd ${COLABFOLDDIR} && wget -q "https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/runner.py")
+(cd ${COLABFOLDDIR} && wget -q "https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/runner_af2advanced.py")
+
+echo "Making standalone command 'colabfold'..."
+cd ${COLABFOLDDIR}
+mkdir -p bin && cd bin
+cat << EOF > colabfold
+#!/bin/sh
+
+. "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
+conda activate ${COLABFOLDDIR}/colabfold-conda
+export NVIDIA_VISIBLE_DEVICES="all"
+export TF_FORCE_UNIFIED_MEMORY="1"
+export XLA_PYTHON_CLIENT_MEM_FRACTION="4.0"
+export COLABFOLD_PATH="${COLABFOLDDIR}"
+python3.7 ${COLABFOLDDIR}/runner_af2advanced.py $@
+EOF
+chmod +x ./colabfold
+cd ${COLABFOLDDIR}
+wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/residue_constants.patch -O residue_constants.patch
+wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/colabfold_alphafold.patch -O colabfold_alphafold.patch
+patch -u alphafold/common/residue_constants.py -i residue_constants.patch
+patch -u colabfold_alphafold.py -i colabfold_alphafold.patch
 
 echo "Installation of Alphafold2_advanced finished."
