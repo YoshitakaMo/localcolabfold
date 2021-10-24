@@ -61,34 +61,27 @@ It has not been properly tested on this platform and we cannot guarantee it prov
 
 This message is due to Apple Silicon, but I think we can ignore it.
 
-## Usage of runner_af2advanced.py
+## Usage of `colabfold` shell script (Linux)
 
-`runner_af2advanced.py` is a python script that can take command-line arguments. This is more helpful for users who want to predict many sequences.
+An executable `colabfold` shell script is installed in `/path/to/colabfold/bin` directory. This is more helpful for installation on a shared computer and users who want to predict many sequences.
 
-1. Download `runner_af2advanced.py` on your colabfold directory:<pre>$ cd <i>/path/to/</i>colabfold <br>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/runner_af2advanced.py</pre>
-1. Place a FASTA file that contains the sequence you want to predict (e.g. 6x9z.fasta).
-1. run the file with command-line arguments. For example,<br><pre># python3.7 for Linux and Intel Mac Users, otherwise python3.8
-$ colabfold-conda/bin/python3.7 runner_af2advanced.py \\
-    --input 6x9z.fasta \\
-    --output_dir 6x9z \\
-    --max_recycle 18 \\
-    --use_ptm \\
-    --use_turbo \\
-    --num_relax Top5
-</pre>where the input sequence `6x9z.fasta` is <pre>>6X9Z_1|Chain A|Transmembrane beta-barrels|synthetic construct (32630)
-MEQKPGTLMVYVVVGYNTDNTVDVVGGAQYAVSPYLFLDVGYGWNNSSLNFLEVGGGVSYKVSPDLEPYVKAGFEYNTDNTIKPTAGAGALYRVSPNLALMVEYGWNNSSLQKVAIGIAYKVKD
-</pre>This will predict a protein structure [6x9z](https://www.rcsb.org/structure/6x9z) with increasing the number of 'recycling' to 18. This may be effective for *de novo* structure prediction. For another example, [PDB: 3KUD](https://www.rcsb.org/structure/3KUD), <pre># python3.7 for Linux and Intel Mac Users, otherwise python3.8
-$ colabfold-conda/bin/python3.7 runner_af2advanced.py \\
-    --input 3kud_complex.fasta \\
-    --output_dir 3kud \\
-    --homooligomer 1:1 \\
-    --use_ptm \\
-    --use_turbo \\
-    --max_recycle 3 \\
-    --num_relax Top5</pre>where the input sequence `3kud_complex.fasta` is<pre>>3KUD_complex
-MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAGQEEYSAMRDQYMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDLAARTVESRQAQDLARSYGIPYIETSAKTRQGVEDAFYTLVREIRQH:
-PSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLHEHKGKKARLDWNTDAASLIGEELQVDFL
-</pre>This will predict a hetelooligomer. For more information about the options, type `colabfold-conda/bin/python3.7 runner_af2advanced.py --help` or refer to the original [ColabFold / AlphaFold2_advanced](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb).
+1. Prepare a FASTA file containing the amino acid sequence for which you want to predict the structure (e.g. `6x9z.fasta`).<pre>>6X9Z_1|Chain A|Transmembrane beta-barrels|synthetic construct (32630)
+MEQKPGTLMVYVVVGYNTDNTVDVVGGAQYAVSPYLFLDVGYGWNNSSLNFLEVGGGVSYKVSPDLEPYVKAGFEYNTDNTIKPTAGAGALYRVSPNLALMVEYGWNNSSLQKVAIGIAYKVKD</pre>
+2. Type `export PATH="/path/to/colabfold/bin:$PATH"` to add a path to the PATH environment variable. For example, `export PATH="/home/foo/bar/colabfold/bin:$PATH"` if you installed localcolabfold on `/home/foo/bar/colabfold`.
+3. Run colabfold command with your FASTA file. For example,<pre>$ colabfold --input 6x9z.fasta \\
+   --output_dir 6x9z \\
+   --max_recycle 18 \\
+   --use_ptm \\
+   --use_turbo \\
+   --num_relax Top5</pre>This will predict a protein structure [6x9z](https://www.rcsb.org/structure/6x9z) with increasing the number of 'recycling' to 18. This may be effective for *de novo* structure prediction. For another example, [PDB: 3KUD](https://www.rcsb.org/structure/3KUD), <pre>$ colabfold --input 3kud_complex.fasta \\
+   --output_dir 3kud \\
+   --homooligomer 1:1 \\
+   --use_ptm \\
+   --use_turbo \\
+   --max_recycle 3 \\
+   --num_relax Top5</pre>where the input sequence `3kud_complex.fasta` is<pre>>3KUD_complex
+   MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAGQEEYSAMRDQYMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDLAARTVESRQAQDLARSYGIPYIETSAKTRQGVEDAFYTLVREIRQH:
+   PSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLHEHKGKKARLDWNTDAASLIGEELQVDFL</pre>This will predict a hetelooligomer. For more information about the options, type `colabfold --help` or refer to the original [ColabFold / AlphaFold2_advanced](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb).
 
 ## Advantages of LocalColabFold
 - **Structure inference and relaxation will be accelerated if your PC has Nvidia GPU and CUDA drivers.**

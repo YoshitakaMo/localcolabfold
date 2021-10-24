@@ -64,34 +64,28 @@ It has not been properly tested on this platform and we cannot guarantee it prov
 
 このメッセージはApple Silicon上で動作させる時のみ現れますが、たぶん無視して大丈夫です。
 
-## runner_af2advanced.pyの使い方
+## `colabfold`コマンドの使い方（Linux向け）
 
-`runner_af2advanced.py`は`runner.py`の代わりにコマンドライン引数を取ることのできるPython実行スクリプトです。こちらはlocalcolabfoldを使ってより多くの配列を予測したいというユーザーに便利なスクリプトです。
+`colabfold`は`runner.py`の代わりにコマンドライン引数を取ることのできる実行可能シェルスクリプトです。こちらは共用計算機上に一度インストールするだけで済み、複数のユーザーがlocalcolabfoldを使ってより多くの配列を予測したい場合に有用です。
 
-1. `runner_af2advanced.py`をダウンロードして自身のcolabfoldディレクトリに置きます。`/path/to/colabfold`は適当にお使いのパソコン上の`colabfold`ディレクトリの場所に置き換えてください。<pre>$ cd <i>/path/to/</i>colabfold <br>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/runner_af2advanced.py</pre>
-2. 予測したいアミノ酸配列が含まれるFASTA形式のファイルを同ディレクトリに用意します。例として`6x9z.fasta`とします。
-3. コマンドライン引数とともに`runner_af2advanced.py`を実行します。例えばこんな感じ<br><pre># python3.7 for Linux and Intel Mac Users, otherwise python3.8
-$ colabfold-conda/bin/python3.7 runner_af2advanced.py \\
-    --input 6x9z.fasta \\
-    --output_dir 6x9z \\
-    --max_recycle 18 \\
-    --use_ptm \\
-    --use_turbo \\
-    --num_relax Top5
-</pre>ここで`6x9z.fasta`の中身は<pre>>6X9Z_1|Chain A|Transmembrane beta-barrels|synthetic construct (32630)
-MEQKPGTLMVYVVVGYNTDNTVDVVGGAQYAVSPYLFLDVGYGWNNSSLNFLEVGGGVSYKVSPDLEPYVKAGFEYNTDNTIKPTAGAGALYRVSPNLALMVEYGWNNSSLQKVAIGIAYKVKD
-</pre>としています。上記コマンドは*de novo*タンパク質構造[PDB: 6X9Z](https://www.rcsb.org/structure/6x9z)を予想するときに、'recycling'回数を最大18回まで引き上げています。この回数の引き上げは*de novo*タンパク質構造を予測する時には効果的であることが示されています（通常のタンパク質は3回で十分なことがほとんどです）。<br>他の入力例として, [PDB: 3KUD](https://www.rcsb.org/structure/3KUD)の**複合体予測**を行おうとするときは<pre># python3.7 for Linux and Intel Mac Users, otherwise python3.8
-$ colabfold-conda/bin/python3.7 runner_af2advanced.py \\
-    --input 3kud_complex.fasta \\
-    --output_dir 3kud \\
-    --homooligomer 1:1 \\
-    --use_ptm \\
-    --use_turbo \\
-    --max_recycle 3 \\
-    --num_relax Top5</pre>ここで入力配列`3kud_complex.fasta`は以下の通りです。<pre>>3KUD_complex
-MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAGQEEYSAMRDQYMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDLAARTVESRQAQDLARSYGIPYIETSAKTRQGVEDAFYTLVREIRQH:
-PSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLHEHKGKKARLDWNTDAASLIGEELQVDFL
-</pre>`:`記号で隔てることで複合体予測をすることができます。この場合はヘテロ複合体予測になっています。ホモオリゴマー予測を行いたいときなど、他の設定については`colabfold-conda/bin/python3.7 runner_af2advanced.py --help`で設定方法を読むか、オリジナルの[ColabFold / AlphaFold2_advanced](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb)にある説明を読んでください。
+1. 予測したいアミノ酸配列が含まれるFASTA形式のファイルを同ディレクトリに用意します。例として`6x9z.fasta`とします。<pre>>6X9Z_1|Chain A|Transmembrane beta-barrels|synthetic construct (32630)
+MEQKPGTLMVYVVVGYNTDNTVDVVGGAQYAVSPYLFLDVGYGWNNSSLNFLEVGGGVSYKVSPDLEPYVKAGFEYNTDNTIKPTAGAGALYRVSPNLALMVEYGWNNSSLQKVAIGIAYKVKD</pre>
+1. `export PATH="/path/to/colabfold/bin:$PATH"`と打つことで環境変数PATHにこのcolabfoldシェルスクリプトのファイルパスを設定します。例えばlocalcolabfoldを`/home/foo/bar/colabfold`にインストールした場合は、`export PATH="/home/foo/bar/colabfold/bin:$PATH"`と入力します。
+1. 入力のアミノ酸配列ファイルを`--input`の引数に指定し、`colabfold`コマンドを実行します。例えばこんな感じ<pre>$ colabfold --input 6x9z.fasta \\
+   --output_dir 6x9z \\
+   --max_recycle 18 \\
+   --use_ptm \\
+   --use_turbo \\
+   --num_relax Top5</pre>上記コマンドは*de novo*タンパク質構造[PDB: 6X9Z](https://www.rcsb.org/structure/6x9z)を予想するときに、'recycling'回数を最大18回まで引き上げています。この回数の引き上げは*de novo*タンパク質構造を予測する時には効果的であることが示されています（通常のタンパク質は3回で十分なことがほとんどです）。<br>他の入力例として, [PDB: 3KUD](https://www.rcsb.org/structure/3KUD)の**複合体予測**を行おうとするときは<pre>$ colabfold --input 3kud_complex.fasta \\
+   --output_dir 3kud \\
+   --homooligomer 1:1 \\
+   --use_ptm \\
+   --use_turbo \\
+   --max_recycle 3 \\
+   --num_relax Top5</pre>ここで入力配列`3kud_complex.fasta`は以下の通りです。<pre>>3KUD_complex
+   MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAGQEEYSAMRDQYMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDLAARTVESRQAQDLARSYGIPYIETSAKTRQGVEDAFYTLVREIRQH:
+   PSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLHEHKGKKARLDWNTDAASLIGEELQVDFL
+   </pre>`:`記号でアミノ酸配列を隔てることで複合体予測をすることができます。この場合はヘテロ複合体予測になっています。ホモオリゴマー予測を行いたいときなど、他の設定については`colabfold --help`で設定方法を読むか、オリジナルの[ColabFold / AlphaFold2_advanced](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb)にある説明を読んでください。
 
 ## LocalColabFoldを利用するメリット
 
