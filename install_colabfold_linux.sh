@@ -97,7 +97,7 @@ export NVIDIA_VISIBLE_DEVICES="all"
 export TF_FORCE_UNIFIED_MEMORY="1"
 export XLA_PYTHON_CLIENT_MEM_FRACTION="4.0"
 export COLABFOLD_PATH="${COLABFOLDDIR}"
-python3.7 ${COLABFOLDDIR}/runner_af2advanced.py $@
+python3.7 ${COLABFOLDDIR}/runner_af2advanced.py \$@
 EOF
 chmod +x ./colabfold
 cd ${COLABFOLDDIR}
