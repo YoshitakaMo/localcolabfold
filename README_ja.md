@@ -6,7 +6,7 @@
 
 ### Linux+GPUの場合
 
-1. ターミナル上で`curl`と`wget`コマンドがすでにインストールされていることを確認します。存在しない場合は先にこれらをインストールしてください。Ubuntuの場合はtype `sudo apt -y install curl wget`でインストールできます。
+1. ターミナル上で`curl`, `git`と`wget`コマンドがすでにインストールされていることを確認します。存在しない場合は先にこれらをインストールしてください。Ubuntuの場合はtype `sudo apt -y install curl git wget`でインストールできます。
 2. **Cuda compilerのバージョンが11.1以降であることを確認します。**<pre>$ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2020 NVIDIA Corporation
@@ -70,7 +70,7 @@ It has not been properly tested on this platform and we cannot guarantee it prov
 
 1. 予測したいアミノ酸配列が含まれるFASTA形式のファイルを同ディレクトリに用意します。例として`6x9z.fasta`とします。<pre>>6X9Z_1|Chain A|Transmembrane beta-barrels|synthetic construct (32630)
 MEQKPGTLMVYVVVGYNTDNTVDVVGGAQYAVSPYLFLDVGYGWNNSSLNFLEVGGGVSYKVSPDLEPYVKAGFEYNTDNTIKPTAGAGALYRVSPNLALMVEYGWNNSSLQKVAIGIAYKVKD</pre>
-1. `export PATH="/path/to/colabfold/bin:$PATH"`と打つことで環境変数PATHにこのcolabfoldシェルスクリプトのファイルパスを設定します。例えばlocalcolabfoldを`/home/foo/bar/colabfold`にインストールした場合は、`export PATH="/home/foo/bar/colabfold/bin:$PATH"`と入力します。
+1. `export PATH="/path/to/colabfold/bin:$PATH"`と打つことで環境変数PATHにこのcolabfoldシェルスクリプトのファイルパスを設定します。例えばLocalColabFoldを`/home/foo/bar/colabfold`にインストールした場合は、`export PATH="/home/foo/bar/colabfold/bin:$PATH"`と入力します。
 1. 入力のアミノ酸配列ファイルを`--input`の引数に指定し、`colabfold`コマンドを実行します。例えばこんな感じ<pre>$ colabfold --input 6x9z.fasta \\
    --output_dir 6x9z \\
    --max_recycle 18 \\

@@ -6,8 +6,8 @@
 
 ### For Linux
 
-1. Make sure `curl` and `wget` commands are already installed on your PC. If not present, you need install them at first. For Ubuntu, type `sudo apt -y install curl wget`.
-1. Make sure your Cuda compiler driver is **11.1 or later**:<pre>$ nvcc --version
+1. Make sure `curl`, `git`, and `wget` commands are already installed on your PC. If not present, you need install them at first. For Ubuntu, type `sudo apt -y install curl git wget`.
+2. Make sure your Cuda compiler driver is **11.1 or later**:<pre>$ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2020 NVIDIA Corporation
 Built on Mon_Oct_12_20:09:46_PDT_2020
