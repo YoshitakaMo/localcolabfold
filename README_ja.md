@@ -38,7 +38,7 @@ arm64  # Apple Silicon
 #### Intel CPUのMacの場合
 
 1. [Homebrew](https://qiita.com/zaburo/items/29fe23c1ceb6056109fd)をインストールします:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-2. Homebrweで`wget`コマンドをインストールします:<pre>$ brew install wget</pre>
+2. Homebrewで`wget`コマンドをインストールします:<pre>$ brew install wget</pre>
 3. `install_colabfold_intelmac.sh`をこのリポジトリからダウンロードします:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabfold_intelmac.sh</pre>これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabfold_intelmac.sh</pre>およそ5分後に`colabfold`ディレクトリができます。インストール後はこのディレクトリを移動させないでください。
 4. 残りの手順は"Linux+GPUの場合"と同様です.
 

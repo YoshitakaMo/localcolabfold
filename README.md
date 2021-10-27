@@ -81,7 +81,7 @@ MEQKPGTLMVYVVVGYNTDNTVDVVGGAQYAVSPYLFLDVGYGWNNSSLNFLEVGGGVSYKVSPDLEPYVKAGFEYNTDN
    --max_recycle 3 \\
    --num_relax Top5</pre>where the input sequence `3kud_complex.fasta` is<pre>>3KUD_complex
    MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAGQEEYSAMRDQYMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDLAARTVESRQAQDLARSYGIPYIETSAKTRQGVEDAFYTLVREIRQH:
-   PSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLHEHKGKKARLDWNTDAASLIGEELQVDFL</pre>This will predict a hetelooligomer. For more information about the options, type `colabfold --help` or refer to the original [ColabFold / AlphaFold2_advanced](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb).
+   PSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLHEHKGKKARLDWNTDAASLIGEELQVDFL</pre>This will predict a heterooligomer. For more information about the options, type `colabfold --help` or refer to the original [ColabFold / AlphaFold2_advanced](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb).
 
 ## Advantages of LocalColabFold
 - **Structure inference and relaxation will be accelerated if your PC has Nvidia GPU and CUDA drivers.**
