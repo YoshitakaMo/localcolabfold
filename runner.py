@@ -183,7 +183,7 @@ homooligomers = [int(h) for h in homooligomer.split(":")]
 #@markdown - `sequence` Specify protein sequence to be modelled.
 #@markdown  - Use `/` to specify intra-protein chainbreaks (for trimming regions within protein).
 #@markdown  - Use `:` to specify inter-protein chainbreaks (for modeling protein-protein hetero-complexes).
-#@markdown  - For example, sequence `AC/DE:FGH` will be modelled as polypeptides: `AC`, `DE` and `FGH`. A seperate MSA will be generates for `ACDE` and `FGH`.
+#@markdown  - For example, sequence `AC/DE:FGH` will be modelled as polypeptides: `AC`, `DE` and `FGH`. A separate MSA will be generates for `ACDE` and `FGH`.
 #@markdown    If `pair_msa` is enabled, `ACDE`'s MSA will be paired with `FGH`'s MSA.
 #@markdown - `homooligomer` Define number of copies in a homo-oligomeric assembly.
 #@markdown  - Use `:` to specify different homooligomeric state (copy numer) for each component of the complex.
@@ -260,9 +260,9 @@ msa_format = "fas" #@param ["fas","a2m","a3m","sto","psi","clu"]
 
 #@markdown Experimental option for protein complexes. Pairing currently only supported for proteins in same operon (prokaryotic genomes).
 pair_mode = "unpaired" #@param ["unpaired","unpaired+paired","paired"] {type:"string"}
-#@markdown - `unpaired` - generate seperate MSA for each protein.
+#@markdown - `unpaired` - generate separate MSA for each protein.
 #@markdown - `unpaired+paired` - attempt to pair sequences from the same operon within the genome.
-#@markdown - `paired` - only use sequences that were sucessfully paired.
+#@markdown - `paired` - only use sequences that were successfully paired.
 
 #@markdown Options to prefilter each MSA before pairing. (It might help if there are any paralogs in the complex.)
 pair_cov = 50 #@param [0,25,50,75,90] {type:"raw"}
