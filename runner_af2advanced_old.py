@@ -9,7 +9,7 @@ parser.add_argument("-o", "--output_dir", default="", type=str,
 parser.add_argument("-h", "--homooligomer", default="1", type=str,
                     help="homooligomer: Define number of copies in a homo-oligomeric assembly. "
                     "For example, sequence:ABC:DEF, homooligomer: 2:1, "
-                    "the first protein ABC will be modeled as a omodimer (2 copies) and second DEF a monomer (1 copy). Default is 1.")
+                    "the first protein ABC will be modeled as a homodimer (2 copies) and second DEF a monomer (1 copy). Default is 1.")
 parser.add_argument("-m", "--msa_method", default="mmseqs2", type=str, choices=["mmseqs2", "single_sequence"],
                     help="Options to generate MSA."
                     "mmseqs2 - FAST method from ColabFold (default) "
@@ -18,9 +18,9 @@ parser.add_argument("-m", "--msa_method", default="mmseqs2", type=str, choices=[
 parser.add_argument("-p", "--pair_mode", default="unpaired", choices=["unpaired", "unpaired+paired", "paired"],
                     help="Experimental option for protein complexes. "
                     "Pairing currently only supported for proteins in same operon (prokaryotic genomes). "
-                    "unpaired - generate seperate MSA for each protein. (default) "
+                    "unpaired - generate separate MSA for each protein. (default) "
                     "unpaired+paired - attempt to pair sequences from the same operon within the genome. "
-                    "paired - only use sequences that were sucessfully paired. "
+                    "paired - only use sequences that were successfully paired. "
                     "Default is 'unpaired'.")
 parser.add_argument("-pc", "--pair_cov", default=50, type=int,
                     help="Options to prefilter each MSA before pairing. It might help if there are any paralogs in the complex. "
@@ -254,7 +254,7 @@ homooligomers = [int(h) for h in homooligomer.split(":")]
 #@markdown - `sequence` Specify protein sequence to be modelled.
 #@markdown  - Use `/` to specify intra-protein chainbreaks (for trimming regions within protein).
 #@markdown  - Use `:` to specify inter-protein chainbreaks (for modeling protein-protein hetero-complexes).
-#@markdown  - For example, sequence `AC/DE:FGH` will be modelled as polypeptides: `AC`, `DE` and `FGH`. A seperate MSA will be generates for `ACDE` and `FGH`.
+#@markdown  - For example, sequence `AC/DE:FGH` will be modelled as polypeptides: `AC`, `DE` and `FGH`. A separate MSA will be generates for `ACDE` and `FGH`.
 #@markdown    If `pair_msa` is enabled, `ACDE`'s MSA will be paired with `FGH`'s MSA.
 #@markdown - `homooligomer` Define number of copies in a homo-oligomeric assembly.
 #@markdown  - Use `:` to specify different homooligomeric state (copy numer) for each component of the complex.
