@@ -9,7 +9,7 @@ parser.add_argument("-o", "--output_dir", default="", type=str,
 parser.add_argument("-h", "--homooligomer", default="1", type=str,
                     help="homooligomer: Define number of copies in a homo-oligomeric assembly. "
                     "For example, sequence:ABC:DEF, homooligomer: 2:1, "
-                    "the first protein ABC will be modeled as a omodimer (2 copies) and second DEF a monomer (1 copy). Default is 1.")
+                    "the first protein ABC will be modeled as a homodimer (2 copies) and second DEF a monomer (1 copy). Default is 1.")
 parser.add_argument("-m", "--msa_method", default="mmseqs2", type=str, choices=["mmseqs2", "single_sequence"],
                     help="Options to generate MSA."
                     "mmseqs2 - FAST method from ColabFold (default) "
