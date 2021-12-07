@@ -35,21 +35,21 @@ cat << EOF > colabfold_batch
 #!/bin/sh
 export TF_FORCE_UNIFIED_MEMORY="1"
 export XLA_PYTHON_CLIENT_MEM_FRACTION="4.0"
-$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch \$@
+export COLABFOLDDIR=$COLABFOLDDIR
+export XDG_CACHE_HOME="\${COLABFOLDDIR}"
+export PATH="\$PATH:\${COLABFOLDDIR}/colabfold-conda/bin"
+\$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch \$@
 EOF
 chmod +x colabfold_batch
 
 # hack to share the parameter files in a workstation.
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" batch.py
-sed -i -e "s#kalign_binary_path=\"kalign\"#kalign_binary_path=\"${COLABFOLDDIR}/colabfold-conda/bin/kalign\"#g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold/batch.py
-sed -i -e "s#binary_path=\"hhsearch\"#binary_path=\"${COLABFOLDDIR}/colabfold-conda/bin/hhsearch\"#g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold/batch.py
-sed -i -e "s#Path(appdirs.user_cache_dir(__package__ or \"colabfold\"))#\"${COLABFOLDDIR}\"#g" download.py
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/relax
 sed -i -e 's/CPU/CUDA/g' amber_minimize.py
 
-echo "Installation of colabFold_batch finished."
-echo "Note: AlphaFold2 weight parameters will be donwloaded at ${COLABFOLDDIR}/params directory in the first run."
+echo "Installation of colabfold_batch finished."
+echo "Note: AlphaFold2 weight parameters will be downloaded at ${COLABFOLDDIR}/colabfold/params directory in the first run."
 echo "Please set your PATH to ${COLABFOLDDIR}/bin to run 'colabfold_batch'."
 echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/bin:\$PATH\""
 echo "For more details, please type 'colabfold_batch --help'."

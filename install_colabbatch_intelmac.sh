@@ -52,18 +52,17 @@ mkdir -p $COLABFOLDDIR/bin
 cd $COLABFOLDDIR/bin
 cat << EOF > colabfold_batch
 #!/bin/sh
-$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch --cpu \$@
+export COLABFOLDDIR=$COLABFOLDDIR
+export PATH="\$PATH:\${COLABFOLDDIR}/colabfold-conda/bin"
+\$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch --cpu \$@
 EOF
 chmod +x colabfold_batch
 
 # hack to share the parameter files in a workstation.
 gsed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold/batch.py
-gsed -i -e "s#kalign_binary_path=\"kalign\"#kalign_binary_path=\"/usr/local/bin/kalign\"#g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold/batch.py
-gsed -i -e "s#binary_path=\"hhsearch\"#binary_path=\"/usr/local/bin/hhsearch\"#g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold/batch.py
-gsed -i -e "s#Path(appdirs.user_cache_dir(__package__ or \"colabfold\"))#${COLABFOLDDIR}#g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold/download.py
 
-echo "Installation of colabFold_batch finished."
-echo "Note: AlphaFold2 weight parameters will be donwloaded at ${COLABFOLDDIR}/params directory in the first run."
+echo "Installation of colabfold_batch finished."
+echo "Note: AlphaFold2 weight parameters will be downloaded at ~/Library/Caches/colabfold/params directory in the first run."
 echo "Please set your PATH to ${COLABFOLDDIR}/bin to run 'colabfold_batch'."
 echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/bin:\$PATH\""
 echo "For more details, please type 'colabfold_batch --help'."

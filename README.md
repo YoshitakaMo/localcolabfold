@@ -17,9 +17,9 @@ Copyright (c) 2005-2020 NVIDIA Corporation
 Built on Mon_Oct_12_20:09:46_PDT_2020
 Cuda compilation tools, release 11.1, V11.1.105
 Build cuda_11.1.TC455_06.29190527_0
-</pre>DO NOT use `nvidia-smi` for checking the version.<br>See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) if you haven't installed it.
+</pre>DO NOT use `nvidia-smi` to check the version.<br>See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) if you haven't installed it.
 1. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
-1. Add environment variable PATH:<pre># bash<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"<br>#i.e. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"</pre>
+1. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
 2. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`. For more details, see `colabfold_batch --help`.
 
 ### For macOS
@@ -39,13 +39,28 @@ Please use the correct installer for your Mac.
 #### For Mac with Intel CPU
 
 1. Install [Homebrew](https://brew.sh/index_ja) if not present:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-1. Install `wget` command using Homebrew:<pre>$ brew install wget gnu-sed<br>\$ brew install brewsci/bio/hh-suite brewsci/bio/kalign</pre>
-1. Download `install_colabbatch_intelmac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_intelmac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_intelmac.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
-1. The rest procedure is the same as "For Linux".
+2. Install `wget`, `gnu-sed`, [HH-suite](https://github.com/soedinglab/hh-suite) and [kalign](https://github.com/TimoLassmann/kalign) using Homebrew:<pre>$ brew install wget gnu-sed<br>\$ brew install brewsci/bio/hh-suite brewsci/bio/kalign</pre>
+3. Download `install_colabbatch_intelmac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_intelmac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_intelmac.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
+4. The rest procedure is the same as "For Linux".
 
 #### For Mac with Apple Silicon (M1 chip)
 
-Currently not supported.
+**Note: This installer is experimental because most of the dependent packages are not fully tested on Apple Silicon Mac.**
+
+1. Install [Homebrew](https://brew.sh/index_ja) if not present:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
+1. Install several commands using Homebrew (currently kalign can't be installed, but no effects):<pre>$ brew install wget cmake gnu-sed<br>$ brew install brewsci/bio/hh-suite</pre>
+1. Install `miniforge` command using Homebrew:<pre>$ brew install --cask miniforge</pre>
+1. Download `install_colabbatch_M1mac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_M1mac.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation. **You can ignore the installation errors that appear along the way**.
+2. The rest procedure is the same as "For Linux".
+
+A Warning message appeared when you run the prediction:
+```
+You are using an experimental build of OpenMM v7.5.1.
+This is NOT SUITABLE for production!
+It has not been properly tested on this platform and we cannot guarantee it provides accurate results.
+```
+
+This message is due to Apple Silicon, but I think we can ignore it.
 
 ## Advantages of LocalColabFold
 
@@ -62,7 +77,7 @@ Currently not supported.
 - Are the pLDDT score and PAE figures available?
   - Yes, they will be generated just like the ColabFold.
 - Is it possible to predict homooligomers and complexes?
-  - Yes, the sequence input is the same as ColabFold. See [ColabFold / AlphaFold2_advanced](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb).
+  - Yes, the format of input sequence is the same as ColabFold. See `query_sequence:` and its use of [ColabFold: AlphaFold2 using MMseqs2](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb).
 - Is it possible to create MSA by jackhmmer?
   - **No, it is not currently supported**.
 - I want to use multiple GPUs to perform the prediction.
@@ -71,7 +86,7 @@ Currently not supported.
   - You may not have updated to CUDA 11.1 or later. Please check the version of Cuda compiler with `nvcc --version` command, not `nvidia-smi`.
 - Is this available on Windows 10?
   - You can run LocalColabFold on your Windows 10 with [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
-- I want to use a custom MSA file in the format of a3m.
+- (New!)I want to use a custom MSA file in the format of a3m.
   - **ColabFold can accept various input files now**. See the help messsage. You can set your own A3M file, a fasta file that contains multiple sequences (in FASTA format), or a directory that contains multiple fasta files.
 
 
