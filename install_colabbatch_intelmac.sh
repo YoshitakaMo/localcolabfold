@@ -43,6 +43,8 @@ conda install -c conda-forge python=3.7 openmm==7.5.1 pdbfixer -y
 wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openmm.patch --no-check-certificate
 (cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages; patch -s -p0 < ${COLABFOLDDIR}/openmm.patch)
 rm openmm.patch
+# Download the updater
+wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_intelmac.sh --no-check-certificate
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
 colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/mac/jaxlib-0.1.74-cp37-none-macosx_10_9_x86_64.whl

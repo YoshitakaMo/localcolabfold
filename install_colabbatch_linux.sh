@@ -22,6 +22,8 @@ conda install -c conda-forge python=3.7 cudnn==8.2.1.32 cudatoolkit==11.1.1 open
 wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openmm.patch --no-check-certificate
 (cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages; patch -s -p0 < ${COLABFOLDDIR}/openmm.patch)
 rm openmm.patch
+# Download the updater
+wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_linux.sh --no-check-certificate
 # install alignment tools
 conda install -c conda-forge -c bioconda kalign3=3.2.2 hhsuite=3.3.0 -y
 # install ColabFold and Jaxlib

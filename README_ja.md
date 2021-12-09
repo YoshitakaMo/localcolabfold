@@ -4,6 +4,7 @@
 
 ## アップデート情報
 
+- 2021年12月9日, β版。簡単に使えるアップデートスクリプトを追加。[アップデートのやり方](#アップデートのやり方)を参照。
 - 2021年12月4日, LocalColabFoldは最新版の[pipでインストール可能なColabFold](https://github.com/sokrypton/ColabFold#running-locally)に対応しました。このリポジトリではrelax（構造最適化）処理を行うために必要な他のパラメータファイルとともにColabFoldをインストールするためのスクリプトを提供しています。AlphaFoldとAlphaFold-Multimerの重みパラメータは初回の実行時に自動的にダウンロードされます。
 
 ## インストール方法
@@ -65,6 +66,28 @@ It has not been properly tested on this platform and we cannot guarantee it prov
 ```
 
 このメッセージはApple Silicon上で動作させる時のみ現れますが、たぶん無視して大丈夫です。
+
+## アップデートのやり方
+
+[ColabFold](https://github.com/sokrypton/ColabFold)はいまだ開発途中であるため、最新の機能を利用するためにはこのlocalcolabfoldも頻繁にアップデートする必要があります。そこでお手軽にアップデートするためのスクリプトを用意しました。
+
+アップデートは`colabfold_batch`ディレクトリで以下のように入力するだけです。
+
+```bash
+$ ./update_linux.sh . # if Linux
+$ ./update_intelmac.sh . # if Intel Mac
+$ ./update_M1mac.sh . # if M1 Mac
+```
+
+また、もしすでに1.2.0-beta以前からlocalcolabfoldをインストールしていた場合は、まずこれらのアップデートスクリプトをダウンロードしてきてから実行してください。例として以下のような感じです。
+
+```bash
+# set your OS. Select one of the following variables {linux,intelmac,M1mac}
+$ OS=linux # if Linux
+$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_${OS}.sh
+$ chmod +x update_${OS}.sh
+$ ./update_${OS}.sh /path/to/your/colabfold_batch
+```
 
 ## LocalColabFoldを利用する利点
 

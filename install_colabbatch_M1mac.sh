@@ -44,6 +44,8 @@ conda install -y -c apple tensorflow-deps
 wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openmm.patch --no-check-certificate
 (cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.8/site-packages; patch -s -p0 < ${COLABFOLDDIR}/openmm.patch)
 rm openmm.patch
+# Download the updater
+wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_M1mac.sh --no-check-certificate
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.8 -m pip install tensorflow-macos
 colabfold-conda/bin/python3.8 -m pip install git+git://github.com/deepmind/tree.git
