@@ -19,10 +19,16 @@ Built on Mon_Oct_12_20:09:46_PDT_2020
 Cuda compilation tools, release 11.1, V11.1.105
 Build cuda_11.1.TC455_06.29190527_0
 </pre>バージョンチェックの時に`nvidia-smi`コマンドを使わないでください。こちらでは不正確です。<br>まだCUDA Compilerをインストールしていない場合は、[NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)を参照してください。
-3. このリポジトリにある`install_colabbatch_linux.sh`をダウンロードします。<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre>これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_linux.sh</pre>およそ5分後に`colabfold_batch`ディレクトリができます。インストール後はこのディレクトリを移動させないでください。
-4. `cd colabfold_batch`を入力してこのディレクトリに入ります。
-5. 環境変数`PATH`を追加します。<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>この1行を`~/.bashrc`または`~/.zshrc`に追記しておくと便利です。
-6. 以下のコマンドでColabFoldを実行します。<pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>結果のファイルは`outputdir`に生成されます. 詳細な使い方は`colabfold_batch --help`コマンドで確認してください。
+3. **GNU compilerのバージョンが4.9以降であることを確認します。** 動作上、`GLIBCXX_3.4.20`が必要になるためです。<pre>$ gcc --version
+gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</pre>もしバージョンが4.8.5以前の場合は(CentOS 7だとよくありがち)、新しいGCCをインストールしてそれにPATHを通してください。スパコンの場合はEnvironment moduleの`module avail`の中にあるかもしれません。
+1. このリポジトリにある`install_colabbatch_linux.sh`をダウンロードします。<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre>これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_linux.sh</pre>およそ5分後に`colabfold_batch`ディレクトリができます。インストール後はこのディレクトリを移動させないでください。
+2. `cd colabfold_batch`を入力してこのディレクトリに入ります。
+3. 環境変数`PATH`を追加します。<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>この1行を`~/.bashrc`または`~/.zshrc`に追記しておくと便利です。
+4. 以下のコマンドでColabFoldを実行します。<pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>結果のファイルは`outputdir`に生成されます. 詳細な使い方は`colabfold_batch --help`コマンドで確認してください。
 
 ### macOSの場合
 

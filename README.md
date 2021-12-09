@@ -19,9 +19,15 @@ Built on Mon_Oct_12_20:09:46_PDT_2020
 Cuda compilation tools, release 11.1, V11.1.105
 Build cuda_11.1.TC455_06.29190527_0
 </pre>DO NOT use `nvidia-smi` to check the version.<br>See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) if you haven't installed it.
-3. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
-4. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
-5. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`. For more details, see `colabfold_batch --help`.
+1. Make sure your GNU compiler version is **4.9 or later** because `GLIBCXX_3.4.20` is required:<pre>$ gcc --version
+gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</pre>If the version is 4.8.5 or older (e.g. CentOS 7), install a new one and add `PATH` to it.
+1. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
+2. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
+3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`. For more details, see `colabfold_batch --help`.
 
 ### For macOS
 
