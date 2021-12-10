@@ -4,7 +4,7 @@
 
 ## New Updates
 
-- 09Dec2021, version 1.2.0-beta released. easy-to-use updater scripts added. See [How to update](#how-to-update)
+- 09Dec2021, version 1.2.0-beta released. easy-to-use updater scripts added. See [How to update](#how-to-update).
 - 04Dec2021, LocalColabFold is now compatible with the latest [pip installable ColabFold](https://github.com/sokrypton/ColabFold#running-locally). In this repository, I will provide a script to install ColabFold with some external parameter files to perform relaxation with AMBER. The weight parameters of AlphaFold and AlphaFold-Multimer will be downloaded automatically at your first run.
 
 ## Installation

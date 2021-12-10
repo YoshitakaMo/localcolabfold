@@ -28,8 +28,8 @@ wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/upda
 conda install -c conda-forge -c bioconda kalign3=3.2.2 hhsuite=3.3.0 -y
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-colabfold-conda/bin/python3.7 -m pip install jax==0.2.25
 colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda111/jaxlib-0.1.72+cuda111-cp37-none-manylinux2010_x86_64.whl
+colabfold-conda/bin/python3.7 -m pip install jax==0.2.25
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
@@ -51,8 +51,9 @@ sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFO
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/relax
 sed -i -e 's/CPU/CUDA/g' amber_minimize.py
 
+echo "-----------------------------------------"
 echo "Installation of colabfold_batch finished."
 echo "Note: AlphaFold2 weight parameters will be downloaded at ${COLABFOLDDIR}/colabfold/params directory in the first run."
-echo "Please set your PATH to ${COLABFOLDDIR}/bin to run 'colabfold_batch'."
+echo "Add ${COLABFOLDDIR}/bin to your environment variable PATH to run 'colabfold_batch'."
 echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/bin:\$PATH\""
 echo "For more details, please type 'colabfold_batch --help'."

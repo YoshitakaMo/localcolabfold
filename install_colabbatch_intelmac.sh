@@ -47,8 +47,8 @@ rm openmm.patch
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_intelmac.sh --no-check-certificate
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-colabfold-conda/bin/python3.7 -m pip install jax==0.2.25
 colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/mac/jaxlib-0.1.74-cp37-none-macosx_10_9_x86_64.whl
+colabfold-conda/bin/python3.7 -m pip install jax==0.2.25
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
@@ -64,8 +64,9 @@ chmod +x colabfold_batch
 # hack to share the parameter files in a workstation.
 gsed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold/batch.py
 
+echo "-----------------------------------------"
 echo "Installation of colabfold_batch finished."
 echo "Note: AlphaFold2 weight parameters will be downloaded at ~/Library/Caches/colabfold/params directory in the first run."
-echo "Please set your PATH to ${COLABFOLDDIR}/bin to run 'colabfold_batch'."
+echo "Add ${COLABFOLDDIR}/bin to your environment variable PATH to run 'colabfold_batch'."
 echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/bin:\$PATH\""
 echo "For more details, please type 'colabfold_batch --help'."
