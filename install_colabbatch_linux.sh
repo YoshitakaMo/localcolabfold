@@ -24,6 +24,7 @@ wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openm
 rm openmm.patch
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_linux.sh --no-check-certificate
+chmod +x update_linux.sh
 # install alignment tools
 conda install -c conda-forge -c bioconda kalign3=3.2.2 hhsuite=3.3.0 -y
 # install ColabFold and Jaxlib
@@ -40,7 +41,7 @@ export TF_FORCE_UNIFIED_MEMORY="1"
 export XLA_PYTHON_CLIENT_MEM_FRACTION="4.0"
 export COLABFOLDDIR=$COLABFOLDDIR
 export XDG_CACHE_HOME="\${COLABFOLDDIR}"
-export PATH="\$PATH:\${COLABFOLDDIR}/colabfold-conda/bin"
+export PATH="\${COLABFOLDDIR}/colabfold-conda/bin:\$PATH"
 \$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch \$@
 EOF
 chmod +x colabfold_batch

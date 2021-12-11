@@ -46,6 +46,7 @@ wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openm
 rm openmm.patch
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_M1mac.sh --no-check-certificate
+chmod +x update_M1mac.sh
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.8 -m pip install tensorflow-macos
 colabfold-conda/bin/python3.8 -m pip install git+git://github.com/deepmind/tree.git
@@ -64,7 +65,7 @@ cd $COLABFOLDDIR/bin
 cat << EOF > colabfold_batch
 #!/bin/sh
 export COLABFOLDDIR=$COLABFOLDDIR
-export PATH="\$PATH:\${COLABFOLDDIR}/colabfold-conda/bin"
+export PATH="\${COLABFOLDDIR}/colabfold-conda/bin:\$PATH"
 \$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch --cpu \$@
 EOF
 chmod +x colabfold_batch

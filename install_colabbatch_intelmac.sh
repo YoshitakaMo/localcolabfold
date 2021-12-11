@@ -45,6 +45,7 @@ wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openm
 rm openmm.patch
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_intelmac.sh --no-check-certificate
+chmod +x update_intelmac.sh
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
 colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/mac/jaxlib-0.1.74-cp37-none-macosx_10_9_x86_64.whl
@@ -56,7 +57,7 @@ cd $COLABFOLDDIR/bin
 cat << EOF > colabfold_batch
 #!/bin/sh
 export COLABFOLDDIR=$COLABFOLDDIR
-export PATH="\$PATH:\${COLABFOLDDIR}/colabfold-conda/bin"
+export PATH="\${COLABFOLDDIR}/colabfold-conda/bin:\$PATH"
 \$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch --cpu \$@
 EOF
 chmod +x colabfold_batch
