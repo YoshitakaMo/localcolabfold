@@ -58,6 +58,7 @@ colabfold-conda/bin/python3.8 -m pip install jax==0.2.25 --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install jaxlib==0.1.74 -f "https://dfm.io/custom-wheels/jaxlib/index.html" --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install numpy==1.21.1 --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install chex --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install scipy --no-deps --no-color
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
