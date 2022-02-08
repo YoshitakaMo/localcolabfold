@@ -5,7 +5,7 @@ COLABFOLDDIR=$1
 if [ ! -d $COLABFOLDDIR/colabfold-conda ]; then
     echo "Error! colabfold-conda directory is not present in $COLABFOLDDIR."
     exit 1
-fi    
+fi
 
 pushd $COLABFOLDDIR || { echo "${COLABFOLDDIR} is not present." ; exit 1 ; }
 
@@ -21,5 +21,9 @@ python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypto
 # repatch batch.py
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" batch.py
+popd
+# use gpu relaxation patch
+pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold
+sed -i -e "s#CPU#CUDA#g" relax/amber_minimize.py
 popd
 popd
