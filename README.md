@@ -47,7 +47,8 @@ To run the AlphaFold2-multimer, type <pre>colabfold_batch --amber --templates --
 The inputfile can be in csv format like this<pre>id,sequence
 Complex,\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\></pre>
 replace \<SEQUENCE\> with your sequence
-For more details, see `colabfold_batch --help`.
+
+    For more details, see `colabfold_batch --help`.
 
 #### For WSL2 (in windows)
 
