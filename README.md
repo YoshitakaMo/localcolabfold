@@ -34,30 +34,19 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 </pre>If the version is 4.8.5 or older (e.g. CentOS 7), install a new one and add `PATH` to it.
 1. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
 
-Keep the network unblocked. And **check the log** output to see if there are any errors.
+    Keep the network unblocked. And **check the log** output to see if there are any errors.
 
-If you find errors in the output log, the easiest way is to check the network and delete the colabfold_batch directory, then re-run the installation script.
+    If you find errors in the output log, the easiest way is to check the network and delete the colabfold_batch directory, then re-run the installation script.
 
 2. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
-
 It is recommended to add this export command to ~/.bashrc and restart bash (~/.bashrc will be executed every time bash is started)
 
 3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`. 
-
 Just use cpu to run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ --cpu</pre>
-
 To run the AlphaFold2-multimer, type <pre>colabfold_batch --amber --templates --num-recycle 3 --model-type AlphaFold2-multimer inputfile outputdir/</pre>
-
-The inputfile can be in csv format like this
-
-````
-id,sequence
-Complex,<SEQUENCE>:<SEQUENCE>:<SEQUENCE>:<SEQUENCE>
-````
-
+The inputfile can be in csv format like this<pre>id,sequence
+Complex,\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\></pre>
 replace \<SEQUENCE\> with your sequence
-
-
 For more details, see `colabfold_batch --help`.
 
 #### For WSL2 (in windows)
