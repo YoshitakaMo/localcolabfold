@@ -2,6 +2,13 @@
 
 [ColabFold](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb) on your local PC (or macOS). See also [ColabFold repository](https://github.com/sokrypton/ColabFold).
 
+## Advantages of LocalColabFold
+
+- **Structure inference and relaxation will be accelerated if your PC has Nvidia GPU and CUDA drivers.**
+- **No Time out (90 minutes and 12 hours)**
+- **No GPU limitations**
+- **NOT necessary to prepare the large database required for native AlphaFold2**.
+
 ## New Updates
 
 - 09Dec2021, version 1.2.0-beta released. easy-to-use updater scripts added. See [How to update](#how-to-update).
@@ -12,7 +19,7 @@
 ### For Linux
 
 1. Make sure `curl`, `git`, and `wget` commands are already installed on your PC. If not present, you need install them at first. For Ubuntu, type `sudo apt -y install curl git wget`.
-2. Make sure your Cuda compiler driver is **11.1 or later**:<pre>$ nvcc --version
+2. Make sure your Cuda compiler driver is **11.1 or later** (If you don't have a GPU or don't plan to use a GPU, you can skip this section) :<pre>$ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2020 NVIDIA Corporation
 Built on Mon_Oct_12_20:09:46_PDT_2020
@@ -26,8 +33,36 @@ This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 </pre>If the version is 4.8.5 or older (e.g. CentOS 7), install a new one and add `PATH` to it.
 1. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
+
+    Keep the network unblocked. And **check the log** output to see if there are any errors.
+
+    If you find errors in the output log, the easiest way is to check the network and delete the colabfold_batch directory, then re-run the installation script.
+
 2. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
-3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`. For more details, see `colabfold_batch --help`.
+It is recommended to add this export command to \~/.bashrc and restart bash (\~/.bashrc will be executed every time bash is started)
+
+3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`. 
+Just use cpu to run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ --cpu</pre>
+To run the AlphaFold2-multimer, type <pre>colabfold_batch --amber --templates --num-recycle 3 --model-type AlphaFold2-multimer inputfile outputdir/</pre>
+The inputfile can be in csv format like this<pre>id,sequence
+Complex,\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\></pre>
+replace \<SEQUENCE\> with your sequence
+
+    For more details, see `colabfold_batch --help`.
+
+#### For WSL2 (in windows)
+
+Before running the prediction:
+
+```
+export TF_FORCE_UNIFIED_MEMORY="1"
+export XLA_PYTHON_CLIENT_MEM_FRACTION="4.0"
+export XLA_PYTHON_CLIENT_ALLOCATOR="platform"
+export TF_FORCE_GPU_ALLOW_GROWTH="true"
+```
+
+It is recommended to add these export commands to \~/.bashrc and restart bash (\~/.bashrc will be executed every time bash is started)
+
 
 ### For macOS
 
@@ -90,13 +125,6 @@ $ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_
 $ chmod +x update_${OS}.sh
 $ ./update_${OS}.sh /path/to/your/colabfold_batch
 ```
-
-## Advantages of LocalColabFold
-
-- **Structure inference and relaxation will be accelerated if your PC has Nvidia GPU and CUDA drivers.**
-- **No Time out (90 minutes and 12 hours)**
-- **No GPU limitations**
-- **NOT necessary to prepare the large database required for native AlphaFold2**.
 
 ## FAQ
 - What else do I need to do before installation? Do I need sudo privileges?
