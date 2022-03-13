@@ -49,8 +49,12 @@ chmod +x colabfold_batch
 # hack to share the parameter files in a workstation.
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" batch.py
+# Use gpu-accelerated relaxation.
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/relax
 sed -i -e 's/CPU/CUDA/g' amber_minimize.py
+# Use 'Agg' for non-GUI backend
+cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
+sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" plot.py
 
 echo "-----------------------------------------"
 echo "Installation of colabfold_batch finished."

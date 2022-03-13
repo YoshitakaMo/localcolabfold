@@ -41,7 +41,7 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 2. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
 It is recommended to add this export command to \~/.bashrc and restart bash (\~/.bashrc will be executed every time bash is started)
 
-3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`. 
+3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`.
 Just use cpu to run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ --cpu</pre>
 To run the AlphaFold2-multimer, type <pre>colabfold_batch --amber --templates --num-recycle 3 --model-type AlphaFold2-multimer inputfile outputdir/</pre>
 The inputfile can be in csv format like this<pre>id,sequence
@@ -61,7 +61,7 @@ export XLA_PYTHON_CLIENT_ALLOCATOR="platform"
 export TF_FORCE_GPU_ALLOW_GROWTH="true"
 ```
 
-It is recommended to add these export commands to \~/.bashrc and restart bash (\~/.bashrc will be executed every time bash is started)
+It is recommended to add these export commands to `~/.bashrc` and restart bash (`~/.bashrc` will be executed every time bash is started)
 
 
 ### For macOS
@@ -164,7 +164,7 @@ $ ./update_${OS}.sh /path/to/your/colabfold_batch
   Nature (2021) doi: [10.1038/s41586-021-03819-2](https://doi.org/10.1038/s41586-021-03819-2)
 - If you’re using **AlphaFold-multimer**, please also cite: <br />
   Evans et al. "Protein complex prediction with AlphaFold-Multimer." <br />
-  biorxiv (2021) doi: [10.1101/2021.10.04.463034v1](https://www.biorxiv.org/content/10.1101/2021.10.04.463034v1)
+  biorxiv (2021) doi: [10.1101/2021.10.04.463034v2](https://www.biorxiv.org/content/10.1101/2021.10.04.463034v2)
 - If you are using **RoseTTAFold**, please also cite: <br />
   Minkyung et al. "Accurate prediction of protein structures and interactions using a three-track neural network." <br />
   Science (2021) doi: [10.1126/science.abj8754](https://doi.org/10.1126/science.abj8754)

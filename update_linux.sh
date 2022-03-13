@@ -26,4 +26,8 @@ popd
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold
 sed -i -e "s#CPU#CUDA#g" relax/amber_minimize.py
 popd
+# use 'agg' for non-GUI backend
+pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
+sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" plot.py
+popd
 popd
