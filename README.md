@@ -90,10 +90,10 @@ Please use the correct installer for your Mac.
 **Note: This installer is experimental because most of the dependent packages are not fully tested on Apple Silicon Mac.**
 
 1. Install [Homebrew](https://brew.sh/index_ja) if not present:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-1. Install several commands using Homebrew (currently kalign can't be installed, but no effects):<pre>$ brew install wget cmake gnu-sed<br>$ brew install brewsci/bio/hh-suite</pre>
-1. Install `miniforge` command using Homebrew:<pre>$ brew install --cask miniforge</pre>
-1. Download `install_colabbatch_M1mac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_M1mac.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation. **You can ignore the installation errors that appear along the way**.
-2. The rest procedure is the same as "For Linux".
+2. Install several commands using Homebrew (Now kalign 3.3.2 is available!):<pre>$ brew install wget cmake gnu-sed<br>$ brew install brewsci/bio/hh-suite<br>$ brew install brewsci/bio/kalign</pre>
+3. Install `miniforge` command using Homebrew:<pre>$ brew install --cask miniforge</pre>
+4. Download `install_colabbatch_M1mac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_M1mac.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation. **You can ignore the installation errors that appear along the way**.
+5. The rest procedure is the same as "For Linux".
 
 A Warning message appeared when you run the prediction:
 ```

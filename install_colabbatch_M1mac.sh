@@ -4,7 +4,7 @@
 type wget || { echo "wget command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 type gsed || { echo "gnu-sed command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 type hhsearch || { echo "hhsearch command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
-# type kalign || { echo "kalign command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
+type kalign || { echo "kalign command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 
 # check whether miniforge is present
 test -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" || { echo "Install miniforge by using Homebrew before installation. \n 'brew install --cask miniforge'" ; exit 1 ; }
