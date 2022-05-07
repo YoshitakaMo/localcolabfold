@@ -52,7 +52,7 @@ colabfold-conda/bin/python3.8 -m pip install tensorflow-macos
 colabfold-conda/bin/python3.8 -m pip install git+https://github.com/deepmind/tree.git
 colabfold-conda/bin/python3.8 -m pip install git+https://github.com/google/ml_collections.git
 colabfold-conda/bin/python3.8 -m pip install dm-haiku==0.0.4 appdirs pandas absl-py==0.13.0 docker
-colabfold-conda/bin/python3.8 -m pip install git+https://github.com/konstin/alphafold.git@a603b950fce1e5984d03328f48ad96d93acd3459 --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install alphafold-colabfold --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install jax==0.2.25 --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install jaxlib==0.1.74 -f "https://dfm.io/custom-wheels/jaxlib/index.html" --no-deps --no-color

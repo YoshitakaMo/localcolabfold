@@ -41,6 +41,8 @@ COLABFOLDDIR=$(cd $(dirname colabfold_batch); pwd)
 conda activate $COLABFOLDDIR/colabfold-conda
 # reinstall colabfold
 python3.8 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y --no-color
+python3.8 -m pip uninstall alphafold-colabfold -y --no-color
+python3.8 -m pip install alphafold-colabfold --no-deps --no-color
 python3.8 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
 # repatch batch.py
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.8/site-packages/colabfold
