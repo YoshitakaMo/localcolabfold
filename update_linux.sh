@@ -15,16 +15,13 @@ COLABFOLDDIR=$(cd $(dirname colabfold_batch); pwd)
 . ${COLABFOLDDIR}/conda/etc/profile.d/conda.sh
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
 conda activate $COLABFOLDDIR/colabfold-conda
-# reinstall colabfold
+# reinstall colabfold and alphafold-colabfold
 python3.7 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y
+python3.7 -m pip uninstall alphafold-colabfold -y
 python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
 # repatch batch.py
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" batch.py
-popd
-# use gpu relaxation patch
-pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold
-sed -i -e "s#CPU#CUDA#g" relax/amber_minimize.py
 popd
 # use 'agg' for non-GUI backend
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
