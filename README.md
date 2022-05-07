@@ -2,6 +2,10 @@
 
 [ColabFold](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb) on your local PC (or macOS). See also [ColabFold repository](https://github.com/sokrypton/ColabFold).
 
+## What is LocalColabFold?
+
+LocalColabFold is an installer script designed to make ColabFold functionality available on local users' machines. It supports wide range of operating systems, such as Windows 10 or later (using Windows Subsystem for Linux 2), macOS, and Linux.
+
 ## Advantages of LocalColabFold
 
 - **Structure inference and relaxation will be accelerated if your PC has Nvidia GPU and CUDA drivers.**
@@ -11,6 +15,8 @@
 
 ## New Updates
 
+- 07May2022, **Updated `update_linux.sh`.** See also [How to update](#how-to-update). Please use a new option `--use-gpu-relax` if GPU relaxation is required (recommended).
+- 12Apr2022, version 1.3.0 released. See [Release v1.3.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.3.0)
 - 09Dec2021, version 1.2.0-beta released. easy-to-use updater scripts added. See [How to update](#how-to-update).
 - 04Dec2021, LocalColabFold is now compatible with the latest [pip installable ColabFold](https://github.com/sokrypton/ColabFold#running-locally). In this repository, I will provide a script to install ColabFold with some external parameter files to perform relaxation with AMBER. The weight parameters of AlphaFold and AlphaFold-Multimer will be downloaded automatically at your first run.
 
@@ -41,9 +47,9 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 2. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
 It is recommended to add this export command to \~/.bashrc and restart bash (\~/.bashrc will be executed every time bash is started)
 
-3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>The result files will be created in the `outputdir`.
-Just use cpu to run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ --cpu</pre>
-To run the AlphaFold2-multimer, type <pre>colabfold_batch --amber --templates --num-recycle 3 --model-type AlphaFold2-multimer inputfile outputdir/</pre>
+3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax inputfile outputdir/ </pre>The result files will be created in the `outputdir`.
+Just use cpu to run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax inputfile outputdir/ --cpu</pre>
+To run the AlphaFold2-multimer, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax --model-type AlphaFold2-multimer inputfile outputdir/</pre>
 The inputfile can be in csv format like this<pre>id,sequence
 Complex,\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\></pre>
 replace \<SEQUENCE\> with your sequence
@@ -62,7 +68,6 @@ export TF_FORCE_GPU_ALLOW_GROWTH="true"
 ```
 
 It is recommended to add these export commands to `~/.bashrc` and restart bash (`~/.bashrc` will be executed every time bash is started)
-
 
 ### For macOS
 
@@ -106,24 +111,18 @@ This message is due to Apple Silicon, but I think we can ignore it.
 
 ## How to update
 
-Because [ColabFold](https://github.com/sokrypton/ColabFold) is still a work in progress, the localcolabfold should be also updated frequently to use the latest features. I will provide an easy-to-use update script.
+Since [ColabFold](https://github.com/sokrypton/ColabFold) is still a work in progress, your localcolabfold should be also updated frequently to use the latest features. An easy-to-use update script is provided for this purpose.
 
 To update your localcolabfold, simply type in the `colabfold_batch` directory:
 
 ```bash
-$ ./update_linux.sh . # if Linux
-$ ./update_intelmac.sh . # if Intel Mac
-$ ./update_M1mac.sh . # if M1 Mac
-```
-
-Or, if you have already installed localcolabfold before, please download the updater from this repository and execute it.
-
-```bash
 # set your OS. Select one of the following variables {linux,intelmac,M1mac}
 $ OS=linux # if Linux
-$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_${OS}.sh
+# get the latest updater
+$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_${OS}.sh -O update_${OS}.sh
 $ chmod +x update_${OS}.sh
-$ ./update_${OS}.sh /path/to/your/colabfold_batch
+# execute it.
+$ ./update_${OS}.sh .
 ```
 
 ## FAQ
@@ -158,7 +157,7 @@ $ ./update_${OS}.sh /path/to/your/colabfold_batch
 ## How do I reference this work?
 
 - Mirdita M, Schütze K, Moriwaki Y, Heo L, Ovchinnikov S and Steinegger M. ColabFold - Making protein folding accessible to all. <br />
-  bioRxiv (2021) doi: [10.1101/2021.08.15.456425](https://www.biorxiv.org/content/10.1101/2021.08.15.456425v2)
+  bioRxiv (2021) doi: [10.1101/2021.08.15.456425](https://www.biorxiv.org/content/10.1101/2021.08.15.456425v3)
 - If you’re using **AlphaFold**, please also cite: <br />
   Jumper et al. "Highly accurate protein structure prediction with AlphaFold." <br />
   Nature (2021) doi: [10.1038/s41586-021-03819-2](https://doi.org/10.1038/s41586-021-03819-2)
