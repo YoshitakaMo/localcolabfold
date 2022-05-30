@@ -136,15 +136,15 @@ $ ./update_${OS}.sh /path/to/your/colabfold_batch
 ## How do I reference this work?
 
 - Mirdita M, Schütze K, Moriwaki Y, Heo L, Ovchinnikov S and Steinegger M. ColabFold - Making protein folding accessible to all. <br />
-  bioRxiv (2021) doi: [10.1101/2021.08.15.456425](https://www.biorxiv.org/content/10.1101/2021.08.15.456425v2)
+  *Nature Methods* (2022) doi: [10.1038/s41592-022-01488-1](https://www.nature.com/articles/s41592-022-01488-1)
 - If you’re using **AlphaFold**, please also cite: <br />
   Jumper et al. "Highly accurate protein structure prediction with AlphaFold." <br />
-  Nature (2021) doi: [10.1038/s41586-021-03819-2](https://doi.org/10.1038/s41586-021-03819-2)
+  *Nature* (2021) doi: [10.1038/s41586-021-03819-2](https://doi.org/10.1038/s41586-021-03819-2)
 - If you’re using **AlphaFold-multimer**, please also cite: <br />
   Evans et al. "Protein complex prediction with AlphaFold-Multimer." <br />
-  biorxiv (2021) doi: [10.1101/2021.10.04.463034v1](https://www.biorxiv.org/content/10.1101/2021.10.04.463034v1)
+  *BioRxiv* (2021) doi: [10.1101/2021.10.04.463034v1](https://www.biorxiv.org/content/10.1101/2021.10.04.463034v1)
 - If you are using **RoseTTAFold**, please also cite: <br />
   Minkyung et al. "Accurate prediction of protein structures and interactions using a three-track neural network." <br />
-  Science (2021) doi: [10.1126/science.abj8754](https://doi.org/10.1126/science.abj8754)
+  *Science* (2021) doi: [10.1126/science.abj8754](https://doi.org/10.1126/science.abj8754)
 
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.5123296.svg)](https://doi.org/10.5281/zenodo.5123296)
