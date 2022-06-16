@@ -15,6 +15,7 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 
 ## New Updates
 
+- 16Jun2022, version 1.4.0 released. See [Release v1.4.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.4.0)
 - 07May2022, **Updated `update_linux.sh`.** See also [How to update](#how-to-update). Please use a new option `--use-gpu-relax` if GPU relaxation is required (recommended).
 - 12Apr2022, version 1.3.0 released. See [Release v1.3.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.3.0)
 - 09Dec2021, version 1.2.0-beta released. easy-to-use updater scripts added. See [How to update](#how-to-update).
