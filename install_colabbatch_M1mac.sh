@@ -48,14 +48,17 @@ rm openmm.patch
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_M1mac.sh --no-check-certificate
 chmod +x update_M1mac.sh
 # install ColabFold and Jaxlib
-colabfold-conda/bin/python3.8 -m pip install https://files.pythonhosted.org/packages/bd/57/88cea9e14dacaea82ca86fac2bf6ecb8b7fd99622d776e4131786ce5b65e/tensorflow_macos-2.7.0-cp38-cp38-macosx_11_0_arm64.whl
+colabfold-conda/bin/python3.8 -m pip install tensorflow-macos
 colabfold-conda/bin/python3.8 -m pip install git+https://github.com/deepmind/tree.git
 colabfold-conda/bin/python3.8 -m pip install git+https://github.com/google/ml_collections.git
-colabfold-conda/bin/python3.8 -m pip install dm-haiku appdirs pandas absl-py docker
+colabfold-conda/bin/python3.8 -m pip install dm-haiku==0.0.4 appdirs pandas absl-py==0.13.0 docker
 colabfold-conda/bin/python3.8 -m pip install alphafold-colabfold --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
-colabfold-conda/bin/python3.8 -m pip install jaxlib==0.3.10 --no-deps --no-color
-colabfold-conda/bin/python3.8 -m pip install jax==0.3.13 chex scipy toolz --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install jax==0.2.25 --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install jaxlib==0.1.74 -f "https://dfm.io/custom-wheels/jaxlib/index.html" --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install numpy==1.21.1 --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install chex --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install scipy --no-deps --no-color
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin

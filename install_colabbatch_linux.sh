@@ -29,8 +29,9 @@ chmod +x update_linux.sh
 conda install -c conda-forge -c bioconda kalign3=3.2.2 hhsuite=3.3.0 -y
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.10+cuda11.cudnn82-cp37-none-manylinux2014_x86_64.whl
-colabfold-conda/bin/python3.7 -m pip install jax==0.3.13
+colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda111/jaxlib-0.1.72+cuda111-cp37-none-manylinux2010_x86_64.whl
+colabfold-conda/bin/python3.7 -m pip install jax==0.2.25
+
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
 cd $COLABFOLDDIR/bin
@@ -48,6 +49,9 @@ chmod +x colabfold_batch
 # hack to share the parameter files in a workstation.
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" batch.py
+# Use gpu-accelerated relaxation.
+cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/relax
+sed -i -e 's/CPU/CUDA/g' amber_minimize.py
 # Use 'Agg' for non-GUI backend
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" plot.py
