@@ -13,8 +13,28 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 - **No GPU limitations**
 - **NOT necessary to prepare the large database required for native AlphaFold2**.
 
+## Note (Jun 18, 2022)
+
+ColabFold now depends on [JAX](https://github.com/google/jax) == 0.3.13 and jaxlib > 0.3.7, so you may encounter this error message after updating your localcolabfold using `./update_linux.sh`:
+
+```
+  File "/path/to/colabfold_batch/colabfold-conda/lib/python3.7/site-packages/jax/_src/lib/__init__.py", line 91, in check_jaxlib_version
+    raise RuntimeError(msg)
+RuntimeError: jaxlib is version 0.1.72, but this version of jax requires version >= 0.3.7.
+```
+
+To fix this issue, please upgrade your jax and jaxlib:
+
+```bash
+# '/path/to/your/colabfold_batch' should be substituted to your path, e.g. '/home/moriwaki/Desktop/colabfold_batch'
+# install GPU-supported jaxlib
+/path/to/your/colabfold_batch/colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.10+cuda11.cudnn82-cp37-none-manylinux2014_x86_64.whl
+/path/to/your/colabfold_batch/colabfold-conda/bin/python3.7 -m pip install jax==0.3.13
+```
+
 ## New Updates
 
+- 16Jun2022, version 1.4.0 released. See [Release v1.4.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.4.0)
 - 07May2022, **Updated `update_linux.sh`.** See also [How to update](#how-to-update). Please use a new option `--use-gpu-relax` if GPU relaxation is required (recommended).
 - 12Apr2022, version 1.3.0 released. See [Release v1.3.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.3.0)
 - 09Dec2021, version 1.2.0-beta released. easy-to-use updater scripts added. See [How to update](#how-to-update).
