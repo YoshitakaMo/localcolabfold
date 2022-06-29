@@ -19,6 +19,9 @@ conda activate $COLABFOLDDIR/colabfold-conda
 python3.7 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y
 python3.7 -m pip uninstall alphafold-colabfold -y
 python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
+#install jax
+colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.10+cuda11.cudnn82-cp37-none-manylinux2014_x86_64.whl
+colabfold-conda/bin/python3.7 -m pip install jax==0.3.13
 # repatch batch.py
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" batch.py
