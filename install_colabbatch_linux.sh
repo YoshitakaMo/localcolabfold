@@ -8,7 +8,6 @@ COLABFOLDDIR="${CURRENTPATH}/colabfold_batch"
 
 mkdir -p ${COLABFOLDDIR}
 cd ${COLABFOLDDIR}
-wget https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt --no-check-certificate
 wget -q -P . https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash ./Miniconda3-latest-Linux-x86_64.sh -b -p ${COLABFOLDDIR}/conda
 rm Miniconda3-latest-Linux-x86_64.sh
@@ -18,10 +17,6 @@ conda create -p $COLABFOLDDIR/colabfold-conda python=3.7 -y
 conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y
 conda install -c conda-forge python=3.7 cudnn==8.2.1.32 cudatoolkit==11.1.1 openmm==7.5.1 pdbfixer -y
-# patch to openmm
-wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openmm.patch --no-check-certificate
-(cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages; patch -s -p0 < ${COLABFOLDDIR}/openmm.patch)
-rm openmm.patch
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_linux.sh --no-check-certificate
 chmod +x update_linux.sh
@@ -45,9 +40,6 @@ export PATH="\${COLABFOLDDIR}/colabfold-conda/bin:\$PATH"
 EOF
 chmod +x colabfold_batch
 
-# hack to share the parameter files in a workstation.
-cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
-sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" batch.py
 # Use 'Agg' for non-GUI backend
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" plot.py

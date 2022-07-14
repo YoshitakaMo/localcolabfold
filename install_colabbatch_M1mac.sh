@@ -32,7 +32,6 @@ COLABFOLDDIR="${CURRENTPATH}/colabfold_batch"
 
 mkdir -p ${COLABFOLDDIR}
 cd ${COLABFOLDDIR}
-wget https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt --no-check-certificate
 . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
 conda create -p $COLABFOLDDIR/colabfold-conda python=3.8 -y
 conda activate $COLABFOLDDIR/colabfold-conda
@@ -40,10 +39,6 @@ conda update -n base conda -y
 
 conda install -y -c conda-forge python=3.8 openmm==7.5.1 pdbfixer jupyter matplotlib py3Dmol tqdm biopython==1.79 immutabledict==2.0.0
 conda install -y -c apple tensorflow-deps
-# patch to openmm
-wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openmm.patch --no-check-certificate
-(cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.8/site-packages; patch -s -p0 < ${COLABFOLDDIR}/openmm.patch)
-rm openmm.patch
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_M1mac.sh --no-check-certificate
 chmod +x update_M1mac.sh
@@ -67,9 +62,6 @@ export PATH="\${COLABFOLDDIR}/colabfold-conda/bin:\$PATH"
 \$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch --cpu \$@
 EOF
 chmod +x colabfold_batch
-
-# hack to share the parameter files in a workstation.
-gsed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" ${COLABFOLDDIR}/colabfold-conda/lib/python3.8/site-packages/colabfold/batch.py
 
 echo "-----------------------------------------"
 echo "Installation of colabfold_batch finished."
