@@ -11,8 +11,8 @@ assignees: ''
 Describe your question here.
 
 **Computational environment**
- - OS: [e.g. Ubuntu 20.04, Windows10 & WSL2, macOS...]
- - CUDA version if Linux (Use `nvidia-smi` to check)
+ - OS: [e.g. Ubuntu 22.04, Windows10 & WSL2, macOS...]
+ - CUDA version if Linux (Show the output of `/usr/local/cuda/bin/nvcc --version`.)
 
 **To Reproduce**
 Steps to reproduce the behavior:
