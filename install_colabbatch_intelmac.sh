@@ -43,7 +43,7 @@ wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/upda
 chmod +x update_intelmac.sh
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/mac/jaxlib-0.3.10-cp37-none-macosx_10_9_x86_64.whl
+colabfold-conda/bin/python3.7 -m pip install jaxlib==0.3.10
 colabfold-conda/bin/python3.7 -m pip install jax==0.3.13
 
 # bin directory to run
