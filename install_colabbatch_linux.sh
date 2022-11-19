@@ -26,6 +26,8 @@ conda install -c conda-forge -c bioconda kalign3=3.2.2 hhsuite=3.3.0 -y
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
 colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.10+cuda11.cudnn82-cp37-none-manylinux2014_x86_64.whl
 colabfold-conda/bin/python3.7 -m pip install jax==0.3.13
+colabfold-conda/bin/python3.7 -m pip install biopython==1.79
+
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
 cd $COLABFOLDDIR/bin

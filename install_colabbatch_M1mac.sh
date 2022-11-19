@@ -51,6 +51,7 @@ colabfold-conda/bin/python3.8 -m pip install alphafold-colabfold --no-deps --no-
 colabfold-conda/bin/python3.8 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install jaxlib==0.3.10 --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install jax==0.3.13 chex scipy toolz --no-deps --no-color
+colabfold-conda/bin/python3.7 -m pip install biopython==1.79 --no-deps --no-color
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin

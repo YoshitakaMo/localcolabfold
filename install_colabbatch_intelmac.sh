@@ -45,6 +45,7 @@ chmod +x update_intelmac.sh
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
 colabfold-conda/bin/python3.7 -m pip install jaxlib==0.3.10
 colabfold-conda/bin/python3.7 -m pip install jax==0.3.13
+colabfold-conda/bin/python3.7 -m pip install biopython==1.79
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
