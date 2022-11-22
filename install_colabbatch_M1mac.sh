@@ -49,9 +49,12 @@ colabfold-conda/bin/python3.8 -m pip install git+https://github.com/google/ml_co
 colabfold-conda/bin/python3.8 -m pip install dm-haiku appdirs pandas absl-py docker
 colabfold-conda/bin/python3.8 -m pip install alphafold-colabfold --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
-colabfold-conda/bin/python3.8 -m pip install jaxlib==0.3.10 --no-deps --no-color
-colabfold-conda/bin/python3.8 -m pip install jax==0.3.13 chex scipy toolz --no-deps --no-color
-colabfold-conda/bin/python3.7 -m pip install biopython==1.79 --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install jaxlib==0.3.25 --no-deps --no-color
+colabfold-conda/bin/python3.8 -m pip install jax==0.3.25 chex scipy toolz --no-deps --no-color
+
+# fix warnings (ad hoc)
+gsed -i -e "s/jax.tree_flatten/jax.tree_util.tree_flatten/g" colabfold-conda/lib/python3.8/site-packages/alphafold/model/mapping.py
+gsed -i -e "s/jax.tree_unflatten/jax.tree_util.tree_unflatten/g" colabfold-conda/lib/python3.8/site-packages/alphafold/model/mapping.py
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
