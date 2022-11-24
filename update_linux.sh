@@ -19,10 +19,10 @@ conda activate $COLABFOLDDIR/colabfold-conda
 python3.7 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y
 python3.7 -m pip uninstall alphafold-colabfold -y
 python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-# repatch batch.py
-pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
-sed -i -e "s#props_path = \"stereo_chemical_props.txt\"#props_path = \"${COLABFOLDDIR}/stereo_chemical_props.txt\"#" batch.py
-popd
+
+# fix jax.tree_(un)flatten warnings (ad hoc)
+sed -i -e "s/jax.tree_flatten/jax.tree_util.tree_flatten/g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/model/mapping.py
+sed -i -e "s/jax.tree_unflatten/jax.tree_util.tree_unflatten/g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/model/mapping.py
 # use 'agg' for non-GUI backend
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/colabfold
 sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" plot.py

@@ -13,14 +13,15 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 - **No GPU limitations**
 - **NOT necessary to prepare the large database required for native AlphaFold2**.
 
-## Note (Jun 18, 2022)
+## Note (Nov 24, 2022)
 
-ColabFold now depends on [JAX](https://github.com/google/jax) == 0.3.13 and jaxlib > 0.3.7, so you may encounter this error message after updating your localcolabfold using `./update_linux.sh`:
+ColabFold now depends on [JAX](https://github.com/google/jax) == 0.3.25 and jaxlib == 0.3.25, so you may encounter this error message after updating your localcolabfold using `./update_linux.sh`:
 
 ```
-  File "/path/to/colabfold_batch/colabfold-conda/lib/python3.7/site-packages/jax/_src/lib/__init__.py", line 91, in check_jaxlib_version
-    raise RuntimeError(msg)
-RuntimeError: jaxlib is version 0.1.72, but this version of jax requires version >= 0.3.7.
+jax._src.errors.UnexpectedTracerError: An UnexpectedTracerError was raised while inside a Haiku transformed function (see error above).
+Hint: are you using a JAX transform or JAX control-flow function (jax.vmap/jax.scan/...) inside a Haiku transform? You might want to use the Haiku version of the transform instead (hk.vmap/hk.scan/...).
+See https://dm-haiku.readthedocs.io/en/latest/notebooks/transforms.html on why you can't use JAX transforms inside a Haiku module.
+See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.UnexpectedTracerError
 ```
 
 To fix this issue, please upgrade your jax and jaxlib:
@@ -28,9 +29,17 @@ To fix this issue, please upgrade your jax and jaxlib:
 ```bash
 # '/path/to/your/colabfold_batch' should be substituted to your path, e.g. '/home/moriwaki/Desktop/colabfold_batch'
 # install GPU-supported jaxlib
-/path/to/your/colabfold_batch/colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.10+cuda11.cudnn82-cp37-none-manylinux2014_x86_64.whl
-/path/to/your/colabfold_batch/colabfold-conda/bin/python3.7 -m pip install jax==0.3.13
+COLABFOLDDIR="/path/to/your/colabfold_batch"
+${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y
+${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip uninstall alphafold-colabfold -y
+${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
+${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.25+cuda11.cudnn82-cp37-cp37m-manylinux2014_x86_64.whl
+${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip install jax==0.3.25 biopython==1.79
+# fix jax.tree_(un)flatten warnings (ad hoc)
+sed -i -e "s/jax.tree_flatten/jax.tree_util.tree_flatten/g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/model/mapping.py
+sed -i -e "s/jax.tree_unflatten/jax.tree_util.tree_unflatten/g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/model/mapping.py
 ```
+
 
 ## New Updates
 
@@ -70,11 +79,8 @@ It is recommended to add this export command to \~/.bashrc and restart bash (\~/
 3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax inputfile outputdir/ </pre>The result files will be created in the `outputdir`.
 Just use cpu to run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax inputfile outputdir/ --cpu</pre>
 To run the AlphaFold2-multimer, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax --model-type AlphaFold2-multimer inputfile outputdir/</pre>
-The inputfile can be in csv format like this<pre>id,sequence
-Complex,\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\>:\<SEQUENCE\></pre>
-replace \<SEQUENCE\> with your sequence
 
-    For more details, see `colabfold_batch --help`.
+For more details, see `colabfold_batch --help`.
 
 #### For WSL2 (in windows)
 
@@ -128,6 +134,65 @@ It has not been properly tested on this platform and we cannot guarantee it prov
 ```
 
 This message is due to Apple Silicon, but I think we can ignore it.
+
+### Input Examples
+
+ColabFold can accept multiple file formats or directory.
+
+```
+positional arguments:
+  input                 Can be one of the following: Directory with fasta/a3m
+                        files, a csv/tsv file, a fasta file or an a3m file
+  results               Directory to write the results to
+```
+
+#### fasta format
+
+It is recommended that the header line starting with `>` be short since the description will be the prefix of the output file. It is acceptable to insert line breaks in the amino acid sequence.
+
+```:P61823.fasta
+>sp|P61823
+MALKSLVLLSLLVLVLLLVRVQPSLGKETAAAKFERQHMDSSTSAASSSNYCNQMMKSRN
+LTKDRCKPVNTFVHESLADVQAVCSQKNVACKNGQTNCYQSYSTMSITDCRETGSSKYPN
+CAYKTTQANKHIIVACEGNPYVPVHFDASV
+```
+
+**For prediction of multimers, insert `:` between the protein sequences.**
+
+```
+>1BJP_homohexamer
+PIAQIHILEGRSDEQKETLIREVSEAISRSLDAPLTSVRVIITEMAKGHFGIGGELASKVRR:
+PIAQIHILEGRSDEQKETLIREVSEAISRSLDAPLTSVRVIITEMAKGHFGIGGELASKVRR:
+PIAQIHILEGRSDEQKETLIREVSEAISRSLDAPLTSVRVIITEMAKGHFGIGGELASKVRR:
+PIAQIHILEGRSDEQKETLIREVSEAISRSLDAPLTSVRVIITEMAKGHFGIGGELASKVRR:
+PIAQIHILEGRSDEQKETLIREVSEAISRSLDAPLTSVRVIITEMAKGHFGIGGELASKVRR:
+PIAQIHILEGRSDEQKETLIREVSEAISRSLDAPLTSVRVIITEMAKGHFGIGGELASKVRR
+```
+
+```
+>3KUD_RasRaf_complex
+MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAGQEEYSAMRDQ
+YMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDLAARTVESRQAQDLARSYGIP
+YIETSAKTRQGVEDAFYTLVREIRQH:
+PSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLHEHKGKKARLDWNTDAAS
+LIGEELQVDFL
+```
+
+Multiple `>` header lines with sequences in a FASTA format file yield multiple predictions at once in the specified output directory.
+
+#### csv format
+
+In a csv format, `id` and `sequence` should be separated by `,`.
+
+```:test.csv
+id,sequence
+5AWL_1,YYDPETGTWY
+3G5O_A_3G5O_B,MRILPISTIKGKLNEFVDAVSSTQDQITITKNGAPAAVLVGADEWESLQETLYWLAQPGIRESIAEADADIASGRTYGEDEIRAEFGVPRRPH:MPYTVRFTTTARRDLHKLPPRILAAVVEFAFGDLSREPLRVGKPLRRELAGTFSARRGTYRLLYRIDDEHTTVVILRVDHRADIYRR
+```
+
+#### a3m format
+
+You can input your a3m format MSA file. For multimer predictions, the a3m file should be compatible with colabfold format.
 
 ## How to update
 
@@ -184,8 +249,3 @@ $ ./update_${OS}.sh .
 - If you’re using **AlphaFold-multimer**, please also cite: <br />
   Evans et al. "Protein complex prediction with AlphaFold-Multimer." <br />
   *BioRxiv* (2021) doi: [10.1101/2021.10.04.463034v1](https://www.biorxiv.org/content/10.1101/2021.10.04.463034v1)
-- If you are using **RoseTTAFold**, please also cite: <br />
-  Minkyung et al. "Accurate prediction of protein structures and interactions using a three-track neural network." <br />
-  *Science* (2021) doi: [10.1126/science.abj8754](https://doi.org/10.1126/science.abj8754)
-
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.5123296.svg)](https://doi.org/10.5281/zenodo.5123296)

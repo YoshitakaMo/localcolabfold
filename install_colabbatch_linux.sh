@@ -24,9 +24,12 @@ chmod +x update_linux.sh
 conda install -c conda-forge -c bioconda kalign3=3.2.2 hhsuite=3.3.0 -y
 # install ColabFold and Jaxlib
 colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.10+cuda11.cudnn82-cp37-none-manylinux2014_x86_64.whl
-colabfold-conda/bin/python3.7 -m pip install jax==0.3.13
-colabfold-conda/bin/python3.7 -m pip install biopython==1.79
+colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.25+cuda11.cudnn82-cp37-cp37m-manylinux2014_x86_64.whl
+colabfold-conda/bin/python3.7 -m pip install jax==0.3.25 biopython==1.79
+
+# fix jax.tree_(un)flatten warnings (ad hoc)
+sed -i -e "s/jax.tree_flatten/jax.tree_util.tree_flatten/g" colabfold-conda/lib/python3.7/site-packages/alphafold/model/mapping.py
+sed -i -e "s/jax.tree_unflatten/jax.tree_util.tree_unflatten/g" colabfold-conda/lib/python3.7/site-packages/alphafold/model/mapping.py
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
