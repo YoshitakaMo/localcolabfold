@@ -13,36 +13,13 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 - **No GPU limitations**
 - **NOT necessary to prepare the large database required for native AlphaFold2**.
 
-## Note (Nov 24, 2022)
+## Note (Feb 5, 2023)
 
-ColabFold now depends on [JAX](https://github.com/google/jax) == 0.3.25 and jaxlib == 0.3.25, so you may encounter this error message after updating your localcolabfold using `./update_linux.sh`:
-
-```
-jax._src.errors.UnexpectedTracerError: An UnexpectedTracerError was raised while inside a Haiku transformed function (see error above).
-Hint: are you using a JAX transform or JAX control-flow function (jax.vmap/jax.scan/...) inside a Haiku transform? You might want to use the Haiku version of the transform instead (hk.vmap/hk.scan/...).
-See https://dm-haiku.readthedocs.io/en/latest/notebooks/transforms.html on why you can't use JAX transforms inside a Haiku module.
-See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.UnexpectedTracerError
-```
-
-To fix this issue, please upgrade your jax and jaxlib:
-
-```bash
-# '/path/to/your/colabfold_batch' should be substituted to your path, e.g. '/home/moriwaki/Desktop/colabfold_batch'
-# install GPU-supported jaxlib
-COLABFOLDDIR="/path/to/your/colabfold_batch"
-${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y
-${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip uninstall alphafold-colabfold -y
-${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.25+cuda11.cudnn82-cp37-cp37m-manylinux2014_x86_64.whl
-${COLABFOLDDIR}/colabfold-conda/bin/python3.7 -m pip install jax==0.3.25 biopython==1.79
-# fix jax.tree_(un)flatten warnings (ad hoc)
-sed -i -e "s/jax.tree_flatten/jax.tree_util.tree_flatten/g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/model/mapping.py
-sed -i -e "s/jax.tree_unflatten/jax.tree_util.tree_unflatten/g" ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages/alphafold/model/mapping.py
-```
-
+ColabFold now upgrade to 1.5.0 (compatible with AlphaFold 2.3.1). I recommend to install Localcolabfold freshly.
 
 ## New Updates
 
+- 05Feb2023, version 1.5.0-pre released.
 - 16Jun2022, version 1.4.0 released. See [Release v1.4.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.4.0)
 - 07May2022, **Updated `update_linux.sh`.** See also [How to update](#how-to-update). Please use a new option `--use-gpu-relax` if GPU relaxation is required (recommended).
 - 12Apr2022, version 1.3.0 released. See [Release v1.3.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.3.0)
