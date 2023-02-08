@@ -24,5 +24,7 @@ python3.8 -m pip install --no-warn-conflicts "colabfold[alphafold-minus-jax] @ g
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.8/site-packages/colabfold
 sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" plot.py
 sed -i -e "s#appdirs.user_cache_dir(__package__ or \"colabfold\")#\"${COLABFOLDDIR}/colabfold\"#g" download.py
+# remove cache directory
+rm -rf __pycache__
 popd
 popd

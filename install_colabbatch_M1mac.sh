@@ -52,10 +52,6 @@ colabfold-conda/bin/python3.8 -m pip install "colabfold[alphafold] @ git+https:/
 colabfold-conda/bin/python3.8 -m pip install jaxlib==0.3.25 --no-deps --no-color
 colabfold-conda/bin/python3.8 -m pip install jax==0.3.25 chex scipy toolz --no-deps --no-color
 
-# fix warnings (ad hoc)
-gsed -i -e "s/jax.tree_flatten/jax.tree_util.tree_flatten/g" colabfold-conda/lib/python3.8/site-packages/alphafold/model/mapping.py
-gsed -i -e "s/jax.tree_unflatten/jax.tree_util.tree_unflatten/g" colabfold-conda/lib/python3.8/site-packages/alphafold/model/mapping.py
-
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
 cd $COLABFOLDDIR/bin
@@ -63,13 +59,19 @@ cat << EOF > colabfold_batch
 #!/bin/sh
 export COLABFOLDDIR=$COLABFOLDDIR
 export PATH="\${COLABFOLDDIR}/colabfold-conda/bin:\$PATH"
-\$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch --cpu \$@
+\$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch \$@
 EOF
 chmod +x colabfold_batch
 
+# start downloading weights
+cd ${COLABFOLDDIR}
+colabfold-conda/bin/python3.8 -m colabfold.download
+cd ${CURRENTPATH}
+
+echo "Download of alphafold2 weights finished."
+
 echo "-----------------------------------------"
 echo "Installation of colabfold_batch finished."
-echo "Note: AlphaFold2 weight parameters will be downloaded at ~/Library/Caches/colabfold/params directory at your first run."
 echo "Add ${COLABFOLDDIR}/bin to your environment variable PATH to run 'colabfold_batch'."
 echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/bin:\$PATH\""
 echo "For more details, please type 'colabfold_batch --help'."

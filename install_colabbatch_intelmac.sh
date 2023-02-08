@@ -34,18 +34,18 @@ bash ./Miniconda3-latest-MacOSX-x86_64.sh -b -p ${COLABFOLDDIR}/conda
 rm Miniconda3-latest-MacOSX-x86_64.sh
 . "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
-conda create -p $COLABFOLDDIR/colabfold-conda python=3.7 -y
+conda create -p $COLABFOLDDIR/colabfold-conda python=3.8 -y
 conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y
-conda install -c conda-forge python=3.7 openmm==7.5.1 pdbfixer -y
+conda install -c conda-forge python=3.8 openmm==7.5.1 pdbfixer -y
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_intelmac.sh --no-check-certificate
 chmod +x update_intelmac.sh
 # install ColabFold and Jaxlib
-colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-colabfold-conda/bin/python3.7 -m pip install jaxlib==0.3.25
-colabfold-conda/bin/python3.7 -m pip install jax==0.3.25
-colabfold-conda/bin/python3.7 -m pip install biopython==1.79
+colabfold-conda/bin/python3.8 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
+colabfold-conda/bin/python3.8 -m pip install jaxlib==0.3.25
+colabfold-conda/bin/python3.8 -m pip install jax==0.3.25
+colabfold-conda/bin/python3.8 -m pip install biopython==1.79
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
@@ -54,9 +54,16 @@ cat << EOF > colabfold_batch
 #!/bin/sh
 export COLABFOLDDIR=$COLABFOLDDIR
 export PATH="\${COLABFOLDDIR}/colabfold-conda/bin:\$PATH"
-\$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch --cpu \$@
+\$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch \$@
 EOF
 chmod +x colabfold_batch
+
+# start downloading weights
+cd ${COLABFOLDDIR}
+colabfold-conda/bin/python3.8 -m colabfold.download
+cd ${CURRENTPATH}
+
+echo "Download of alphafold2 weights finished."
 
 echo "-----------------------------------------"
 echo "Installation of colabfold_batch finished."

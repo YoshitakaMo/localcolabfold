@@ -46,6 +46,8 @@ cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.8/site-packages/colabfold
 sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" plot.py
 # modify the default params directory
 sed -i -e "s#appdirs.user_cache_dir(__package__ or \"colabfold\")#\"${COLABFOLDDIR}/colabfold\"#g" download.py
+# remove cache directory
+rm -rf __pycache__
 
 # start downloading weights
 cd ${COLABFOLDDIR}
