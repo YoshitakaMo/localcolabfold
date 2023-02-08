@@ -16,6 +16,7 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 ## Note (Feb 5, 2023)
 
 ColabFold now upgrade to 1.5.0 (compatible with AlphaFold 2.3.1). I recommend to install Localcolabfold freshly.
+See also Change log: https://github.com/sokrypton/ColabFold/wiki/v1.5.0
 
 ## New Updates
 
