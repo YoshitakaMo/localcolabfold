@@ -4,7 +4,7 @@
 
 ## What is LocalColabFold?
 
-LocalColabFold is an installer script designed to make ColabFold functionality available on local users' machines. It supports wide range of operating systems, such as Windows 10 or later (using Windows Subsystem for Linux 2), macOS, and Linux.
+LocalColabFold is an installer script designed to make ColabFold functionality available on users' local machines. It supports wide range of operating systems, such as Windows 10 or later (using Windows Subsystem for Linux 2), macOS, and Linux.
 
 ## Advantages of LocalColabFold
 
@@ -51,7 +51,7 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
     If you find errors in the output log, the easiest way is to check the network and delete the colabfold_batch directory, then re-run the installation script.
 
-2. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
+2. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/colabfold-conda/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>
 It is recommended to add this export command to \~/.bashrc and restart bash (\~/.bashrc will be executed every time bash is started)
 
 3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax inputfile outputdir/ </pre>The result files will be created in the `outputdir`.
@@ -226,4 +226,4 @@ $ ./update_${OS}.sh .
   *Nature* (2021) doi: [10.1038/s41586-021-03819-2](https://doi.org/10.1038/s41586-021-03819-2)
 - If you’re using **AlphaFold-multimer**, please also cite: <br />
   Evans et al. "Protein complex prediction with AlphaFold-Multimer." <br />
-  *BioRxiv* (2021) doi: [10.1101/2021.10.04.463034v1](https://www.biorxiv.org/content/10.1101/2021.10.04.463034v1)
+  *BioRxiv* (2022) doi: [10.1101/2021.10.04.463034v2](https://www.biorxiv.org/content/10.1101/2021.10.04.463034v2)
