@@ -28,19 +28,6 @@ colabfold-conda/bin/python3.8 -m pip install -q --no-warn-conflicts "colabfold[a
 colabfold-conda/bin/python3.8 -m pip install https://storage.googleapis.com/jax-releases/cuda11/jaxlib-0.3.25+cuda11.cudnn82-cp38-cp38-manylinux2014_x86_64.whl
 colabfold-conda/bin/python3.8 -m pip install jax==0.3.25 biopython==1.79
 
-# bin directory to run
-mkdir -p $COLABFOLDDIR/bin
-cd $COLABFOLDDIR/bin
-cat << EOF > colabfold_batch
-#!/bin/sh
-export TF_FORCE_UNIFIED_MEMORY="1"
-export XLA_PYTHON_CLIENT_MEM_FRACTION="4.0"
-export COLABFOLDDIR=$COLABFOLDDIR
-export PATH="\${COLABFOLDDIR}/colabfold-conda/bin:\$PATH"
-\$COLABFOLDDIR/colabfold-conda/bin/colabfold_batch \$@
-EOF
-chmod +x colabfold_batch
-
 # Use 'Agg' for non-GUI backend
 cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.8/site-packages/colabfold
 sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" plot.py
@@ -55,6 +42,6 @@ cd ${CURRENTPATH}
 echo "Download of alphafold2 weights finished."
 echo "-----------------------------------------"
 echo "Installation of colabfold_batch finished."
-echo "Add ${COLABFOLDDIR}/bin to your environment variable PATH to run 'colabfold_batch'."
-echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/bin:\$PATH\""
+echo "Add ${COLABFOLDDIR}/colabfold-conda/bin to your environment variable PATH to run 'colabfold_batch'."
+echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/colabfold-conda/bin:\$PATH\""
 echo "For more details, please type 'colabfold_batch --help'."
