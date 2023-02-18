@@ -56,7 +56,8 @@ It is recommended to add this export command to \~/.bashrc and restart bash (\~/
 
 3. To run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax inputfile outputdir/ </pre>The result files will be created in the `outputdir`.
 Just use cpu to run the prediction, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax inputfile outputdir/ --cpu</pre>
-To run the AlphaFold2-multimer, type <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax --model-type AlphaFold2-multimer inputfile outputdir/</pre>
+To run the AlphaFold2-multimer with the versioned AF2-multimer weights, add `--model-type alphafold2_multimer_v3` in the arguments. e.g. <pre>colabfold_batch --amber --templates --num-recycle 3 --use-gpu-relax --model-type alphafold2_multimer_v3 inputfile outputdir/</pre>`alphafold2_multimer_v1, alphafold2_multimer_v2` are also available. Default is `auto` (use `alphafold2_ptm` for monomers and
+`alphafold2_multimer_v3` for complexes.)
 
 For more details, see `colabfold_batch --help`.
 
