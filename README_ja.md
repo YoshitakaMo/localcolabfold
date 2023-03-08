@@ -4,6 +4,7 @@
 
 ## アップデート情報
 
+- 2023年2月5日, version 1.5.0-preリリース。
 - 2022年6月18日, version 1.4.0 リリース。[Release v1.4.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.4.0)
 - 2021年12月9日, β版。簡単に使えるアップデートスクリプトを追加。[アップデートのやり方](#アップデートのやり方)を参照。
 - 2021年12月4日, LocalColabFoldは最新版の[pipでインストール可能なColabFold](https://github.com/sokrypton/ColabFold#running-locally)に対応しました。このリポジトリではrelax（構造最適化）処理を行うために必要な他のパラメータファイルとともにColabFoldをインストールするためのスクリプトを提供しています。AlphaFoldとAlphaFold-Multimerの重みパラメータは初回の実行時に自動的にダウンロードされます。
