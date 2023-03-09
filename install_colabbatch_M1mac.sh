@@ -28,33 +28,33 @@ else
 fi
 
 CURRENTPATH=`pwd`
-COLABFOLDDIR="${CURRENTPATH}/colabfold_batch"
+COLABFOLDDIR="${CURRENTPATH}/localcolabfold"
 
 mkdir -p ${COLABFOLDDIR}
 cd ${COLABFOLDDIR}
 . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
-conda create -p $COLABFOLDDIR/colabfold-conda python=3.8 -y
+conda create -p $COLABFOLDDIR/colabfold-conda python=3.9 -y
 conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y
 
-conda install -y -c conda-forge python=3.8 openmm==7.5.1 pdbfixer jupyter matplotlib py3Dmol tqdm biopython==1.79 immutabledict==2.0.0
+conda install -y -c conda-forge python=3.9 openmm==7.5.1 pdbfixer jupyter matplotlib py3Dmol tqdm biopython==1.79 immutabledict==2.0.0
 conda install -y -c apple tensorflow-deps
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_M1mac.sh --no-check-certificate
 chmod +x update_M1mac.sh
 # install ColabFold and Jaxlib
-colabfold-conda/bin/python3.8 -m pip install https://files.pythonhosted.org/packages/bd/57/88cea9e14dacaea82ca86fac2bf6ecb8b7fd99622d776e4131786ce5b65e/tensorflow_macos-2.7.0-cp38-cp38-macosx_11_0_arm64.whl
-colabfold-conda/bin/python3.8 -m pip install git+https://github.com/deepmind/tree.git
-colabfold-conda/bin/python3.8 -m pip install git+https://github.com/google/ml_collections.git
-colabfold-conda/bin/python3.8 -m pip install dm-haiku appdirs pandas absl-py docker
-colabfold-conda/bin/python3.8 -m pip install alphafold-colabfold --no-deps --no-color
-colabfold-conda/bin/python3.8 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
-colabfold-conda/bin/python3.8 -m pip install jaxlib==0.3.25 --no-deps --no-color
-colabfold-conda/bin/python3.8 -m pip install jax==0.3.25 chex scipy toolz --no-deps --no-color
+colabfold-conda/bin/python3.9 -m pip install https://files.pythonhosted.org/packages/bd/57/88cea9e14dacaea82ca86fac2bf6ecb8b7fd99622d776e4131786ce5b65e/tensorflow_macos-2.7.0-cp38-cp38-macosx_11_0_arm64.whl
+colabfold-conda/bin/python3.9 -m pip install git+https://github.com/deepmind/tree.git
+colabfold-conda/bin/python3.9 -m pip install git+https://github.com/google/ml_collections.git
+colabfold-conda/bin/python3.9 -m pip install dm-haiku appdirs pandas absl-py docker
+colabfold-conda/bin/python3.9 -m pip install alphafold-colabfold --no-deps --no-color
+colabfold-conda/bin/python3.9 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
+colabfold-conda/bin/python3.9 -m pip install jaxlib==0.3.25 --no-deps --no-color
+colabfold-conda/bin/python3.9 -m pip install jax==0.3.25 chex scipy toolz --no-deps --no-color
 
 # start downloading weights
 cd ${COLABFOLDDIR}
-colabfold-conda/bin/python3.8 -m colabfold.download
+colabfold-conda/bin/python3.9 -m colabfold.download
 cd ${CURRENTPATH}
 
 echo "Download of alphafold2 weights finished."

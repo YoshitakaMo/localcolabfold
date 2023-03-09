@@ -20,6 +20,7 @@ See also Change log: https://github.com/sokrypton/ColabFold/wiki/v1.5.0
 
 ## New Updates
 
+- 09Mar2023, version 1.5.2 released. The base directory has been changed to `localcolabfold` from `colabfold_batch` to distinguish it from the execution command.
 - 05Feb2023, version 1.5.0-pre released.
 - 16Jun2022, version 1.4.0 released. See [Release v1.4.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.4.0)
 - 07May2022, **Updated `update_linux.sh`.** See also [How to update](#how-to-update). Please use a new option `--use-gpu-relax` if GPU relaxation is required (recommended).
