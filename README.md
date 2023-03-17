@@ -6,6 +6,8 @@
 
 LocalColabFold is an installer script designed to make ColabFold functionality available on users' local machines. It supports wide range of operating systems, such as Windows 10 or later (using Windows Subsystem for Linux 2), macOS, and Linux.
 
+**If you only want to predict a small number of naturally occuring proteins, I recommend using [ColabFold notebook](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb) or download the structures from [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk/) or [UniProt](https://www.uniprot.org/). Localcolabfold is suitable for more advanced applications such as batch processing of structure predictions for non-natural proteins and complexes, or predictions with manually specified MSAs / templates.**
+
 ## Advantages of LocalColabFold
 
 - **Structure inference and relaxation will be accelerated if your PC has Nvidia GPU and CUDA drivers.**
