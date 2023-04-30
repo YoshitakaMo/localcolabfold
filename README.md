@@ -22,6 +22,7 @@ See also Change log: https://github.com/sokrypton/ColabFold/wiki/v1.5.0
 
 ## New Updates
 
+- 30APr2023, Updated to use python 3.10 for compatibility with Google Colaboratory.
 - 09Mar2023, version 1.5.1 released. The base directory has been changed to `localcolabfold` from `colabfold_batch` to distinguish it from the execution command.
 - 09Mar2023, version 1.5.0 released. See [Release v1.5.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.5.0)
 - 05Feb2023, version 1.5.0-pre released.
