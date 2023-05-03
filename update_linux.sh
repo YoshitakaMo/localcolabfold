@@ -16,9 +16,9 @@ COLABFOLDDIR=$(cd $(dirname colabfold_batch); pwd)
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
 conda activate $COLABFOLDDIR/colabfold-conda
 # reinstall colabfold and alphafold-colabfold
-python3.9 -m pip uninstall -q "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold" -y
-python3.9 -m pip uninstall alphafold-colabfold -y
-python3.9 -m pip install --no-warn-conflicts "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold"
+python3.10 -m pip uninstall -q "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold" -y
+python3.10 -m pip uninstall alphafold-colabfold -y
+python3.10 -m pip install --no-warn-conflicts "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold"
 
 # use 'agg' for non-GUI backend
 pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.10/site-packages/colabfold
