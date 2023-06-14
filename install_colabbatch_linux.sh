@@ -16,7 +16,7 @@ export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
 conda create -p $COLABFOLDDIR/colabfold-conda python=3.10 -y
 conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y
-conda install -c conda-forge python=3.10 cudnn==8.8.0.121 cudatoolkit==11.8.0 openmm==7.7.0 pdbfixer -y
+conda install -c conda-forge python=3.10 cudnn==8.2.1.32 cudatoolkit==11.6.0 openmm==7.7.0 pdbfixer -y
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_linux.sh --no-check-certificate
 chmod +x update_linux.sh
