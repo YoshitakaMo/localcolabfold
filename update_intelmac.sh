@@ -38,10 +38,10 @@ COLABFOLDDIR=$(cd $(dirname colabfold_batch); pwd)
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
 conda activate $COLABFOLDDIR/colabfold-conda
 # reinstall colabfold
-python3.8 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y
-python3.8 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
+python3.10 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y
+python3.10 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
 # repatch batch.py
-pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.8/site-packages/colabfold
+pushd ${COLABFOLDDIR}/colabfold-conda/lib/python3.10/site-packages/colabfold
 popd
 popd
 

@@ -34,22 +34,21 @@ bash ./Miniconda3-latest-MacOSX-x86_64.sh -b -p ${COLABFOLDDIR}/conda
 rm Miniconda3-latest-MacOSX-x86_64.sh
 . "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
-conda create -p $COLABFOLDDIR/colabfold-conda python=3.9 -y
+conda create -p $COLABFOLDDIR/colabfold-conda python=3.10 -y
 conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y
-conda install -c conda-forge python=3.9 openmm==7.5.1 pdbfixer -y
+conda install -c conda-forge python=3.10 openmm==8.0.0 pdbfixer==1.9 jupyter matplotlib py3Dmol tqdm biopython==1.79 immutabledict==2.0.0 -y
 # Download the updater
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_intelmac.sh --no-check-certificate
 chmod +x update_intelmac.sh
 # install ColabFold and Jaxlib
-colabfold-conda/bin/python3.9 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-colabfold-conda/bin/python3.9 -m pip install jaxlib==0.3.25
-colabfold-conda/bin/python3.9 -m pip install jax==0.3.25
-colabfold-conda/bin/python3.9 -m pip install biopython==1.79
+colabfold-conda/bin/python3.10 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
+colabfold-conda/bin/python3.10 -m pip install jaxlib==0.3.25
+colabfold-conda/bin/python3.10 -m pip install jax==0.3.25
 
 # start downloading weights
 cd ${COLABFOLDDIR}
-colabfold-conda/bin/python3.9 -m colabfold.download
+colabfold-conda/bin/python3.10 -m colabfold.download
 cd ${CURRENTPATH}
 
 echo "Download of alphafold2 weights finished."
