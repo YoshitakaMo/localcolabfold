@@ -6,9 +6,6 @@ type gsed || { echo "gnu-sed command is not installed. Please install it at firs
 type hhsearch || { echo "hhsearch command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 type kalign || { echo "kalign command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 
-# check whether miniforge is present
-test -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" || { echo "Install miniforge by using Homebrew before installation. \n 'brew install --cask miniforge'" ; exit 1 ; }
-
 # check whether Apple Silicon (M1 mac) or Intel Mac
 arch_name="$(uname -m)"
 
@@ -30,9 +27,9 @@ fi
 CURRENTPATH=`pwd`
 COLABFOLDDIR="${CURRENTPATH}/localcolabfold"
 
-mkdir -p ${COLABFOLDDIR}
-cd ${COLABFOLDDIR}
-. "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+wget -q -P . https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-MacOSX-arm64.sh
+bash ./Mambaforge-MacOSX-arm64.sh -b -p ${COLABFOLDDIR}/conda
+rm Mambaforge-MacOSX-arm64.sh
 conda create -p $COLABFOLDDIR/colabfold-conda python=3.10 -y
 conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y

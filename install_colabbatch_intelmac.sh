@@ -29,9 +29,9 @@ COLABFOLDDIR="${CURRENTPATH}/localcolabfold"
 
 mkdir -p ${COLABFOLDDIR}
 cd ${COLABFOLDDIR}
-wget -q -P . https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
-bash ./Miniconda3-latest-MacOSX-x86_64.sh -b -p ${COLABFOLDDIR}/conda
-rm Miniconda3-latest-MacOSX-x86_64.sh
+wget -q -P . https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-MacOSX-x86_64.sh
+bash ./Mambaforge-MacOSX-x86_64.sh -b -p ${COLABFOLDDIR}/conda
+rm Mambaforge-MacOSX-x86_64.sh
 . "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
 conda create -p $COLABFOLDDIR/colabfold-conda python=3.10 -y
