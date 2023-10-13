@@ -44,12 +44,12 @@ Built on Mon_Oct_12_20:09:46_PDT_2020
 Cuda compilation tools, release 11.1, V11.1.105
 Build cuda_11.1.TC455_06.29190527_0
 </pre>DO NOT use `nvidia-smi` to check the version.<br>See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) if you haven't installed it.
-3. Make sure your GNU compiler version is **4.9 or later** because `GLIBCXX_3.4.20` is required:<pre>$ gcc --version
+3. Make sure your GNU compiler version is **9.0 or later** because `GLIBCXX_3.4.26` is required for openmm:<pre>$ gcc --version
 gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
 Copyright (C) 2019 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-</pre>If the version is 4.8.5 or older (e.g. CentOS 7), install a new one and add `PATH` to it.
+</pre>If the version is 8.5.0 or older (e.g. CentOS 7, Rocky/Almalinux 8, etc.), install a new one and add `PATH` to it.
 4. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
 
     Keep the network unblocked. And **check the log** output to see if there are any errors.
