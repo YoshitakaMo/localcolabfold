@@ -50,11 +50,11 @@ Copyright (C) 2019 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 </pre>If the version is 8.5.0 or older (e.g. CentOS 7, Rocky/Almalinux 8, etc.), install a new one and add `PATH` to it.
-4. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
+4. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `localcolabfold` directory will be created. Do not move this directory after the installation.
 
     Keep the network unblocked. And **check the log** output to see if there are any errors.
 
-    If you find errors in the output log, the easiest way is to check the network and delete the colabfold_batch directory, then re-run the installation script.
+    If you find errors in the output log, the easiest way is to check the network and delete the localcolabfold directory, then re-run the installation script.
 
 5. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/localcolabfold/colabfold-conda/bin:\$PATH"<br>export PATH="/path/to/your/localcolabfold/colabfold-conda/bin:\$PATH"</pre>
 It is recommended to add this export command to `~/.bashrc` and restart bash (`~/.bashrc` will be executed every time bash is started)
@@ -63,7 +63,7 @@ It is recommended to add this export command to `~/.bashrc` and restart bash (`~
 
     <pre>colabfold_batch --templates --amber input outputdir/</pre>
 
-    To run the AlphaFold2-multimer with the versioned AF2-multimer weights, add `--model-type alphafold2_multimer_v3` in the arguments. e.g. <pre>colabfold_batch --templates --amber --model-type alphafold2_multimer_v3 input outputdir/</pre>`alphafold2_multimer_v1, alphafold2_multimer_v2` are also available. Default is `auto` (use `alphafold2_ptm` for monomers and `alphafold2_multimer_v3` for complexes.)
+    `colabfold_batch` will automatically detect whether the prediction is for monomeric or complex prediction. In most cases, users don't have to add `--model-type alphafold2_multimer_v3` to turn on multimer prediction. `alphafold2_multimer_v1, alphafold2_multimer_v2` are also available. Default is `auto` (use `alphafold2_ptm` for monomers and `alphafold2_multimer_v3` for complexes.)
 
 For more details, see [Flags](#flags) and `colabfold_batch --help`.
 
