@@ -40,6 +40,7 @@ conda install -y -c apple tensorflow-deps
 wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_M1mac.sh --no-check-certificate
 chmod +x update_M1mac.sh
 # install ColabFold and Jaxlib
+cd localcolabfold
 colabfold-conda/bin/python3.10 -m pip install tensorflow-macos
 colabfold-conda/bin/python3.10 -m pip install git+https://github.com/deepmind/tree.git
 colabfold-conda/bin/python3.10 -m pip install git+https://github.com/google/ml_collections.git
