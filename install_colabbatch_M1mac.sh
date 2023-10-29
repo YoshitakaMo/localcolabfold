@@ -24,12 +24,19 @@ else
     exit 1
 fi
 
+# Maybe required for Apple Silicon (M1 mac) when installing mamgaforge
+ulimit -n 99999
+
 CURRENTPATH=`pwd`
 COLABFOLDDIR="${CURRENTPATH}/localcolabfold"
 
-wget -q -P . https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-MacOSX-arm64.sh
-bash ./Mambaforge-MacOSX-arm64.sh -b -p ${COLABFOLDDIR}/conda
-rm Mambaforge-MacOSX-arm64.sh
+mkdir -p ${COLABFOLDDIR}
+cd ${COLABFOLDDIR}
+wget -q -P . https://github.com/conda-forge/miniforge/releases/download/23.3.1-1/Mambaforge-23.3.1-1-MacOSX-arm64.sh
+bash ./Mambaforge-23.3.1-1-MacOSX-arm64.sh -b -p ${COLABFOLDDIR}/conda
+rm Mambaforge-23.3.1-1-MacOSX-arm64.sh
+. "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
+export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
 conda create -p $COLABFOLDDIR/colabfold-conda python=3.10 -y
 conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y

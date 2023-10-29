@@ -4,9 +4,6 @@
 type wget || { echo "wget command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 type gsed || { echo "gnu-sed command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
 
-# check whether miniforge is present
-test -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" || { echo "Install miniforge by using Homebrew before installation. \n 'brew install --cask miniforge'" ; exit 1 ; }
-
 # check whether Apple Silicon (M1 mac) or Intel Mac
 arch_name="$(uname -m)"
 
@@ -25,6 +22,9 @@ else
     exit 1
 fi
 
+# Maybe required for Apple Silicon (M1 mac) when installing mamgaforge
+ulimit -n 99999
+
 COLABFOLDDIR=$1
 
 if [ ! -d $COLABFOLDDIR/colabfold-conda ]; then
@@ -37,7 +37,8 @@ pushd $COLABFOLDDIR || { echo "${COLABFOLDDIR} is not present." ; exit 1 ; }
 # get absolute path of COLABFOLDDIR
 COLABFOLDDIR=$(cd $(dirname colabfold_batch); pwd)
 # activate conda in $COLABFOLDDIR/conda
-. "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+. ${COLABFOLDDIR}/conda/etc/profile.d/conda.sh
+export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
 conda activate $COLABFOLDDIR/colabfold-conda
 # reinstall colabfold
 python3.10 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y --no-color
