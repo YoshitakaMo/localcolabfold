@@ -69,7 +69,7 @@ For more details, see [Flags](#flags) and `colabfold_batch --help`.
 
 ### For WSL2 (in Windows)
 
-**Caution: If your installation fails due to symbolic link (`symlink`) creation issues, this is due to the Windows file system being case-insensitive (while Linux file system is case-sensitive).** To resolve this, run the following command on Windows Powershell:
+**Caution: If your installation fails due to symbolic link (`symlink`) creation issues, this is due to the Windows file system being case-insensitive (while the Linux file system is case-sensitive).** To resolve this, run the following command on Windows Powershell:
 ```
 fsutil file SetCaseSensitiveInfo path\to\localcolabfold\installation enable
 ```
