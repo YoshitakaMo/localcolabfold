@@ -67,7 +67,14 @@ It is recommended to add this export command to `~/.bashrc` and restart bash (`~
 
 For more details, see [Flags](#flags) and `colabfold_batch --help`.
 
-#### For WSL2 (in windows)
+### For WSL2 (in Windows)
+
+**Caution: If your installation fails due to symbolic link (`symlink`) creation issues, this is due to the Windows file system being case-insensitive (while the Linux file system is case-sensitive).** To resolve this, run the following command on Windows Powershell:
+```
+fsutil file SetCaseSensitiveInfo path\to\localcolabfold\installation enable
+```
+
+Replace `path\to\colabfold\installation` with the path to the directory where you are installing LocalColabFold. Also, make sure that you are running the command on Windows Powershell (not WSL). For more details, see [Adjust Case Sensitivty (Microsoft)](https://learn.microsoft.com/en-us/windows/wsl/case-sensitivity).
 
 Before running the prediction:
 
