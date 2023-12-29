@@ -1,14 +1,13 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # check commands
-type wget || { echo "wget command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
-type gsed || { echo "gnu-sed command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
-type hhsearch || { echo "hhsearch command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
-type kalign || { echo "kalign command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
+type wget 2>/dev/null || { echo "Please install wget using Homebrew:\n\tbrew install wget" ; exit 1 ; }
+type hhsearch 2>/dev/null || { echo -e "Please install hh-suite using Homebrew:\n\tbrew install brewsci/bio/hh-suite" ; exit 1 ; }
+type kalign 2>/dev/null || { echo -e "Please install kalign using Homebrew:\n\tbrew install kalign" ; exit 1 ; }
+type mmseqs 2>/dev/null || { echo -e "Please install mmseqs2 using Homebrew:\n\tbrew install mmseqs2" ; exit 1 ; }
 
 # check whether Apple Silicon (M1 mac) or Intel Mac
 arch_name="$(uname -m)"
-
 if [ "${arch_name}" = "x86_64" ]; then
     if [ "$(sysctl -in sysctl.proc_translated)" = "1" ]; then
         echo "Running on Rosetta 2"
@@ -24,47 +23,39 @@ else
     exit 1
 fi
 
-# Maybe required for Apple Silicon (M1 mac) when installing mamgaforge
+# Maybe required for Apple Silicon (M1 mac) when installing mambaforge
 ulimit -n 99999
 
-CURRENTPATH=`pwd`
+CURRENTPATH="$(pwd)"
 COLABFOLDDIR="${CURRENTPATH}/localcolabfold"
 
-mkdir -p ${COLABFOLDDIR}
-cd ${COLABFOLDDIR}
-wget -q -P . https://github.com/conda-forge/miniforge/releases/download/23.3.1-1/Mambaforge-23.3.1-1-MacOSX-arm64.sh
-bash ./Mambaforge-23.3.1-1-MacOSX-arm64.sh -b -p ${COLABFOLDDIR}/conda
-rm Mambaforge-23.3.1-1-MacOSX-arm64.sh
-. "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
+mkdir -p "${COLABFOLDDIR}"
+cd "${COLABFOLDDIR}"
+wget -q -P . https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh 
+bash ./Miniforge3-MacOSX-arm64.sh -b -p "${COLABFOLDDIR}/conda"
+rm Miniforge3-MacOSX-arm64.sh
+
+source "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
-conda create -p $COLABFOLDDIR/colabfold-conda python=3.10 -y
-conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y
+conda create -p "$COLABFOLDDIR/colabfold-conda" -c conda-forge \
+    git python=3.10 openmm==8.0.0 pdbfixer==1.9 -y
+conda activate "$COLABFOLDDIR/colabfold-conda"
 
-conda install -y -c conda-forge python=3.10 openmm==8.0.0 pdbfixer==1.9 jupyter matplotlib py3Dmol tqdm biopython==1.79 immutabledict==2.0.0
-conda install -y -c apple tensorflow-deps
+# install colabfold
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install --no-warn-conflicts \
+    "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
+
 # Download the updater
-wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_M1mac.sh --no-check-certificate
-chmod +x update_M1mac.sh
-# install ColabFold and Jaxlib
-colabfold-conda/bin/python3.10 -m pip install tensorflow-macos
-colabfold-conda/bin/python3.10 -m pip install git+https://github.com/deepmind/tree.git
-colabfold-conda/bin/python3.10 -m pip install git+https://github.com/google/ml_collections.git
-colabfold-conda/bin/python3.10 -m pip install dm-haiku appdirs pandas absl-py docker
-colabfold-conda/bin/python3.10 -m pip install alphafold-colabfold --no-deps --no-color
-colabfold-conda/bin/python3.10 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
-colabfold-conda/bin/python3.10 -m pip install jaxlib==0.3.25 --no-deps --no-color
-colabfold-conda/bin/python3.10 -m pip install jax==0.3.25 chex scipy toolz --no-deps --no-color
+wget -qnc -O "$COLABFOLDDIR/update_M1mac.sh" \
+    https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_M1mac.sh
+chmod +x "$COLABFOLDDIR/update_M1mac.sh"
 
-# start downloading weights
-cd ${COLABFOLDDIR}
-colabfold-conda/bin/python3.10 -m colabfold.download
-cd ${CURRENTPATH}
-
+# Download weights
+"$COLABFOLDDIR/colabfold-conda/bin/python3" -m colabfold.download
 echo "Download of alphafold2 weights finished."
-
 echo "-----------------------------------------"
-echo "Installation of colabfold_batch finished."
+echo "Installation of ColabFold finished."
 echo "Add ${COLABFOLDDIR}/colabfold-conda/bin to your environment variable PATH to run 'colabfold_batch'."
-echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/colabfold-conda/bin:\$PATH\""
-echo "For more details, please type 'colabfold_batch --help'."
+echo -e "i.e. for Bash:\n\texport PATH=\"${COLABFOLDDIR}/colabfold-conda/bin:\$PATH\""
+echo "For more details, please run 'colabfold_batch --help'."

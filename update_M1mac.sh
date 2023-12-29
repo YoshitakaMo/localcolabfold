@@ -1,12 +1,7 @@
-#!/bin/bash
-
-# check commands
-type wget || { echo "wget command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
-type gsed || { echo "gnu-sed command is not installed. Please install it at first using Homebrew." ; exit 1 ; }
+#!/bin/bash -e
 
 # check whether Apple Silicon (M1 mac) or Intel Mac
 arch_name="$(uname -m)"
-
 if [ "${arch_name}" = "x86_64" ]; then
     if [ "$(sysctl -in sysctl.proc_translated)" = "1" ]; then
         echo "Running on Rosetta 2"
@@ -22,28 +17,19 @@ else
     exit 1
 fi
 
-# Maybe required for Apple Silicon (M1 mac) when installing mamgaforge
+# Maybe required for Apple Silicon (M1 mac) when installing mambaforge
 ulimit -n 99999
 
-COLABFOLDDIR=$1
-
-if [ ! -d $COLABFOLDDIR/colabfold-conda ]; then
+COLABFOLDDIR="$1"
+if [ ! -d "$COLABFOLDDIR/colabfold-conda" ]; then
     echo "Error! colabfold-conda directory is not present in $COLABFOLDDIR."
     exit 1
 fi
 
-pushd $COLABFOLDDIR || { echo "${COLABFOLDDIR} is not present." ; exit 1 ; }
-
-# get absolute path of COLABFOLDDIR
-COLABFOLDDIR=$(cd $(dirname colabfold_batch); pwd)
 # activate conda in $COLABFOLDDIR/conda
-. ${COLABFOLDDIR}/conda/etc/profile.d/conda.sh
-export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
-conda activate $COLABFOLDDIR/colabfold-conda
-# reinstall colabfold
-python3.10 -m pip uninstall "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" -y --no-color
-python3.10 -m pip uninstall alphafold-colabfold -y --no-color
-python3.10 -m pip install alphafold-colabfold --no-deps --no-color
-python3.10 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold" --no-deps --no-color
-popd
+source "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
+conda activate "$COLABFOLDDIR/colabfold-conda"
 
+# reinstall colabfold
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install --no-warn-conflicts --upgrade --force-reinstall \
+    "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
