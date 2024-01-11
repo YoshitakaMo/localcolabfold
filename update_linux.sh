@@ -16,6 +16,8 @@ conda activate "$COLABFOLDDIR/colabfold-conda"
     "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold"
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install --upgrade "jax[cuda11_pip]" \
     -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install "colabfold[alphafold]"
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install --upgrade tensorflow
 
 
 # use 'agg' for non-GUI backend
