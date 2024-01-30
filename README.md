@@ -15,14 +15,15 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 - **No GPU limitations**
 - **NOT necessary to prepare the large database required for native AlphaFold2**.
 
-## Note (Feb 5, 2023)
+## Note (Jan 30, 2024)
 
-ColabFold now upgrade to 1.5.0 (compatible with AlphaFold 2.3.1). I recommend to install Localcolabfold freshly.
-See also Change log: https://github.com/sokrypton/ColabFold/wiki/v1.5.0
+- ColabFold now upgrade to 1.5.5 (compatible with AlphaFold 2.3.2). Now LocalColabFold requires **CUDA 11.8 or later**. Please update your CUDA driver if you have not done so.
+- Now (Local)ColabFold can predict protein structures without connecting the Internet. Use [`setup_databases.sh`](https://github.com/sokrypton/ColabFold/blob/main/setup_databases.sh) script to download and build the databases (See also [ColabFold Downloads](https://colabfold.mmseqs.com/)). An instruction to run `colabfold_search` to obtain the MSA and templates locally is written in [this comment](https://github.com/sokrypton/ColabFold/issues/563).
 
 ## New Updates
 
-- 30APr2023, Updated to use python 3.10 for compatibility with Google Colaboratory.
+- 30Jan2024, ColabFold 1.5.5 (Compatible with AlphaFold 2.3.2). Now LocalColabFold requires **CUDA 11.8 or later**. Please update your CUDA driver.
+- 30Apr2023, Updated to use python 3.10 for compatibility with Google Colaboratory.
 - 09Mar2023, version 1.5.1 released. The base directory has been changed to `localcolabfold` from `colabfold_batch` to distinguish it from the execution command.
 - 09Mar2023, version 1.5.0 released. See [Release v1.5.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.5.0)
 - 05Feb2023, version 1.5.0-pre released.
@@ -37,12 +38,12 @@ See also Change log: https://github.com/sokrypton/ColabFold/wiki/v1.5.0
 ### For Linux
 
 1. Make sure `curl`, `git`, and `wget` commands are already installed on your PC. If not present, you need install them at first. For Ubuntu, type `sudo apt -y install curl git wget`.
-2. Make sure your Cuda compiler driver is **11.1 or later** (If you don't have a GPU or don't plan to use a GPU, you can skip this section) :<pre>$ nvcc --version
+2. Make sure your Cuda compiler driver is **11.8 or later** (If you don't have a GPU or don't plan to use a GPU, you can skip this step) :<pre>$ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2020 NVIDIA Corporation
-Built on Mon_Oct_12_20:09:46_PDT_2020
-Cuda compilation tools, release 11.1, V11.1.105
-Build cuda_11.1.TC455_06.29190527_0
+Copyright (c) 2005-2022 NVIDIA Corporation
+Built on Wed_Sep_21_10:33:58_PDT_2022
+Cuda compilation tools, release 11.8, V11.8.89
+Build cuda_11.8.r11.8/compiler.31833905_0
 </pre>DO NOT use `nvidia-smi` to check the version.<br>See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) if you haven't installed it.
 3. Make sure your GNU compiler version is **9.0 or later** because `GLIBCXX_3.4.26` is required for openmm:<pre>$ gcc --version
 gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
