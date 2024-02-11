@@ -6,7 +6,7 @@
 
 LocalColabFold is an installer script designed to make ColabFold functionality available on users' local machines. It supports wide range of operating systems, such as Windows 10 or later (using Windows Subsystem for Linux 2), macOS, and Linux.
 
-**If you only want to predict a small number of naturally occuring proteins, I recommend using [ColabFold notebook](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb) or download the structures from [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk/) or [UniProt](https://www.uniprot.org/). Localcolabfold is suitable for more advanced applications such as batch processing of structure predictions for non-natural proteins and complexes, or predictions with manually specified MSAs / templates.**
+**If you only intend to predict a small number of naturally occurring proteins, I recommend using [ColabFold notebook](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb) or downloading structures from the [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk/) or [UniProt](https://www.uniprot.org/). LocalColabFold is suitable for more advanced applications, such as batch processing of structure predictions for natural complexes, non-natural proteins, or predictions with manually specified MSAs/templates.**
 
 ## Advantages of LocalColabFold
 
@@ -14,6 +14,10 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 - **No Time out (90 minutes and 12 hours)**
 - **No GPU limitations**
 - **NOT necessary to prepare the large database required for native AlphaFold2**.
+
+## Note (Feb 11, 2024)
+
+- Fixed the version of Jax to 0.4.23 because jax >=0.4.24 has a lot of changes, deprecations, and removals. Please use the latest `install_colabbatch_linux.sh` or `update_linux.sh`.
 
 ## Note (Jan 30, 2024)
 
@@ -222,7 +226,7 @@ $ ./update_${OS}.sh .
 ## FAQ
 - What else do I need to do before installation? Do I need sudo privileges?
   - No, except for installation of `curl` and `wget` commands.
-- Do I need to prepare the large database such as PDB70, BFD, Uniclust30, MGnify...?
+- Do I need to prepare the large database such as PDB70, BFD, Uniclust30, MGnify?
   - **No. it is not necessary.** Generation of MSA is performed by the MMseqs2 web server, just as implemented in ColabFold.
 - Are the pLDDT score and PAE figures available?
   - Yes, they will be generated just like the ColabFold.
@@ -232,8 +236,10 @@ $ ./update_${OS}.sh .
   - **No, it is not currently supported**.
 - I want to use multiple GPUs to perform the prediction.
   - **AlphaFold and ColabFold does not support multiple GPUs**. Only One GPU can model your protein.
+- I have multiple GPUs. Can I specify to run LocalColabfold on each GPU?
+  - Use `CUDA_VISIBLE_DEVICES` environment variable. See https://github.com/YoshitakaMo/localcolabfold/issues/200.
 - I got an error message `CUDA_ERROR_ILLEGAL_ADDRESS: an illegal memory access was encountered`.
-  - You may not have updated to CUDA 11.1 or later. Please check the version of Cuda compiler with `nvcc --version` command, not `nvidia-smi`.
+  - You may not have updated to CUDA 11.8 or later. Please check the version of Cuda compiler with `nvcc --version` command, not `nvidia-smi`.
 - Is this available on Windows 10?
   - You can run LocalColabFold on your Windows 10 with [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 - (New!)I want to use a custom MSA file in the format of a3m.
