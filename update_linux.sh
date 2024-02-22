@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
-COLABFOLDDIR="$1"
+# get absolute path of COLABFOLDDIR
+COLABFOLDDIR=$(realpath $(dirname $0))
 
 if [ ! -d "$COLABFOLDDIR/colabfold-conda" ]; then
     echo "Error! colabfold-conda directory is not present in $COLABFOLDDIR."
