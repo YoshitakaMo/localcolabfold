@@ -4,6 +4,7 @@
 
 ## アップデート情報
 
+- 2024年1月30日, ColabFold 1.5.5 (Compatible with AlphaFold 2.3.2). **CUDA 11.8 or later**が必要となりました。
 - 2023年2月5日, version 1.5.0-preリリース。
 - 2022年6月18日, version 1.4.0 リリース。[Release v1.4.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.4.0)
 - 2021年12月9日, β版。簡単に使えるアップデートスクリプトを追加。[アップデートのやり方](#アップデートのやり方)を参照。
@@ -14,12 +15,12 @@
 ### Linux+GPUの場合
 
 1. ターミナル上で`curl`, `git`と`wget`コマンドがすでにインストールされていることを確認します。存在しない場合は先にこれらをインストールしてください。Ubuntuの場合はtype `sudo apt -y install curl git wget`でインストールできます。
-2. **Cuda compilerのバージョンが11.1以降であることを確認します。**<pre>$ nvcc --version
+2. **Cuda compilerのバージョンが11.8以降であることを確認します。**<pre>$ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2020 NVIDIA Corporation
-Built on Mon_Oct_12_20:09:46_PDT_2020
-Cuda compilation tools, release 11.1, V11.1.105
-Build cuda_11.1.TC455_06.29190527_0
+Copyright (c) 2005-2022 NVIDIA Corporation
+Built on Wed_Sep_21_10:33:58_PDT_2022
+Cuda compilation tools, release 11.8, V11.8.89
+Build cuda_11.8.r11.8/compiler.31833905_0
 </pre>バージョンチェックの時に`nvidia-smi`コマンドを使わないでください。こちらでは不正確です。<br>まだCUDA Compilerをインストールしていない場合は、[NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)を参照してください。
 3. **GNU compilerのバージョンが4.9以降であることを確認します。** 動作上、`GLIBCXX_3.4.20`が必要になるためです。<pre>$ gcc --version
 gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
@@ -64,16 +65,6 @@ arm64  # Apple Silicon
 2. `miniforge`をHomebrewでインストールします:<pre>$ brew install --cask miniforge</pre>
 3. インストーラー`install_colabbatch_M1mac.sh`をこのリポジトリからダウンロードします:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_M1mac.sh</pre>およそ5分後に`colabfold_batch`ディレクトリができます。途中色々WarningsやErrorが出るかもしれませんが大丈夫です。インストール後はこのディレクトリを移動させないでください。
 4. 残りの手順は"Linux+GPUの場合"と同様です.
-
-予測を行っているときに以下のようなメッセージが現れます:
-
-```
-You are using an experimental build of OpenMM v7.5.1.
-This is NOT SUITABLE for production!
-It has not been properly tested on this platform and we cannot guarantee it provides accurate results.
-```
-
-このメッセージはApple Silicon上で動作させる時のみ現れますが、たぶん無視して大丈夫です。
 
 ## アップデートのやり方
 

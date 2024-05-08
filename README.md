@@ -42,7 +42,7 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 ### For Linux
 
 1. Make sure `curl`, `git`, and `wget` commands are already installed on your PC. If not present, you need install them at first. For Ubuntu, type `sudo apt -y install curl git wget`.
-2. Make sure your Cuda compiler driver is **11.8 or later** (If you don't have a GPU or don't plan to use a GPU, you can skip this step) :<pre>$ nvcc --version
+2. Make sure your Cuda compiler driver is **11.8 or later** (the latest version 12.4 is preferable). If you don't have a GPU or don't plan to use a GPU, you can skip this step :<pre>$ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2022 NVIDIA Corporation
 Built on Wed_Sep_21_10:33:58_PDT_2022
@@ -122,15 +122,6 @@ Please use the correct installer for your Mac.
 3. Install `miniforge` command using Homebrew:<pre>$ brew install --cask miniforge</pre>
 4. Download `install_colabbatch_M1mac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_M1mac.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation. **You can ignore the installation errors that appear along the way**.
 5. The rest procedure is the same as "For Linux".
-
-A Warning message appeared when you run the prediction:
-```
-You are using an experimental build of OpenMM v7.5.1.
-This is NOT SUITABLE for production!
-It has not been properly tested on this platform and we cannot guarantee it provides accurate results.
-```
-
-This message is due to Apple Silicon, but I think we can ignore it.
 
 ### Input Examples
 
