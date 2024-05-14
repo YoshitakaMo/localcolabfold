@@ -20,10 +20,10 @@ conda create -p "$COLABFOLDDIR/colabfold-conda" -c conda-forge -c bioconda \
 conda activate "$COLABFOLDDIR/colabfold-conda"
 
 # install ColabFold and Jaxlib
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install --upgrade "jax[cuda12]" \
+    -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install --no-warn-conflicts \
     "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold"
-"$COLABFOLDDIR/colabfold-conda/bin/pip" install --upgrade "jax[cuda12]==0.4.23" \
-    -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install "colabfold[alphafold]"
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install --upgrade tensorflow
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install silence_tensorflow
