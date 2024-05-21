@@ -15,18 +15,18 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 - **No GPU limitations**
 - **NOT necessary to prepare the large database required for native AlphaFold2**.
 
-## Note (Feb 11, 2024)
+## Note (May 21, 2024)
 
-- Fixed the version of Jax to 0.4.23 because jax >=0.4.24 has a lot of changes, deprecations, and removals. Please use the latest `install_colabbatch_linux.sh` or `update_linux.sh`.
+- Since current GPU-supported jax > 0.4.26 requires CUDA 12.1 or later and cudnn 9, please upgrade or install your CUDA driver and cudnn. CUDA 12.4 is recommended.
 
 ## Note (Jan 30, 2024)
 
-- ColabFold now upgrade to 1.5.5 (compatible with AlphaFold 2.3.2). Now LocalColabFold requires **CUDA 11.8 or later**. Please update your CUDA driver if you have not done so.
+- ColabFold now upgrade to 1.5.5 (compatible with AlphaFold 2.3.2). Now LocalColabFold requires **CUDA 12.1 or later**. Please update your CUDA driver if you have not done so.
 - Now (Local)ColabFold can predict protein structures without connecting the Internet. Use [`setup_databases.sh`](https://github.com/sokrypton/ColabFold/blob/main/setup_databases.sh) script to download and build the databases (See also [ColabFold Downloads](https://colabfold.mmseqs.com/)). An instruction to run `colabfold_search` to obtain the MSA and templates locally is written in [this comment](https://github.com/sokrypton/ColabFold/issues/563).
 
 ## New Updates
 
-- 30Jan2024, ColabFold 1.5.5 (Compatible with AlphaFold 2.3.2). Now LocalColabFold requires **CUDA 11.8 or later**. Please update your CUDA driver.
+- 30Jan2024, ColabFold 1.5.5 (Compatible with AlphaFold 2.3.2). Now LocalColabFold requires **CUDA 12.1 or later**. Please update your CUDA driver.
 - 30Apr2023, Updated to use python 3.10 for compatibility with Google Colaboratory.
 - 09Mar2023, version 1.5.1 released. The base directory has been changed to `localcolabfold` from `colabfold_batch` to distinguish it from the execution command.
 - 09Mar2023, version 1.5.0 released. See [Release v1.5.0](https://github.com/YoshitakaMo/localcolabfold/releases/tag/v1.5.0)
