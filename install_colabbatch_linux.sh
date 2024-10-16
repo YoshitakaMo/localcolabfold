@@ -7,9 +7,9 @@ COLABFOLDDIR="${CURRENTPATH}/localcolabfold"
 
 mkdir -p "${COLABFOLDDIR}"
 cd "${COLABFOLDDIR}"
-wget -q -P . https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
-bash ./Mambaforge-Linux-x86_64.sh -b -p "${COLABFOLDDIR}/conda"
-rm Mambaforge-Linux-x86_64.sh
+wget -q -P . https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+bash ./Miniforge3-Linux-x86_64.sh -b -p "${COLABFOLDDIR}/conda"
+rm Miniforge3-Linux-x86_64.sh
 
 source "${COLABFOLDDIR}/conda/etc/profile.d/conda.sh"
 export PATH="${COLABFOLDDIR}/conda/condabin:${PATH}"
