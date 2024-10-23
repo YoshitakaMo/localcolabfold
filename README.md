@@ -202,11 +202,13 @@ These flags are useful for the predictions.
 
 Since [ColabFold](https://github.com/sokrypton/ColabFold) is still a work in progress, your localcolabfold should be also updated frequently to use the latest features. An easy-to-use update script is provided for this purpose.
 
-To update your localcolabfold, simply type in the `colabfold_batch` directory:
+To update your localcolabfold, simply execute the following:
 
 ```bash
 # set your OS. Select one of the following variables {linux,intelmac,M1mac}
 $ OS=linux # if Linux
+# navigate to the directory where you installed localcolabfold, e.g.
+$ cd /home/moriwaki/Desktop/localcolabfold/
 # get the latest updater
 $ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_${OS}.sh -O update_${OS}.sh
 $ chmod +x update_${OS}.sh
