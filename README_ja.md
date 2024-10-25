@@ -70,7 +70,7 @@ arm64  # Apple Silicon
 
 [ColabFold](https://github.com/sokrypton/ColabFold)はいまだ開発途中であるため、最新の機能を利用するためにはこのlocalcolabfoldも頻繁にアップデートする必要があります。そこでお手軽にアップデートするためのスクリプトを用意しました。
 
-アップデートは`colabfold_batch`ディレクトリで以下のように入力するだけです。
+アップデートは`localcolabfold`ディレクトリで以下のように入力するだけです。
 
 ```bash
 $ ./update_linux.sh . # if Linux
@@ -83,9 +83,11 @@ $ ./update_M1mac.sh . # if M1 Mac
 ```bash
 # set your OS. Select one of the following variables {linux,intelmac,M1mac}
 $ OS=linux # if Linux
+# navigate to the directory where you installed localcolabfold, e.g.
+$ cd /home/moriwaki/Desktop/localcolabfold/
 $ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/update_${OS}.sh
 $ chmod +x update_${OS}.sh
-$ ./update_${OS}.sh /path/to/your/colabfold_batch
+$ ./update_${OS}.sh /path/to/your/localcolabfold
 ```
 
 ## LocalColabFoldを利用する利点
