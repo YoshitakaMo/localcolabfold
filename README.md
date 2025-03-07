@@ -49,12 +49,8 @@ Built on Wed_Sep_21_10:33:58_PDT_2022
 Cuda compilation tools, release 11.8, V11.8.89
 Build cuda_11.8.r11.8/compiler.31833905_0
 </pre>DO NOT use `nvidia-smi` to check the version.<br>See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) if you haven't installed it.
-3. Make sure your GNU compiler version is **9.0 or later** because `GLIBCXX_3.4.26` is required for openmm:<pre>$ gcc --version
-gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
-Copyright (C) 2019 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-</pre>If the version is 8.5.0 or older (e.g. CentOS 7, Rocky/Almalinux 8, etc.), install a new one and add `PATH` to it.
+3. Make sure your GNU compiler version is **12.0 or later** because `GLIBCXX_3.4.30` is required for openmm 8.0.0 for `--amber` relaxation.
+If the version is old (e.g. CentOS 7, Rocky/Almalinux 8, etc.), install a new one and add `PATH` to it.
 4. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `localcolabfold` directory will be created. Do not move this directory after the installation.
 
     Keep the network unblocked. And **check the log** output to see if there are any errors.
@@ -70,6 +66,7 @@ It is recommended to add this export command to `~/.bashrc` and restart bash (`~
 
     `colabfold_batch` will automatically detect whether the prediction is for monomeric or complex prediction. In most cases, users don't have to add `--model-type alphafold2_multimer_v3` to turn on multimer prediction. `alphafold2_multimer_v1, alphafold2_multimer_v2` are also available. Default is `auto` (use `alphafold2_ptm` for monomers and `alphafold2_multimer_v3` for complexes.)
 
+If you have some errors on `--amber` relaxation, adding `export LD_LIBRARY_PATH=“/path/to/your/localcolabfold/colabfold-conda/lib:${LD_LIBRARY_PATH}”` may solve this issue before running `colabfold_batch`. 
 For more details, see [Flags](#flags) and `colabfold_batch --help`.
 
 ### For WSL2 (in Windows)
