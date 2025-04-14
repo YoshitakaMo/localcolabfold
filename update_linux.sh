@@ -16,7 +16,7 @@ conda activate "$COLABFOLDDIR/colabfold-conda"
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install --no-warn-conflicts --upgrade --force-reinstall \
     "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold"
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install "colabfold[alphafold]"
-"$COLABFOLDDIR/colabfold-conda/bin/pip" install --force-reinstall "jax[cuda12]"==0.5.2 "numpy==2.2.4"
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install --force-reinstall "jax[cuda12]>=0.5.2" "numpy==2.2.4"
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install --upgrade tensorflow
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install silence_tensorflow
 
