@@ -107,7 +107,7 @@ Please use the correct installer for your Mac.
 
 1. Install [Homebrew](https://brew.sh/index_ja) if not present:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
 2. Install `wget`, `gnu-sed`, [HH-suite](https://github.com/soedinglab/hh-suite) and [kalign](https://github.com/TimoLassmann/kalign) using Homebrew:<pre>$ brew install wget gnu-sed<br>\$ brew install brewsci/bio/hh-suite brewsci/bio/kalign</pre>
-3. Download `install_colabbatch_intelmac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_intelmac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_intelmac.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation.
+3. Download `install_colabbatch_intelmac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_intelmac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_intelmac.sh</pre>About 5 minutes later, `localcolabfold` directory will be created. Do not move this directory after the installation.
 4. The rest procedure is the same as "For Linux".
 
 #### For Mac with Apple Silicon (M1 chip)
@@ -117,7 +117,7 @@ Please use the correct installer for your Mac.
 1. Install [Homebrew](https://brew.sh/index_ja) if not present:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
 2. Install several commands using Homebrew (Now kalign 3.3.2 is available!):<pre>$ brew install wget cmake gnu-sed<br>$ brew install brewsci/bio/hh-suite<br>$ brew install brewsci/bio/kalign</pre>
 3. Install `miniforge` command using Homebrew:<pre>$ brew install --cask miniforge</pre>
-4. Download `install_colabbatch_M1mac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_M1mac.sh</pre>About 5 minutes later, `colabfold_batch` directory will be created. Do not move this directory after the installation. **You can ignore the installation errors that appear along the way**.
+4. Download `install_colabbatch_M1mac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_M1mac.sh</pre>About 5 minutes later, `localcolabfold` directory will be created. Do not move this directory after the installation. **You can ignore the installation errors that appear along the way**.
 5. The rest procedure is the same as "For Linux".
 
 ### Input Examples

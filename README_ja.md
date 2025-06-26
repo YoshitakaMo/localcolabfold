@@ -28,9 +28,9 @@ Copyright (C) 2019 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 </pre>もしバージョンが4.8.5以前の場合は(CentOS 7だとよくありがち)、新しいGCCをインストールしてそれにPATHを通してください。スパコンの場合はEnvironment moduleの`module avail`の中にあるかもしれません。
-1. このリポジトリにある`install_colabbatch_linux.sh`をダウンロードします。<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre>これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_linux.sh</pre>およそ5分後に`colabfold_batch`ディレクトリができます。インストール後はこのディレクトリを移動させないでください。
-2. `cd colabfold_batch`を入力してこのディレクトリに入ります。
-3. 環境変数`PATH`を追加します。<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/colabfold_batch/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>この1行を`~/.bashrc`または`~/.zshrc`に追記しておくと便利です。
+1. このリポジトリにある`install_colabbatch_linux.sh`をダウンロードします。<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre>これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_linux.sh</pre>およそ5分後に`localcolabfold`ディレクトリができます。インストール後はこのディレクトリを移動させないでください。
+2. `cd localcolabfold`を入力してこのディレクトリに入ります。
+3. 環境変数`PATH`を追加します。<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/localcolabfold/colabfold-conda/bin:\$PATH"<br>export PATH="<COLABFOLDBATCH_DIR>/bin:\$PATH"</pre>この1行を`~/.bashrc`または`~/.zshrc`に追記しておくと便利です。
 4. 以下のコマンドでColabFoldを実行します。<pre>colabfold_batch --amber --templates --num-recycle 3 inputfile outputdir/ </pre>結果のファイルは`outputdir`に生成されます. 詳細な使い方は`colabfold_batch --help`コマンドで確認してください。
 
 ### macOSの場合
@@ -53,7 +53,7 @@ arm64  # Apple Silicon
 
 1. [Homebrew](https://qiita.com/zaburo/items/29fe23c1ceb6056109fd)をインストールします:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
 2. Homebrewで`wget`, `gnu-sed`, [HH-suite](https://github.com/soedinglab/hh-suite)と[kalign](https://github.com/TimoLassmann/kalign)をインストールします<pre>$ brew install wget gnu-sed<br>\$ brew install brewsci/bio/hh-suite brewsci/bio/kalign</pre>
-3. `install_colabbatch_intelmac.sh`をこのリポジトリからダウンロードします:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_intelmac.sh</pre>これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_intelmac.sh</pre>およそ5分後に`colabfold_batch`ディレクトリができます。インストール後はこのディレクトリを移動させないでください。
+3. `install_colabbatch_intelmac.sh`をこのリポジトリからダウンロードします:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_intelmac.sh</pre>これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_intelmac.sh</pre>およそ5分後に`localcolabfold`ディレクトリができます。インストール後はこのディレクトリを移動させないでください。
 4. 残りの手順は"Linux+GPUの場合"と同様です.
 
 #### Apple Silicon (M1 chip)のMacの場合
@@ -63,7 +63,7 @@ arm64  # Apple Silicon
 1. [Homebrew](https://qiita.com/zaburo/items/29fe23c1ceb6056109fd)をインストールします:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
 1. いくつかのコマンドをHomebrewでインストールします。(現在kalignはM1 macでインストールすることはできないみたいですが、問題ありません):<pre>$ brew install wget cmake gnu-sed<br>$ brew install brewsci/bio/hh-suite</pre>
 2. `miniforge`をHomebrewでインストールします:<pre>$ brew install --cask miniforge</pre>
-3. インストーラー`install_colabbatch_M1mac.sh`をこのリポジトリからダウンロードします:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_M1mac.sh</pre>およそ5分後に`colabfold_batch`ディレクトリができます。途中色々WarningsやErrorが出るかもしれませんが大丈夫です。インストール後はこのディレクトリを移動させないでください。
+3. インストーラー`install_colabbatch_M1mac.sh`をこのリポジトリからダウンロードします:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> これをインストールしたいディレクトリの上に置いた後、以下のコマンドを入力します:<pre>$ bash install_colabbatch_M1mac.sh</pre>およそ5分後に`localcolabfold`ディレクトリができます。途中色々WarningsやErrorが出るかもしれませんが大丈夫です。インストール後はこのディレクトリを移動させないでください。
 4. 残りの手順は"Linux+GPUの場合"と同様です.
 
 ## アップデートのやり方
