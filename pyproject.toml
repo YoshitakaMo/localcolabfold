@@ -1,0 +1,60 @@
+[project]
+name = "localcolabfold"
+version = "2.0.0"
+description = "ColabFold on your local PC"
+readme = "README.md"
+requires-python = "==3.10"
+
+[tool.pixi.project]
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64", "osx-arm64", "osx-64"]
+
+# [tool.pixi.target.linux-64.dependencies]
+# git = "*"
+# openmm = "==8.2.0"
+# pdbfixer = "*"
+# kalign2 = "==2.04"
+# hhsuite = "==3.3.0"
+# mmseqs2 = "*"
+#
+# [tool.pixi.target.linux-64.pypi-dependencies]
+# # colabfold = { git = "git+https://github.com/sokrypton/ColabFold", extras = ["alphafold-minus-jax"] }
+# colabfold = { version = "==1.5.5", extras = ["alphafold"] }
+# jax = { version = "==0.5.3", extras = ["cuda12"] }
+# tensorflow = "==2.19.0"
+# silence_tensorflow = "==1.2.3"
+
+[tool.pixi.target.osx-arm64.dependencies]
+git = "*"
+openmm = "==8.0.0"
+pdbfixer = "==1.9"
+
+[tool.pixi.target.osx-arm64.pypi-dependencies]
+# colabfold = { git = "git+https://github.com/sokrypton/ColabFold", extras = ["alphafold"] }
+colabfold = { version = "*", extras = ["alphafold"] }
+jax = "==0.4.23"
+jaxlib = "==0.4.23"
+silence_tensorflow = "*"
+
+# [tool.pixi.target.osx-64.dependencies]
+# git = "*"
+# openmm = "==8.0.0"
+# pdbfixer = "==1.9"
+# hhsuite = "==3.3.0"
+# mmseqs2 = "==15.6f452"
+# kalign2 = "==2.04"
+#
+# [tool.pixi.target.osx-64.pypi-dependencies]
+# colabfold = { git = "git+https://github.com/sokrypton/ColabFold", extras = ["alphafold"] }
+# jax = "==0.4.23"
+# jaxlib = "==0.4.23"
+# silence_tensorflow = "*"
+
+
+[tool.pixi.tasks.download]
+
+
+[tool.pixi.tasks.sed_rm]
+
+
+
