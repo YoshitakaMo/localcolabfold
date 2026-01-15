@@ -6,7 +6,8 @@
 
 LocalColabFold is an installer script designed to make ColabFold functionality available on users' local machines. It supports wide range of operating systems, such as Windows 10 or later (using Windows Subsystem for Linux 2), macOS, and Linux.
 
-**If you only intend to predict a small number of naturally occurring proteins, I recommend using [ColabFold notebook](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb) or downloading structures from the [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk/) or [UniProt](https://www.uniprot.org/). LocalColabFold is suitable for more advanced applications, such as batch processing of structure predictions for natural complexes, non-natural proteins, or predictions with manually specified MSAs/templates.**
+> [!NOTE]
+> If you only intend to predict a small number of naturally occurring proteins, I recommend using [ColabFold notebook](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb) or downloading structures from the [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk/) or [UniProt](https://www.uniprot.org/). LocalColabFold is suitable for more advanced applications, such as batch processing of structure predictions for natural complexes, non-natural proteins, or predictions with manually specified MSAs/templates.**
 
 ## Advantages of LocalColabFold
 
@@ -26,6 +27,7 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 
 ## New Updates
 
+- 15Jan2026, Use [pixi](https://pixi.prefix.dev/latest) to install localcolabfold easily.
 - 30Jan2024, ColabFold 1.5.5 (Compatible with AlphaFold 2.3.2). Now LocalColabFold requires **CUDA 12.1 or later**. Please update your CUDA driver.
 - 30Apr2023, Updated to use python 3.10 for compatibility with Google Colaboratory.
 - 09Mar2023, version 1.5.1 released. The base directory has been changed to `localcolabfold` from `colabfold_batch` to distinguish it from the execution command.
@@ -39,41 +41,57 @@ LocalColabFold is an installer script designed to make ColabFold functionality a
 
 ## Installation
 
-### For Linux
+### For Linux (Ubuntu 22.04 or later is recommended)
 
 1. Make sure `curl`, `git`, and `wget` commands are already installed on your PC. If not present, you need install them at first. For Ubuntu, type `sudo apt -y install curl git wget`.
-2. Make sure your Cuda compiler driver is **11.8 or later** (the latest version 12.4 is preferable). If you don't have a GPU or don't plan to use a GPU, you can skip this step :<pre>$ nvcc --version
-nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2022 NVIDIA Corporation
-Built on Wed_Sep_21_10:33:58_PDT_2022
-Cuda compilation tools, release 11.8, V11.8.89
-Build cuda_11.8.r11.8/compiler.31833905_0
-</pre>DO NOT use `nvidia-smi` to check the version.<br>See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) if you haven't installed it.
-3. Make sure your GNU compiler version is **12.0 or later** because `GLIBCXX_3.4.30` is required for openmm 8.0.0 for `--amber` relaxation.
-If the version is old (e.g. CentOS 7, Rocky/Almalinux 8, etc.), install a new one and add `PATH` to it.
-4. Download `install_colabbatch_linux.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_linux.sh</pre>About 5 minutes later, `localcolabfold` directory will be created. Do not move this directory after the installation.
+2. Make sure your Cuda compiler driver is **11.8 or later** (the latest version 12.4 is preferable). If you don't have a GPU or don't plan to use a GPU, you can skip this step:
 
-    Keep the network unblocked. And **check the log** output to see if there are any errors.
+   ```shell
+    $ nvcc --version
+      nvcc: NVIDIA (R) Cuda compiler driver
+      Copyright (c) 2005-2022 NVIDIA Corporation
+      Built on Wed_Sep_21_10:33:58_PDT_2022
+      Cuda compilation tools, release 11.8, V11.8.89
+      Build cuda_11.8.r11.8/compiler.31833905_0
+   ```
 
-    If you find errors in the output log, the easiest way is to check the network and delete the localcolabfold directory, then re-run the installation script.
+   DO NOT use `nvidia-smi` to check the version.<br>See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html) if you haven't installed it.
 
-5. Add environment variable PATH:<pre># For bash or zsh<br># e.g. export PATH="/home/moriwaki/Desktop/localcolabfold/colabfold-conda/bin:\$PATH"<br>export PATH="/path/to/your/localcolabfold/colabfold-conda/bin:\$PATH"</pre>
-It is recommended to add this export command to `~/.bashrc` and restart bash (`~/.bashrc` will be executed every time bash is started)
+3. Install `pixi` package manager by following the instructions at [pixi installation page](https://pixi.prefix.dev/latest/installation).,
 
-6. To run the prediction, type <pre>colabfold_batch input outputdir/</pre>The result files will be created in the `outputdir`. This command will execute the prediction without templates and relaxation (energy minimization). If you want to use templates and relaxation, add `--templates` and `--amber` flags, respectively. For example,
+   ```bash
+   curl -fsSL https://pixi.sh/install.sh | sh
+   ```
 
-    <pre>colabfold_batch --templates --amber input outputdir/</pre>
+4. Clone this repository and run the installation script:
 
-    `colabfold_batch` will automatically detect whether the prediction is for monomeric or complex prediction. In most cases, users don't have to add `--model-type alphafold2_multimer_v3` to turn on multimer prediction. `alphafold2_multimer_v1, alphafold2_multimer_v2` are also available. Default is `auto` (use `alphafold2_ptm` for monomers and `alphafold2_multimer_v3` for complexes.)
+   ```bash
+    git clone https://github.com/yoshitakamo/localcolabfold.git
+    cd localcolabfold
+    pixi install && pixi run setup
+   ```
 
-If you have some errors on `--amber` relaxation, adding `export LD_LIBRARY_PATH=“/path/to/your/localcolabfold/colabfold-conda/lib:${LD_LIBRARY_PATH}”` may solve this issue before running `colabfold_batch`.
-For more details, see [Flags](#flags) and `colabfold_batch --help`.
+   Localcolabfold will be installed in the `/path/to/localcolabfold/.pixi/envs/default/` directory.
+
+5. Use `run_colabfoldbatch_sample.sh` as a sample script to run `colabfold_batch`. Make sure to set the correct PATH (`/path/to/localcolabfold/.pixi/envs/default/bin`) in the shell script.
+
+6. Run the script to start the structure prediction:
+
+   ```bash
+   bash run_colabfoldbatch_sample.sh
+   ```
+
+> [!NOTE]
+> `colabfold_batch` will automatically detect whether the prediction is for monomeric or complex prediction. In most cases, users don't have to add `--model-type alphafold2_multimer_v3` to turn on multimer prediction. `alphafold2_multimer_v1, alphafold2_multimer_v2` are also available. Default is `auto` (use `alphafold2_ptm` for monomers and `alphafold2_multimer_v3` for complexes.)
+
+For more details, see [Flags](#flags) and `/path/to/localcolabfold/.pixi/envs/default/bin/colabfold_batch --help`.
 
 ### For WSL2 (in Windows)
 
-**Caution: If your installation fails due to symbolic link (`symlink`) creation issues, this is due to the Windows file system being case-insensitive (while the Linux file system is case-sensitive).** To resolve this, run the following command on Windows Powershell:
+> [!CAUTION]
+> If your installation fails due to symbolic link (`symlink`) creation issues, this is due to the Windows file system being case-insensitive (while the Linux file system is case-sensitive).** To resolve this, run the following command on Windows Powershell:
 
-```
+```bash
 fsutil file SetCaseSensitiveInfo path\to\localcolabfold\installation enable
 ```
 
@@ -81,51 +99,53 @@ Replace `path\to\colabfold\installation` with the path to the directory where yo
 
 Before running the prediction:
 
-```
+```bash
 export TF_FORCE_UNIFIED_MEMORY="1"
 export XLA_PYTHON_CLIENT_MEM_FRACTION="4.0"
 export XLA_PYTHON_CLIENT_ALLOCATOR="platform"
 export TF_FORCE_GPU_ALLOW_GROWTH="true"
 ```
 
-It is recommended to add these export commands to `~/.bashrc` and restart bash (`~/.bashrc` will be executed every time bash is started)
+### For macOS Apple Silicon
 
-### For macOS
+> [!CAUTION]
+> Due to the lack of Nvidia GPU/CUDA driver, the structure prediction on macOS are 5-10 times slower than on Linux+GPU**. For the test sequence (58 a.a.), it may take 30 minutes. However, it may be useful to play with it before preparing Linux+GPU environment.
 
-**Caution: Due to the lack of Nvidia GPU/CUDA driver, the structure prediction on macOS are 5-10 times slower than on Linux+GPU**. For the test sequence (58 a.a.), it may take 30 minutes. However, it may be useful to play with it before preparing Linux+GPU environment.
+1. Make sure that you have installed [Homebrew](https://brew.sh/) on your macOS.
+2. Install pixi with Homebrew:
 
-You can check whether your Mac is Intel or Apple Silicon by typing `uname -m` on Terminal.
+   ```bash
+   brew install pixi
+   ```
 
-```bash
-$ uname -m
-x86_64 # Intel
-arm64  # Apple Silicon
-```
+3. Clone this repository and run the installation script:
 
-Please use the correct installer for your Mac.
+   ```bash
+   git clone https://github.com/yoshitakamo/localcolabfold.git
+   ```
 
-#### For Mac with Intel CPU
+4. Navigate to the cloned directory and run the installation script for macOS:
 
-1. Install [Homebrew](https://brew.sh/index_ja) if not present:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-2. Install `wget`, `gnu-sed`, [HH-suite](https://github.com/soedinglab/hh-suite) and [kalign](https://github.com/TimoLassmann/kalign) using Homebrew:<pre>$ brew install wget gnu-sed<br>\$ brew install brewsci/bio/hh-suite brewsci/bio/kalign</pre>
-3. Download `install_colabbatch_intelmac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_intelmac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_intelmac.sh</pre>About 5 minutes later, `localcolabfold` directory will be created. Do not move this directory after the installation.
-4. The rest procedure is the same as "For Linux".
+   ```bash
+   cd localcolabfold
+   pixi install && pixi run setup
+   ```
 
-#### For Mac with Apple Silicon (M1 chip)
+   Localcolabfold will be installed in the `/path/to/localcolabfold/.pixi/envs/default/` directory.
 
-**Note: This installer is experimental because most of the dependent packages are not fully tested on Apple Silicon Mac.**
+5. Use `run_colabfoldbatch_sample.sh` as a sample script to run `colabfold_batch`. Make sure to set the correct PATH (/path/to/localcolabfold/.pixi/envs/default/bin) in the shell script.
 
-1. Install [Homebrew](https://brew.sh/index_ja) if not present:<pre>$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-2. Install several commands using Homebrew (Now kalign 3.3.2 is available!):<pre>$ brew install wget cmake gnu-sed<br>$ brew install brewsci/bio/hh-suite<br>$ brew install brewsci/bio/kalign</pre>
-3. Install `miniforge` command using Homebrew:<pre>$ brew install --cask miniforge</pre>
-4. Download `install_colabbatch_M1mac.sh` from this repository:<pre>$ wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_M1mac.sh</pre> and run it in the directory where you want to install:<pre>$ bash install_colabbatch_M1mac.sh</pre>About 5 minutes later, `localcolabfold` directory will be created. Do not move this directory after the installation. **You can ignore the installation errors that appear along the way**.
-5. The rest procedure is the same as "For Linux".
+6. Run the script to start the structure prediction:
+
+   ```bash
+   bash run_colabfoldbatch_sample.sh
+   ```
 
 ### Input Examples
 
 ColabFold can accept multiple file formats or directory.
 
-```
+```shell
 positional arguments:
   input                 Can be one of the following: Directory with fasta/a3m
                         files, a csv/tsv file, a fasta file or an a3m file
