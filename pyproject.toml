@@ -65,11 +65,8 @@ tensorflow = "==2.20.0"
 silence_tensorflow = "==1.2.3"
 
 [tool.pixi.tasks]
-setup = { depends-on = ["fix-matplotlib-backend", "fix-tensorflow-warnings", "remove-pixi-cache"] }
+setup = { depends-on = ["fix-tensorflow-warnings", "remove-pixi-cache"] }
 
-fix-matplotlib-backend = """
-sed -i -e "1s#^#import matplotlib\\nmatplotlib.use('Agg')\\n#" .pixi/envs/default/lib/python3.12/site-packages/colabfold/plot.py
-"""
 fix-tensorflow-warnings = """
 sed -i -e "s#from io import StringIO#from io import StringIO\\nfrom silence_tensorflow import silence_tensorflow\\nsilence_tensorflow()#g" .pixi/envs/default/lib/python3.12/site-packages/colabfold/batch.py
 """
