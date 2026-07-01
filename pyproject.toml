@@ -1,6 +1,6 @@
 [project]
 name = "localcolabfold"
-version = "1.5.5"
+version = "1.6.1"
 description = "ColabFold on your local PC"
 readme = "README.md"
 requires-python = "==3.12.12"
@@ -24,8 +24,8 @@ numpy = "<=2.1.3"
 [tool.pixi.target.linux-64.pypi-dependencies]
 colabfold = { git = "git+https://github.com/sokrypton/ColabFold", extras = ["alphafold-minus-jax"] }
 # colabfold = "==1.5.5"
-jax = { version = "==0.5.3", extras = ["cuda12"] }
-tensorflow = "==2.19.1"
+jax = { version= "==0.10.1", extras = ["cuda12"] }
+tensorflow = "==2.21.0"
 tqdm = "==4.66.1"
 silence_tensorflow = "==1.2.3"
 
@@ -41,8 +41,8 @@ numpy = "<=2.1.3"
 [tool.pixi.target.linux-aarch64.pypi-dependencies]
 colabfold = { git = "git+https://github.com/sokrypton/ColabFold", extras = ["alphafold-minus-jax"] }
 # colabfold = "==1.5.5"
-jax = { version = "==0.6.2", extras = ["cuda12"] }
-tensorflow = "==2.19.1"
+jax = { version = "==0.10.1", extras = ["cuda12"] }
+tensorflow = "==2.21.0"
 tqdm = "==4.66.1"
 silence_tensorflow = "==1.2.3"
 
@@ -65,8 +65,14 @@ tensorflow = "==2.20.0"
 silence_tensorflow = "==1.2.3"
 
 [tool.pixi.tasks]
-setup = { depends-on = ["fix-tensorflow-warnings", "remove-pixi-cache"] }
+setup = { depends-on = ["fix-amin-amax-issue", "fix-tensorflow-warnings", "remove-pixi-cache"] }
 
+fix-amin-amax-issue = """
+sed -i -e "s#a_min#min#g" .pixi/envs/default/lib/python3.12/site-packages/alphafold/model/modules.py && \
+sed -i -e "s#a_max#max#g" .pixi/envs/default/lib/python3.12/site-packages/alphafold/model/modules.py && \
+sed -i -e "s#a_min#min#g" .pixi/envs/default/lib/python3.12/site-packages/alphafold/model/modules_multimer.py && \
+sed -i -e "s#a_max#max#g" .pixi/envs/default/lib/python3.12/site-packages/alphafold/model/modules_multimer.py
+"""
 fix-tensorflow-warnings = """
 sed -i -e "s#from io import StringIO#from io import StringIO\\nfrom silence_tensorflow import silence_tensorflow\\nsilence_tensorflow()#g" .pixi/envs/default/lib/python3.12/site-packages/colabfold/batch.py
 """
